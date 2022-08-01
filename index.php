@@ -3,6 +3,8 @@ require "vendor/autoload.php";
 use Src\Controllers\BasePathController;
 use Src\Controllers\NotFoundController;
 use Src\Controllers\ClientController;
+use Src\Controllers\UserController;
+
 
 $request = $_SERVER['REQUEST_URI'];
 $request = explode('?' ,$request, 2);
@@ -12,16 +14,20 @@ if (isset($request[1]))
 	$data = '?' . $request[1];
 
 $request = $request[0] . $data ; 
-$basePath =  json_decode(file_get_contents('config.json'));
+$config =  json_decode(file_get_contents('config.json'));
 
 switch($request){
 	
-	case $basePath->urls->base.BasePathController::path():
+	case $config->urls->base.BasePathController::path():
         echo BasePathController::index();
 		break;
 
-    case $basePath->urls->base.ClientController::path().$data:
+    case $config->urls->base.ClientController::path().$data:
         echo ClientController::index();
+        break;
+    
+    case $config->urls->base.UserController::path().$data:
+        echo UserController::index($_SERVER['REQUEST_METHOD']);
         break;
 
 	default:

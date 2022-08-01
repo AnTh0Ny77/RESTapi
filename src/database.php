@@ -7,26 +7,17 @@ use PDOException;
 
 class Database {
 
-    public string  $db_Name;
-    private string $db_user;
-    private string $db_pass;
-    private string $db_host;
+    public $config;
     public PDO $Pdo;
 
-    public function __construct($db_name,$db_user='root',$db_pass='',$db_host='localhost'){
-
-        $this->db_Name = $db_name;
-        $this->db_pass = $db_pass;
-        $this->db_user = $db_user;
-        $this->db_host = $db_host;
-        
+    public function __construct(){
+        $this->config = json_decode(file_get_contents('config.json'));
     }
 
     public function DbConnect(){
-
         if(!isset($this->Pdo)){
             try {
-                $pdo = new PDO('mysql:dbname=myrecode;host=localhost', 'root', '' ,  array(1002 => 'SET NAMES utf8'));
+                $pdo = new PDO('mysql:dbname='.$this->config->database->name.';host='.$this->config->database->host.'', ''.$this->config->database->user.'', ''.$this->config->database->pass.'' ,  array(1002 => 'SET NAMES utf8'));
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $this->Pdo = $pdo;
                 return $this->Pdo;

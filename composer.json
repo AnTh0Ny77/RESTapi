@@ -3,6 +3,7 @@
         "psr-4" : {"Src\\" : "src"}
     },
     "require": {
-        "twig/twig": "3.0"
+        "twig/twig": "3.0",
+        "rbdwllr/reallysimplejwt": "^4.0"
     }
 }
