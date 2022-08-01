@@ -1,0 +1,32 @@
+<?php
+require "vendor/autoload.php";
+use Src\Controllers\BasePathController;
+use Src\Controllers\NotFoundController;
+use Src\Controllers\ClientController;
+
+$request = $_SERVER['REQUEST_URI'];
+$request = explode('?' ,$request, 2);
+$data = null;
+
+if (isset($request[1])) 
+	$data = '?' . $request[1];
+
+$request = $request[0] . $data ; 
+$basePath =  json_decode(file_get_contents('config.json'));
+
+switch($request){
+	
+	case $basePath->urls->base.BasePathController::path():
+        echo BasePathController::index();
+		break;
+
+    case $basePath->urls->base.ClientController::path().$data:
+        echo ClientController::index();
+        break;
+
+	default:
+		header('HTTP/1.0 404 not found');
+        echo NotFoundController::index();
+		break;
+}
+?>
