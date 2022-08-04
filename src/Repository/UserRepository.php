@@ -48,7 +48,28 @@ Class UserRepository  extends BaseRepository{
 
         $user_data['user__d_creat'] = date('Y-m-d H:i:s');
         
-        $this->insert($user_data);
+        $id_user = $this->insert($user_data);
+        
+        $user = $this->findOneBy(['user__id' =>  $id_user]);
+        return $user;
+    }
+
+    public function loginUser($user_data){
+        if (empty($user_data['user__password'])) 
+            return 'Le champ password ne peut pas etre vide.';
+
+        if (empty($user_data['user__mail'])) 
+            return 'Le champ mail ne peut pas etre vide.';
+
+        $user = $this->findOneBy(['user__mail' =>  $user_data['user__mail']]);
+
+        if (!$user instanceof User) 
+            return 'Utilisateur inconnu.';
+
+        var_dump($user);
+        $password_authenticity = password_verify($user_data['user__password'],$user->getUser__password());
+
+        var_dump($password_authenticity);
     }
 
 }

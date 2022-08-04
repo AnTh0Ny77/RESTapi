@@ -4,7 +4,7 @@ use Src\Controllers\BasePathController;
 use Src\Controllers\NotFoundController;
 use Src\Controllers\ClientController;
 use Src\Controllers\UserController;
-
+use Src\Controllers\LoginController;
 
 $request = $_SERVER['REQUEST_URI'];
 $request = explode('?' ,$request, 2);
@@ -27,7 +27,11 @@ switch($request){
         break;
     
     case $config->urls->base.UserController::path().$data:
-        echo UserController::index($_SERVER['REQUEST_METHOD']);
+        echo UserController::index($_SERVER['REQUEST_METHOD'],$data);
+        break;
+
+    case $config->urls->base.LoginController::path().$data:
+        echo LoginController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
 
 	default:
