@@ -4,31 +4,33 @@ require  '././vendor/autoload.php';
 
 Class User {
 
-	private $user__id;
+	public $user__id;
 
-    private $user__nom;
+    public $user__nom;
 
-    private $user__prenom;
+    public $user__prenom;
 
-    private $user__mail;
+    public $user__mail;
 
-    private $user__password;
+    public $user__password;
 
-    private $user__service;
+    public $user__service;
 
-    private $user__fonction;
+    public $user__fonction;
 
-    private $user__gsm;
+    public $user__gsm;
 
-    private $user__tel;
+    public $user__memo;
 
-    private $user__d_creat;
+    public $user__tel;
 
-    private $user__d_off;
+    public $user__d_creat;
 
-    private $user__chrono;
+    public $user__d_off;
 
-    private $token;
+    public $user__chrono;
+
+    public $token;
 
 	
 	public function getUser__id(){
@@ -45,6 +47,9 @@ Class User {
     }
  
     public function setUser__nom($user__nom){
+        if (strlen($user__nom) < 2 or strlen($user__nom) > 35 ) {
+            return 'Le nom doit comporter entre 2 et 35 characters'; 
+        }
         $this->user__nom = $user__nom;
         return $this;
     }
@@ -54,6 +59,9 @@ Class User {
     }
    
     public function setUser__prenom($user__prenom){
+        if (strlen($user__prenom) < 2 or strlen($user__prenom) > 35 ) {
+            return 'Le nom doit comporter entre 2 et 35 characters'; 
+        }
         $this->user__prenom = $user__prenom;
         return $this;
     }
@@ -63,8 +71,12 @@ Class User {
     }
 
     public function setUser__mail($user__mail){
-        $this->user__mail = $user__mail;
-        return $this;
+        if (filter_var($user__mail, FILTER_VALIDATE_EMAIL)) {
+            $this->user__mail = $user__mail;
+            return $this;
+        }else return 'Le mail saisi n est pas un email valide'; 
+        
+        
     }
 
     public function getUser__password(){
@@ -147,6 +159,16 @@ Class User {
 
     public function setToken($token){
         $this->token = $token;
+        return $this;
+    }
+
+    public function getUser__memo(){
+        return $this->user__memo;
+    }
+
+    public function setUser__memo($user__memo){
+        $this->user__memo = $user__memo;
+
         return $this;
     }
 }

@@ -35,11 +35,21 @@ Class UserController {
         $database = new Database();
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
-        $userRepository = new UserRepository();
+        $userRepository = new UserRepository('User' , $database , User::class );
         $body = json_decode(file_get_contents('php://input'), true);
 
         
-        $userRepository->postUser($body['email'] , $body['pass'] , $body['nom'] , $body['prenom']);
+        $user = $userRepository->postUser($body);
+
+        if (!$user instanceof User) {
+            $body = [
+                $data = $body ,
+                $message = $user
+            ];
+            return $responseHandler->handleJsonResponse($body , 400 , 'Bad Request');
+        }
+           
+        
 
         return $responseHandler->handleJsonResponse($body , 200 , 'ok');
     }
