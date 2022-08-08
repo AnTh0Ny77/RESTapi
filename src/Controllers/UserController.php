@@ -70,9 +70,6 @@ Class UserController {
             ];
             return $responseHandler->handleJsonResponse($body , 401 , 'UnAuthorized');
         }
-
-       //retourne l'utilisateur demandé si le token est correct : 
-        
     }
 
    

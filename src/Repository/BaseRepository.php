@@ -48,7 +48,7 @@ Class BaseRepository {
         return  $request->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function findOneBy(array $array ){
+    public function findOneBy(array $array , bool $auto ){
         $clause = '';
         $data = [];
         foreach ($array as $key => $value) {
@@ -58,11 +58,16 @@ Class BaseRepository {
         $request = "SELECT * FROM ".$this->Table." WHERE 1 = 1 ".$clause ."";
         $request = $this->Db->Pdo->query($request);
         $request = $request->fetch(PDO::FETCH_ASSOC);
-        if($request != false)
-            return $this->auto_mapping($request, $this->Class);
-        
+       
+        if($request != false){
+            if ($auto == true ) 
+                return $this->auto_mapping($request, $this->Class);
+            if ($auto == false) 
+                return $request;
+        }
         return null;
     }
+
 
 
     public function auto_mapping($array , $class){

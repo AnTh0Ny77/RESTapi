@@ -29,7 +29,7 @@ Class UserRepository  extends BaseRepository{
         if (!$mail instanceof User) 
             return $mail;
         
-        $mail = $this->findOneBy(['user__mail' =>  $user_data['user__mail']]);
+        $mail = $this->findOneBy(['user__mail' =>  $user_data['user__mail']] , true);
 
         if ($mail instanceof User) 
             return 'vous possédez deja un compte pour cet email.';
@@ -50,7 +50,7 @@ Class UserRepository  extends BaseRepository{
         
         $id_user = $this->insert($user_data);
         
-        $user = $this->findOneBy(['user__id' =>  $id_user]);
+        $user = $this->findOneBy(['user__id' =>  $id_user] , true );
         return $user;
     }
 
@@ -61,15 +61,20 @@ Class UserRepository  extends BaseRepository{
         if (empty($user_data['user__mail'])) 
             return 'Le champ mail ne peut pas etre vide.';
 
-        $user = $this->findOneBy(['user__mail' =>  $user_data['user__mail']]);
+        $user = $this->findOneBy(['user__mail' =>  $user_data['user__mail']] , false);
 
-        if (!$user instanceof User) 
+        if (empty($user)) 
             return 'Utilisateur inconnu.';
 
-        var_dump($user);
-        $password_authenticity = password_verify($user_data['user__password'],$user->getUser__password());
+        $password_authenticity = password_verify($user_data['user__password'],$user['user__password']);
 
-        var_dump($password_authenticity);
+        if ($password_authenticity == false )
+             return 'Identifiants invalides.';
+
+        $user = $this->findOneBy(['user__mail' =>  $user_data['user__mail']] , true);
+        
+        return $user;
+        
     }
 
 }

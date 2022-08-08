@@ -38,12 +38,22 @@ Class LoginController {
 	public static function post(){
         $database = new Database();
         $database->DbConnect();
+        $security = new Security();
         $responseHandler = new ResponseHandler();
         $userRepository = new UserRepository('User' , $database , User::class );
         $body = json_decode(file_get_contents('php://input'), true);
         $login = $userRepository->loginUser($body);
- 
+        if (!$login instanceof User) {
+            $body = [
+                $data = $body ,
+                $message =$login
+            ];
+            return $responseHandler->handleJsonResponse($body , 401 , 'Unauthorized');
+        }
+        $login->setToken($security->returnToken($login->getUser__id()));
+        $body = [
+            $message = $login 
+        ];
+        return $responseHandler->handleJsonResponse($body , 200 , 'success');
     }
-
-
 }
