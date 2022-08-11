@@ -32,6 +32,8 @@ Class User {
 
     public $token;
 
+    public $refresh_token;
+
 	
 	public function getUser__id(){
 		return $this->user__id;
@@ -168,6 +170,16 @@ Class User {
 
     public function setUser__memo($user__memo){
         $this->user__memo = $user__memo;
+
+        return $this;
+    }
+
+    public function getRefresh_token(){
+        return $this->refresh_token;
+    }
+    
+    public function setRefresh_token($refresh_token){
+        $this->refresh_token = $refresh_token;
 
         return $this;
     }

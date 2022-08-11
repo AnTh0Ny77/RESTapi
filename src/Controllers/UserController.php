@@ -6,6 +6,7 @@ use Src\Database;
 use Src\Controllers\NotFoundController;
 use Src\Services\Security;
 use Src\Repository\UserRepository;
+use Src\Repository\RefreshRepository;
 use Src\Entities\User;
 
 
@@ -15,6 +16,26 @@ Class UserController {
         return 'user';
     }
 
+    public static function renderDoc(){
+        $doc = [
+             [
+                'method' => 'PUT',
+                'path' => self::path(),
+                'description' => 'permet à l utilisateur de se connecter ' ,
+                'body' =>  [
+                    'type' => 'application/json',
+                    'fields' => [
+                            'user_mail' , 
+                            'user__password'
+                    ]
+                    ],
+                'reponse' =>  'renvoi un objet de type User avec un token et refresh_token à conserver' ,
+                "Auth" => 'JWT'
+                
+            ] 
+        ];
+        return $doc;
+    }
 
     public static function index($method , $data){
         $notFound = new NotFoundController();
@@ -40,6 +61,7 @@ Class UserController {
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
         $userRepository = new UserRepository('User' , $database , User::class );
+        $refreshRepository = new RefreshRepository($database);
         $body = json_decode(file_get_contents('php://input'), true);
 
         
@@ -52,10 +74,13 @@ Class UserController {
             ];
             return $responseHandler->handleJsonResponse($body , 400 , 'Bad Request');
         }
+        $refresh_token = $refreshRepository->insertOne($user->getUser__id());
+        $user->setRefresh_token($refresh_token);
         $body = [
             $data = $user ,
             $message = 'utilisateur créé avec succès'
         ];
+        
         return $responseHandler->handleJsonResponse($body , 200 , 'ok');
     }
 

@@ -3,23 +3,19 @@ namespace Src\Controllers;
 require  '././vendor/autoload.php';
 use Src\Services\ResponseHandler;
 use Src\Database;
-use Src\Controllers\NotFoundController;
-use Src\Services\Security;
-use Src\Repository\UserRepository;
-use Src\Entities\User;
 use Src\Repository\RefreshRepository;
+use Src\Services\Security;
 
-
-Class LoginController {
+Class RefreshController {
 
     public static function path(){
-        return 'login';
+        return 'refresh';
     }
 
     public static function renderDoc(){
         $doc = [
-           [
-                'method' => 'POST',
+              [
+                'method' => 'DELETE',
                 'path' => self::path(),
                 'description' => 'permet à l utilisateur de se connecter ' ,
                 'body' =>  [
@@ -29,7 +25,7 @@ Class LoginController {
                             'user__password'
                     ]
                     ],
-                'reponse' => 'renvoi un objet de type User avec un token et refresh_token à conserver' , 
+                'reponse' =>  'renvoi un objet de type User avec un token et refresh_token à conserver',
                 "Auth" => 'PUBLIC'
                 
             ] 
@@ -42,7 +38,7 @@ Class LoginController {
         $notFound = new NotFoundController();
         switch ($method) {
             case 'POST':
-                return self::post();
+                return self::refresh();
                 break;
 
             case 'GET':
@@ -53,32 +49,39 @@ Class LoginController {
                 return $notFound::index();
                 break;
         }
-
     }
 
 
-	public static function post(){
+	public static function refresh(){
         $database = new Database();
-        $database->DbConnect();
         $security = new Security();
+        $database->DbConnect();
         $responseHandler = new ResponseHandler();
-        $userRepository = new UserRepository('User' , $database , User::class );
+        $security = new Security();
         $refreshRepository = new RefreshRepository($database);
         $body = json_decode(file_get_contents('php://input'), true);
-        $login = $userRepository->loginUser($body);
-        if (!$login instanceof User) {
+
+        if (empty($body['refresh_token'])) {
             $body = [
                 $data = $body ,
-                $message =$login
+                $message = 'le refresh token n a pas été trouvé dans la requete'
             ];
-            return $responseHandler->handleJsonResponse($body , 401 , 'Unauthorized');
+            return $responseHandler->handleJsonResponse($body , 400 , 'Bad Request');
         }
-        $login->setToken($security->returnToken($login->getUser__id()));
-        $refresh_token = $refreshRepository->insertOne($login->getUser__id());
-        $login->setRefresh_token($refresh_token);
-        $body = [
-            $message = $login 
+
+        $refresh_token = $refreshRepository->findOneBy(['refresh_token' => $body['refresh_token'] ] , false);
+        if (empty($refresh_token)) {
+            $body = [
+                $data = $body ,
+                $message = 'refresh token est invalide'
+            ];
+            return $responseHandler->handleJsonResponse($body , 400 , 'Bad Request');
+        }
+        $token  = $security->returnToken($refresh_token['user__id']);
+
+        $data = [
+            "token" => $token
         ];
-        return $responseHandler->handleJsonResponse($body , 200 , 'success');
+        return $responseHandler->handleJsonResponse($data , 200 , 'ok');
     }
 }

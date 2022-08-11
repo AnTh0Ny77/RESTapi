@@ -11,6 +11,27 @@ Class ClientController {
         return 'client';
     }
 
+    public static function renderDoc(){
+        $doc = [
+             [
+                'method' => 'GET',
+                'path' => self::path(),
+                'description' => 'permet à l utilisateur de se connecter ' ,
+                'body' =>  [
+                    'type' => 'application/json',
+                    'fields' => [
+                            'user_mail' , 
+                            'user__password'
+                    ]
+                    ],
+                'reponse' => 'renvoi un objet de type User avec un token et refresh_token à conserver', 
+                "Auth" => 'JWT'
+        
+            ] 
+        ];
+        return $doc;
+    }
+
 	public static function index(){
         $database = new Database();
         $security = new Security();

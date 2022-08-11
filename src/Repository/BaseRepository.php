@@ -68,8 +68,6 @@ Class BaseRepository {
         return null;
     }
 
-
-
     public function auto_mapping($array , $class){
         $object = new $class();
         foreach($array as $key => $value){
@@ -107,11 +105,32 @@ Class BaseRepository {
         return $user__id;
     }
 
-    
-    
-    public function updateFields(){
+    public function delete(array $array){
+        $clause = '';
+        $data = [];
+        foreach ($array as $key => $value) {
+            $clause .=  "AND " . $key. " = '" .$value. "' ";
+            array_push($data ,  $value);
+        }
+        $request = "DELETE FROM ".$this->Table." WHERE 1 = 1 ".$clause ."";
+        $request = $this->Db->Pdo->prepare($request);
+        $request = $request->execute();
+        if($request != false)
+            return $request;
+        return null;
+    }
+
+    public function update(array $field , array $where){
+        $clause = '';
+        foreach ($where as $key => $value) {
+            $clause .=  "AND " . $key. " = '" .$value. "' ";
+        }
+        foreach ($field as $key => $value) {
+            # code...
+        }
 
     }
+
 
     
 }

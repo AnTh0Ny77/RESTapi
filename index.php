@@ -5,6 +5,7 @@ use Src\Controllers\NotFoundController;
 use Src\Controllers\ClientController;
 use Src\Controllers\UserController;
 use Src\Controllers\LoginController;
+use Src\Controllers\RefreshController;
 
 $request = $_SERVER['REQUEST_URI'];
 $request = explode('?' ,$request, 2);
@@ -32,6 +33,10 @@ switch($request){
 
     case $config->urls->base.LoginController::path().$data:
         echo LoginController::index($_SERVER['REQUEST_METHOD'],$data);
+        break;
+
+    case $config->urls->base.RefreshController::path().$data:
+        echo RefreshController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
 
 	default:

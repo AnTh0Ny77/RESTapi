@@ -55,14 +55,6 @@ Class Security {
         return null;
     }
 
-    public function setRefreshToken(User $user){
-
-        
-        $key = md5(microtime().rand());
-    }
-
-    public function getRefreshToken(){
-
-    }
+    
 
 }
