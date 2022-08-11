@@ -18,17 +18,17 @@ Class BasePathController {
            'cache' => false,
        	]);
        	self::$twig->addExtension(new \Twig\Extension\DebugExtension());
-       
+           
         $classes = ClassFinderClassFinder::getClassesInNamespace('Src\Controllers');
         $doc = [];
         foreach ($classes as $key => $value){
            $classe =  new $value();
            if (get_class($classe) != "Src\Controllers\BasePathController" and get_class($classe) != "Src\Controllers\NotFoundController" ) {
+                $temp = $classe->renderDoc();
                array_push($doc , $classe->renderDoc());
            }
         }
         
-
         return self::$twig->render(
             'documentation.html.twig',[
             'doc' => $doc

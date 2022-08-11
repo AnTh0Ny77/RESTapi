@@ -12,7 +12,7 @@
 	<title>API MY RECODE</title>
 </head>
 <body>
-    <div class="container"> 
+    <div class="container mt-2"> 
         <h2 class="h2-api">Documentation API MYRecode</h2>
         {% for key , operation in doc %}
                 <div class="container-operation">
@@ -40,6 +40,7 @@
                                         {{step.description}}
                                     </div>
                                     <div class="text-api my-2">
+                                        {% if step.body %}
                                         <b class="text-uppercase">type :</b> {{step.body.type}}<br>
                                         
                                         <button class="btn-recode-mini my-3" type="button" data-bs-toggle="collapse" data-bs-target="#{{step.path}}" aria-expanded="false" aria-controls="{{step.path}}">
@@ -53,6 +54,8 @@
                                                 {% endfor %}
                                             </div>
                                         </div>
+                                        {% endif %}
+                                       
                                     </div>
                                 </div>
                                 <div class="container-details-droite">

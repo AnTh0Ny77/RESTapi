@@ -19,20 +19,49 @@ Class UserController {
     public static function renderDoc(){
         $doc = [
              [
-                'method' => 'PUT',
+                'method' => 'POST',
                 'path' => self::path(),
-                'description' => 'permet à l utilisateur de se connecter ' ,
+                'description' => 'Crée un nouveau User' ,
                 'body' =>  [
                     'type' => 'application/json',
                     'fields' => [
                             'user_mail' , 
-                            'user__password'
+                            'user__password', 
+                            'user__nom' ,
+                            'user__prenom'
                     ]
                     ],
-                'reponse' =>  'renvoi un objet de type User avec un token et refresh_token à conserver' ,
+                'reponse' =>  'renvoi un objet de type user avec token et refresh_token à conserver' ,
+                "Auth" => 'PUBLIC'
+                
+            ] ,
+            [
+                'method' => 'GET',
+                'path' => self::path(),
+                'description' => 'Permet au user d obtenir les information le conçernant' ,
+                'reponse' =>  'renvoi un objet de type user ' ,
                 "Auth" => 'JWT'
                 
-            ] 
+            ] ,
+            [
+                'method' => 'PUT',
+                'path' => self::path(),
+                'description' => 'Permet à l utilisateur de mettre à jour les information le conçernant' ,
+                'body' =>  [
+                    'type' => 'application/json',
+                    'fields' => [
+                            'user__nom' ,
+                            'user__prenom' , 
+                            'user__service' , 
+                            'user__fonction' ,
+                            'user__gsm', 
+                            'user__tel' 
+                    ]
+                    ],
+                'reponse' =>  'renvoi un objet de type user avec token et refresh_token à conserver' ,
+                "Auth" => 'JWT'
+                
+            ]
         ];
         return $doc;
     }

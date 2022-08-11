@@ -15,17 +15,16 @@ Class RefreshController {
     public static function renderDoc(){
         $doc = [
               [
-                'method' => 'DELETE',
+                'method' => 'POST',
                 'path' => self::path(),
-                'description' => 'permet à l utilisateur de se connecter ' ,
+                'description' => 'permet d obtenir un nouveau JWT' ,
                 'body' =>  [
                     'type' => 'application/json',
                     'fields' => [
-                            'user_mail' , 
-                            'user__password'
+                            'refresh_token'   
                     ]
                     ],
-                'reponse' =>  'renvoi un objet de type User avec un token et refresh_token à conserver',
+                'reponse' =>  'envoi un token valide pour le user',
                 "Auth" => 'PUBLIC'
                 
             ] 
