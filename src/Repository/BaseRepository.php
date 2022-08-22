@@ -21,6 +21,18 @@ Class BaseRepository {
         $this->Class = $class;
     }
 
+    public function verifyColumn(array $array){
+        $object = new $this->Class();
+        foreach ($array as $key => $value) { 
+            if ($key != 'search') {
+                if (!property_exists($object , $key )) {
+                    return 'Le champ '.$key.' n existe pas  ';
+                }
+            }
+        }
+        return null;
+    }
+
     public function findBy(array $array , int $limit , array $order){
         $limitclause = '';
         switch ($limit) {
@@ -56,6 +68,7 @@ Class BaseRepository {
             array_push($data ,  $value);
         }
         $request = "SELECT * FROM ".$this->Table." WHERE 1 = 1 ".$clause ."";
+        
         $request = $this->Db->Pdo->query($request);
         $request = $request->fetch(PDO::FETCH_ASSOC);
        
@@ -77,6 +90,11 @@ Class BaseRepository {
         return $object;
     }
 
+    public function clean($string){
+        return trim(preg_replace('/[^A-Za-z0-9\-\ÀÁÂÄÈÉèËÊÎéêëïúöôûâàÓÔÙÚÿ@.]/', '', $string)); 
+    }
+
+   
     public function insert(array $array){
         $column = '( ';
         $value = '( ';
@@ -120,6 +138,26 @@ Class BaseRepository {
         return null;
     }
 
+    public function searchBy(array $array){
+        $clause = '';
+        $first = reset( $array );
+        foreach ($array as $key => $value) {
+            if ($value == $first) {
+                $clause .=  'AND  ( ' . $key . ' LIKE "%' .$value.'%"';
+            }else{
+                $clause .=  'OR ' . $key . ' LIKE "%' .$value.'%"';
+            }
+        }
+        $clause .= ' )';
+        $request = 'SELECT * FROM '.$this->Table.' WHERE 1 = 1 '.$clause .' ' ;
+        $request = $this->Db->Pdo->query($request);
+        $results =   $request->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($results as $key => $value) {
+            $value = $this->auto_mapping($value, $this->Class);
+        }
+        return $results;
+    }
+
     public function update(array $field , array $where){
         $clause = '';
         foreach ($where as $key => $value) {
@@ -131,6 +169,4 @@ Class BaseRepository {
 
     }
 
-
-    
 }

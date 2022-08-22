@@ -15,6 +15,7 @@ Class RefreshController {
     public static function renderDoc(){
         $doc = [
               [
+                'name' => 'refreshToken',
                 'method' => 'POST',
                 'path' => self::path(),
                 'description' => 'permet d obtenir un nouveau JWT' ,

@@ -24,7 +24,7 @@ switch($request){
 		break;
 
     case $config->urls->base.ClientController::path().$data:
-        echo ClientController::index();
+        echo ClientController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
     
     case $config->urls->base.UserController::path().$data:

@@ -15,8 +15,8 @@
     <div class="container mt-2"> 
         <h2 class="h2-api">Documentation API MYRecode</h2>
         {% for key , operation in doc %}
-                <div class="container-operation">
                     {% for step in operation %}
+                    <div class="container-operation">
                             {% if step.method == 'POST' %}
                                 <div class="POST py-2 d-flex justify-content-between">{{step.method}}
                                     <div class="path text-uppercase">/{{step.path}}</div>
@@ -43,11 +43,11 @@
                                         {% if step.body %}
                                         <b class="text-uppercase">type :</b> {{step.body.type}}<br>
                                         
-                                        <button class="btn-recode-mini my-3" type="button" data-bs-toggle="collapse" data-bs-target="#{{step.path}}" aria-expanded="false" aria-controls="{{step.path}}">
+                                        <button class="btn-recode-mini my-3" type="button" data-bs-toggle="collapse" data-bs-target="#{{step.name}}" aria-expanded="false" aria-controls="{{step.path}}">
                                         Body
                                         </button>
                                        
-                                        <div class="collapse" id="{{step.path}}">
+                                        <div class="collapse" id="{{step.name}}">
                                             <div class="card card-body">
                                                 {% for row in step.body.fields %}
                                                         "{{row}}" <br>
@@ -68,10 +68,8 @@
                                    </div>
                                 </div>
                             </div>
+                        </div>
                     {% endfor %}
-                    
-                </div>
-               
         {% endfor %}
     </div>
     {% block script %}

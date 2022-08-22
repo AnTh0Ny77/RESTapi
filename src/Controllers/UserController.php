@@ -19,6 +19,7 @@ Class UserController {
     public static function renderDoc(){
         $doc = [
              [
+                'name' => 'postUser',
                 'method' => 'POST',
                 'path' => self::path(),
                 'description' => 'Crée un nouveau User' ,
@@ -36,6 +37,7 @@ Class UserController {
                 
             ] ,
             [
+                'name' => 'getUser',
                 'method' => 'GET',
                 'path' => self::path(),
                 'description' => 'Permet au user d obtenir les information le conçernant' ,
@@ -44,6 +46,7 @@ Class UserController {
                 
             ] ,
             [
+                'name' => 'putUser',
                 'method' => 'PUT',
                 'path' => self::path(),
                 'description' => 'Permet à l utilisateur de mettre à jour les information le conçernant' ,

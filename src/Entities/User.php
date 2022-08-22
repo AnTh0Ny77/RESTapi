@@ -77,8 +77,6 @@ Class User {
             $this->user__mail = $user__mail;
             return $this;
         }else return 'Le mail saisi n est pas un email valide'; 
-        
-        
     }
 
     public function getUser__password(){
