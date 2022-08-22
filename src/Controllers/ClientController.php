@@ -19,7 +19,9 @@ Class ClientController {
                 'name' => 'getClient',
                 'method' => 'GET',
                 'path' => self::path(),
-                'description' => 'Permet de consulter une liste de societés en lien avec l utilisateur connecté' ,
+                'description' => 'Permet de consulter une liste de societés, 
+                le parametre "search" peut etre précisé afin d effectuer une recherche.
+                 exemple: /client?cli__id=1 est une requete stricte, /client?client__name=toto&search=true est une recherchce, on peut spécifier plusieurs parametres ' ,
                 'reponse' => 'renvoi un tableau d objet de type client', 
                 "Auth" => 'JWT'
              ],
@@ -66,14 +68,14 @@ Class ClientController {
                 'reponse' => 'renvoi un tableau d objet de type client', 
                 "Auth" => 'JWT + ADMIN ROLE +  ( Le user doit etre le gestiuonnaire de ce site ) '
              ],
-             [
-                'name' => 'DeleteClient',
-                'method' => 'DELETE',
-                'path' => self::path(),
-                'description' => 'Permet de désactiver un site' ,
-                'reponse' => 'renvoi une confirmation que le compte à bien été désactivé', 
-                "Auth" => 'JWT + ADMIN ROLE +  ( Le user doit etre le gestiuonnaire de ce site ) '
-             ],
+            //  [
+            //     'name' => 'DeleteClient',
+            //     'method' => 'DELETE',
+            //     'path' => self::path(),
+            //     'description' => 'Permet de désactiver un site' ,
+            //     'reponse' => 'renvoi une confirmation que le compte à bien été désactivé', 
+            //     "Auth" => 'JWT + ADMIN ROLE +  ( Le user doit etre le gestiuonnaire de ce site ) '
+            //  ],
         ];
         return $doc;
     }
