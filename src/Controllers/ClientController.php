@@ -92,7 +92,7 @@ Class ClientController {
                 break;
 
             case 'PUT':
-                return self::get($data);
+                return self::put();
                 break;
 
             case 'DELETE':
@@ -224,7 +224,21 @@ Class ClientController {
     }
 
     public static function put(){
+        $database = new Database();
+        $database->DbConnect();
+        $responseHandler = new ResponseHandler();
+        $clientRepository = new ClientRepository('client' , $database , Client::class );
+        $security = new Security();
 
+        $auth = self::Auth($responseHandler,$security);
+        if ($auth != null) 
+            return $auth;
+
+        $body = json_decode(file_get_contents('php://input'), true);
+        if (empty($body)) 
+            return $responseHandler->handleJsonResponse('empty body' , 400 , 'Bad Request');
+
+       
     }
 
     public static function delete(){

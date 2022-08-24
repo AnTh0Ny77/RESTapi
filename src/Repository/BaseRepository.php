@@ -159,6 +159,9 @@ Class BaseRepository {
     }
 
     public function update(array $field , array $where){
+        
+        $this->verifyColumn($field);
+        
         $clause = '';
         foreach ($where as $key => $value) {
             $clause .=  "AND " . $key. " = '" .$value. "' ";
