@@ -6,6 +6,7 @@ use DateTime;
 use Src\Database;
 use PDO;
 use Src\Repository\BaseRepository;
+use Src\Repository\RoleRepository;
 use Src\Entities\User;
 use Src\Services\ResponseHandler;
 
@@ -17,6 +18,7 @@ Class UserRepository  extends BaseRepository{
 
     public function postUser($user_data){
 
+        $roleRepository = new RoleRepository($this->Db);
         $user = new User();
        
         $pass  = $user->setUser__password($user_data['user__password']);
@@ -49,10 +51,22 @@ Class UserRepository  extends BaseRepository{
         $user_data['user__d_creat'] = date('Y-m-d H:i:s');
         
         $id_user = $this->insert($user_data);
-        
+        $roleRepository->insert(['ur__user_id' => $id_user , 'ur__role' => 'USER' ]);
         $user = $this->findOneBy(['user__id' =>  $id_user] , true );
+        $user = $this->getRole($user);
         return $user;
     }
+
+    public function getRole( User $user){
+        $roleRepository = new  RoleRepository($this->Db);
+        $arrayRoles = $roleRepository->findBy(['ur__user_id' =>  $user->getUser__id()] , 50 , ['ur__role' => 'ASC' ]);
+        $roles = [];
+        foreach ($arrayRoles as $key => $value) {
+            array_push($roles ,  $value['ur__role']);
+        }
+        $user->setRoles($roles);
+        return $user;
+    } 
 
     public function loginUser($user_data){
         if (empty($user_data['user__password'])) 
@@ -72,7 +86,7 @@ Class UserRepository  extends BaseRepository{
              return 'Identifiants invalides.';
 
         $user = $this->findOneBy(['user__mail' =>  $user_data['user__mail']] , true);
-        
+        $user = $this->getRole($user);
         return $user;
         
     }

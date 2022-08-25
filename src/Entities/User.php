@@ -34,6 +34,8 @@ Class User {
 
     public $refresh_token;
 
+    public $roles;
+
 	
 	public function getUser__id(){
 		return $this->user__id;
@@ -178,6 +180,16 @@ Class User {
     
     public function setRefresh_token($refresh_token){
         $this->refresh_token = $refresh_token;
+
+        return $this;
+    }
+
+    public function getRoles(){
+        return $this->roles;
+    }
+
+    public function setRoles($roles){
+        $this->roles = $roles;
 
         return $this;
     }

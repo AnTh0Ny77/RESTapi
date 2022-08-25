@@ -31,6 +31,10 @@ Class Security {
         return Token::validateExpiration($token, $this->config->security->app_secret);
     }
 
+    public function readToken($token){
+        return Token::getPayload($token , $this->config->security->app_secret);
+    }
+
     public function getAuthorizationHeader(){
         $headers = null;
         if (isset($_SERVER['Authorization'])) {

@@ -42,12 +42,12 @@ Class BaseRepository {
                 break;
             
             default:
-                $limitclause = 'LIMIT' .  $limit;
+                $limitclause = 'LIMIT ' .  $limit;
                 break;
         }
         $orderclause = '';
         foreach ($order as $key => $value) {
-            $orderclause .= 'ORDER BY '.$key . ' ' . $value ;
+            $orderclause .= 'ORDER BY '.$key . ' ' . $value . ' ' ;
         }
         
         $clause = '';
@@ -56,7 +56,8 @@ Class BaseRepository {
             $clause .=  'AND ' . $key . ' = ' .$value.'';
         }
         $request = 'SELECT * FROM '.$this->Table.' WHERE 1 = 1 '.$clause .' ' . $orderclause . $limitclause ;
-        $request = $this->Db->Pdo->prepare($request);
+        $request = $this->Db->Pdo->query($request);
+       
         return  $request->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -158,18 +159,44 @@ Class BaseRepository {
         return $results;
     }
 
-    public function update(array $field , array $where){
+    public function returnPrimaryKey(){
+        $request = "SELECT COLUMN_NAME
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_SCHEMA = 'myrecode'
+            AND TABLE_NAME =  '".$this->Table."'
+            AND COLUMN_KEY = 'PRI';";
+        $request = $this->Db->Pdo->query($request);
+        return $request->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function update(array $field){
         
-        $this->verifyColumn($field);
-        
-        $clause = '';
-        foreach ($where as $key => $value) {
-            $clause .=  "AND " . $key. " = '" .$value. "' ";
-        }
-        foreach ($field as $key => $value) {
-            # code...
+        $identifier =  $this->returnPrimaryKey()['COLUMN_NAME'];
+        if (!isset($field[$identifier]) or empty($field[$identifier])) {
+            return 'le champ '.$identifier.' doit etre renseigné pour effectuer la mise à jour';
         }
 
+        $column = $this->verifyColumn($field);
+        if (!empty($column)) 
+            return $column;
+
+      
+        $setClause = 'SET ';
+        $arraySetClause = [];
+        foreach ($field as $key => $value){
+            if ($key != $identifier and !empty($value)) {
+                    if ($key === array_key_last($field)) {
+                        $setClause.= ''.$key. '= ? ';
+                        array_push($arraySetClause , $value);
+                    }else{
+                        $setClause.= ''.$key. '= ? , ';
+                        array_push($arraySetClause , $value);
+                    }
+            }
+        }
+        $clause = 'WHERE  ( 1 = 1 AND  '. $identifier .' = '. $field[$identifier] .' )';
+        $request = $this->Db->Pdo->prepare('UPDATE '.$this->Table.' '.$setClause.' '. $clause. ' ');
+        $request->execute($arraySetClause);
     }
 
 }

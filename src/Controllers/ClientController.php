@@ -235,9 +235,24 @@ Class ClientController {
             return $auth;
 
         $body = json_decode(file_get_contents('php://input'), true);
+
         if (empty($body)) 
             return $responseHandler->handleJsonResponse('empty body' , 400 , 'Bad Request');
 
+        $client =  $clientRepository->UpdateOne($body); 
+        if (!$client instanceof Client ) {
+            $body = [
+                $data = $body ,
+                $message = $client
+            ];
+            return $responseHandler->handleJsonResponse($body , 400 , 'Bad Request');
+        }
+
+        $body = [
+            $message =  'le client à été mis à jour correctement', 
+            $data = $client
+        ];
+        return $responseHandler->handleJsonResponse($body , 200 , 'Success');
        
     }
 

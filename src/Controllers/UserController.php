@@ -88,6 +88,38 @@ Class UserController {
     }
 
 
+    public static function Auth( ResponseHandler $responseHandler , Security $security){
+        $token = $security->getBearerToken();
+        if (empty($token)) {
+            $body = [
+                $message = 'JWT not found '
+            ];
+            return $responseHandler->handleJsonResponse($body , 401 , 'Unauthorized');
+        }
+        $isAuth = $security->verifyToken($token);
+        if ($isAuth == false) {
+            $body = [
+                $message = 'invalid JWT'
+            ];
+            return $responseHandler->handleJsonResponse($body , 498 , 'Token expired/invalid');
+        }
+        $isExp = $security->verifyExp($token);
+        if($isExp == false){
+            $body = [
+                $message = 'expired JWT'
+            ];
+            return $responseHandler->handleJsonResponse($body , 498 , 'Token expired/invalid');
+        }
+
+        return null;
+    }
+
+    public static function returnId__user(Security $security){
+        $token = $security->getBearerToken();
+        return $security->readToken($token);
+    }
+
+
 	public static function post(){
         $database = new Database();
         $database->DbConnect();
@@ -122,10 +154,17 @@ Class UserController {
             $database->DbConnect();
             $responseHandler = new ResponseHandler();
             $userRepository = new UserRepository('User' , $database , User::class );
-            $body = [
-                $message = 'La liste des utilisateurs est reservée au personnel de recode'
-            ];
-            return $responseHandler->handleJsonResponse($body , 401 , 'UnAuthorized');
+
+            $security = new Security();
+            $auth = self::Auth($responseHandler,$security);
+            if ($auth != null) 
+                return $auth;
+
+            $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
+            $user = $userRepository->getRole($user);
+            var_dump($user);
+          
+            //  $user = $userRepository->findOneBy(['user' => ]);
         }
     }
 
