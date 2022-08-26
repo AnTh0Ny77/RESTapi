@@ -36,6 +36,8 @@ Class User {
 
     public $roles;
 
+    public  $clients;
+
 	
 	public function getUser__id(){
 		return $this->user__id;
@@ -190,6 +192,17 @@ Class User {
 
     public function setRoles($roles){
         $this->roles = $roles;
+
+        return $this;
+    }
+
+   
+    public function getClients(){
+        return $this->clients;
+    }
+
+    public function setClients($clients){
+        $this->clients = $clients;
 
         return $this;
     }

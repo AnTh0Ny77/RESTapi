@@ -8,7 +8,7 @@ use Src\Services\Security;
 use Src\Repository\UserRepository;
 use Src\Repository\RefreshRepository;
 use Src\Entities\User;
-
+use Src\Repository\LienUserClientRepository;
 
 Class UserController {
 
@@ -145,7 +145,7 @@ Class UserController {
             $message = 'utilisateur créé avec succès'
         ];
         
-        return $responseHandler->handleJsonResponse($body , 200 , 'ok');
+        return $responseHandler->handleJsonResponse($body , 201 , 'ok');
     }
 
     public static function get($data){
@@ -153,6 +153,8 @@ Class UserController {
             $database = new Database();
             $database->DbConnect();
             $responseHandler = new ResponseHandler();
+            $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
+            $refreshRepository = new RefreshRepository($database);
             $userRepository = new UserRepository('User' , $database , User::class );
 
             $security = new Security();
@@ -162,9 +164,15 @@ Class UserController {
 
             $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
             $user = $userRepository->getRole($user);
-            var_dump($user);
-          
-            //  $user = $userRepository->findOneBy(['user' => ]);
+            $refresh_token = $refreshRepository->findOneBy(['user__id' => $user->getUser__id()] ,false );
+            $user->setRefresh_token($refresh_token['refresh_token']);
+            $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
+            $user->setClients($clients);
+
+            $body = [
+                $data = $user 
+            ];
+            return $responseHandler->handleJsonResponse($body , 200 , 'ok');
         }
     }
 
