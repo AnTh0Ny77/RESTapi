@@ -66,7 +66,7 @@ Class ConfirmUserController  extends  BaseController {
         $confirmRepository = new ConfirmRepository('confirm' , $database , Confirm::class);
 
         if (empty($_GET))
-            return $responseHandler->handleJsonResponse('Unknow Client' , 401, 'Bad Request');
+            return $responseHandler->handleJsonResponse('Unknow User' , 404, 'Bad Request');
 
         if (empty($_GET['confirm__user'])) 
             return $responseHandler->handleJsonResponse('Le parametre user__email est obligatoire' , 400 , 'Bad Request');

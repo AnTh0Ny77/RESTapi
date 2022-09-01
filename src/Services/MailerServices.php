@@ -51,6 +51,10 @@ Class MailerServices {
         return 'Voici le lien de confirmation ( valable 24 h ) de votre compte myRecode  <a href="'.$link.'">'. $link.'</a>' ;
     }
 
+    public function bodyResetPassword($link){
+        return 'Voici le lien de confirmation ( valable 24 h ) pour la résiliation de votre mot de passe  <a href="'.$link.'">'. $link.'</a>' ;
+    }
+
     public function renderBody($header , $body , $signature){
             return $header . $body . $signature ; 
     }
