@@ -6,6 +6,7 @@ use Src\Database;
 use Src\Controllers\NotFoundController;
 use Src\Entities\Confirm;
 use Src\Services\Security;
+use Src\Services\MailerServices;
 use Src\Repository\UserRepository;
 use Src\Entities\User;
 use Src\Repository\ConfirmRepository;
@@ -66,6 +67,7 @@ Class LoginController {
         $security = new Security();
         $confirmRepository = new ConfirmRepository('confirm' , $database , Confirm::class);
         $responseHandler = new ResponseHandler();
+        $mailer = new MailerServices();
         $userRepository = new UserRepository('User' , $database , User::class );
         $refreshRepository = new RefreshRepository($database);
         $body = json_decode(file_get_contents('php://input'), true);
@@ -102,13 +104,14 @@ Class LoginController {
                 $confirm->setConfirm__exp( $date);
                 $confirmRepository->update((array)$confirm);
             }
-                
-            $body = [
+            $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyConfirmUser('http://localhost:8080/myRecode/confirm?confirm__key='.$confirm->getConfirm__key().'&confirm__user='.$confirm->getConfirm__user().''), $mailer->signature());
+            $mailer->sendMail($body['user__mail'] , 'confirmation de votre compte Myrecode' ,  $body_mail );
+            $response = [
                 $data = $body ,
                 $message = 'vous devez valider votre adresse email avant de vous connecter,
                  un lien a été envoyé à '.$body['user__mail'].'  '
             ];
-            return $responseHandler->handleJsonResponse($body , 401 , 'Unauthorized');
+            return $responseHandler->handleJsonResponse($response , 401 , 'Unauthorized');
         }
 
         $login->setToken($security->returnToken($login->getUser__id()));

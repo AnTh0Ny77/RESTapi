@@ -23,7 +23,7 @@ Class BasePathController {
         $doc = [];
         foreach ($classes as $key => $value){
            $classe =  new $value();
-           if (get_class($classe) != "Src\Controllers\BasePathController" and get_class($classe) != "Src\Controllers\NotFoundController" ) {
+           if (get_class($classe) != "Src\Controllers\BasePathController" and get_class($classe) != "Src\Controllers\NotFoundController" and get_class($classe) != "Src\Controllers\BaseController"  ) {
                 $temp = $classe->renderDoc();
              
                array_push($doc , $classe->renderDoc());

@@ -10,5 +10,10 @@
     },
     "security": {
         "app_secret" : "sec!ReT423*&"
+    },
+    "mailer": {
+        "host" : "ssl0.ovh.net",
+        "username" : "info@myrecode.fr", 
+        "password" : "KFxBrM##5o"
     }
 }

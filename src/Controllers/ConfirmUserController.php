@@ -68,13 +68,13 @@ Class ConfirmUserController  extends  BaseController {
         if (empty($_GET))
             return $responseHandler->handleJsonResponse('Unknow Client' , 401, 'Bad Request');
 
-        if (empty($_GET['user__email'])) 
+        if (empty($_GET['confirm__user'])) 
             return $responseHandler->handleJsonResponse('Le parametre user__email est obligatoire' , 400 , 'Bad Request');
 
         if (empty($_GET['confirm__key'])) 
             return $responseHandler->handleJsonResponse('Le parametre confirm__key est obligatoire' , 400 , 'Bad Request');
 
-        $user = $userRepository->findOneBy(['user__email' => $_GET['user__email'] ] , true);
+        $user = $userRepository->findOneBy(['user__mail' => $_GET['confirm__user'] ] , true);
 
         if (!$user instanceof User) 
             return $responseHandler->handleJsonResponse('Utilisateur inconnu' , 404 , 'Bad Request');
@@ -92,7 +92,4 @@ Class ConfirmUserController  extends  BaseController {
 
         return $responseHandler->handleJsonResponse('L utilisateur à été confirmé avec succès' , 200 , 'Success');
     }
-
-   
-
 }
