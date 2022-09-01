@@ -4,9 +4,11 @@ require  '././vendor/autoload.php';
 use Src\Services\ResponseHandler;
 use Src\Database;
 use Src\Controllers\NotFoundController;
+use Src\Entities\Confirm;
 use Src\Services\Security;
 use Src\Repository\UserRepository;
 use Src\Entities\User;
+use Src\Repository\ConfirmRepository;
 use Src\Repository\RefreshRepository;
 
 
@@ -62,6 +64,7 @@ Class LoginController {
         $database = new Database();
         $database->DbConnect();
         $security = new Security();
+        $confirmRepository = new ConfirmRepository('confirm' , $database , Confirm::class);
         $responseHandler = new ResponseHandler();
         $userRepository = new UserRepository('User' , $database , User::class );
         $refreshRepository = new RefreshRepository($database);
@@ -74,6 +77,40 @@ Class LoginController {
             ];
             return $responseHandler->handleJsonResponse($body , 401 , 'Unauthorized');
         }
+
+        if (intval($login->getUser__confirm()) == 0) {
+
+            $confirm = $confirmRepository->findOneBy(['confirm__user' => $body['user__mail']] , true);
+            if(!$confirm instanceof Confirm ){
+                $confirm = New Confirm();
+                $confirm->setConfirm__user($body['user__mail']);
+                $uniqueKey = strtoupper(substr(sha1(microtime()), rand(0, 5), 20));  
+                $uniqueKey  = implode("-", str_split($uniqueKey, 5));
+                $confirm->setConfirm__key($uniqueKey);
+                $confirm->setConfirm__used(0);
+                $date = date('Y-m-d H:i:s');
+                $date = date('Y-m-d H:i:s', strtotime($date. ' +25 hours'));
+                $confirm->setConfirm__exp( $date);
+                $confirmRepository->insert((array)$confirm);
+            }else{
+                $uniqueKey = strtoupper(substr(sha1(microtime()), rand(0, 5), 20));  
+                $uniqueKey  = implode("-", str_split($uniqueKey, 5));
+                $confirm->setConfirm__key($uniqueKey);
+                $confirm->setConfirm__used(0);
+                $date = date('Y-m-d H:i:s');
+                $date = date('Y-m-d H:i:s', strtotime($date. '  +25 hours'));
+                $confirm->setConfirm__exp( $date);
+                $confirmRepository->update((array)$confirm);
+            }
+                
+            $body = [
+                $data = $body ,
+                $message = 'vous devez valider votre adresse email avant de vous connecter,
+                 un lien a été envoyé à '.$body['user__mail'].'  '
+            ];
+            return $responseHandler->handleJsonResponse($body , 401 , 'Unauthorized');
+        }
+
         $login->setToken($security->returnToken($login->getUser__id()));
         $refresh_token = $refreshRepository->insertOne($login->getUser__id());
         $login->setRefresh_token($refresh_token);

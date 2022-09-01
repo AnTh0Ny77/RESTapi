@@ -1,11 +1,12 @@
 <?php
 require "vendor/autoload.php";
-use Src\Controllers\BasePathController;
-use Src\Controllers\NotFoundController;
-use Src\Controllers\ClientController;
 use Src\Controllers\UserController;
 use Src\Controllers\LoginController;
+use Src\Controllers\ClientController;
 use Src\Controllers\RefreshController;
+use Src\Controllers\BasePathController;
+use Src\Controllers\NotFoundController;
+use Src\Controllers\ConfirmUserController;
 
 $request = $_SERVER['REQUEST_URI'];
 $request = explode('?' ,$request, 2);
@@ -37,6 +38,10 @@ switch($request){
 
     case $config->urls->base.RefreshController::path().$data:
         echo RefreshController::index($_SERVER['REQUEST_METHOD'],$data);
+        break;
+
+    case $config->urls->base.ConfirmUserController::path().$data:
+        echo ConfirmUserController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
 
 	default:

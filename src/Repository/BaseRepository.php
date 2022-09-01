@@ -179,13 +179,19 @@ Class BaseRepository {
         $column = $this->verifyColumn($field);
         if (!empty($column)) 
             return $column;
-
-      
+        $id = $field[$identifier];
         $setClause = 'SET ';
         $arraySetClause = [];
+        $array_remplacement = [];
         foreach ($field as $key => $value){
             if ($key != $identifier and !empty($value)) {
-                    if ($key === array_key_last($field)) {
+                $array_remplacement[$key] = $value;
+            }
+        }
+
+        foreach ($array_remplacement as $key => $value){
+            if ($key != $identifier and !empty($value)) {
+                    if ($key === array_key_last($array_remplacement)) {
                         $setClause.= ''.$key. '= ? ';
                         array_push($arraySetClause , $value);
                     }else{
@@ -194,7 +200,9 @@ Class BaseRepository {
                     }
             }
         }
-        $clause = 'WHERE  ( 1 = 1 AND  '. $identifier .' = '. $field[$identifier] .' )';
+        
+        $clause = 'WHERE  ( 1 = 1 AND  ' . $identifier . ' = ' . $id . ' )';
+        
         $request = $this->Db->Pdo->prepare('UPDATE '.$this->Table.' '.$setClause.' '. $clause. ' ');
         $request->execute($arraySetClause);
     }
