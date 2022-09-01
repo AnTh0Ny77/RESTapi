@@ -84,6 +84,9 @@ Class ConfirmUserController  extends  BaseController {
         if(!$confirm instanceof Confirm)
             return $responseHandler->handleJsonResponse('La clef est inconnue' , 404 , 'Bad Request');
 
+        if($confirm->getConfirm__used() == 1 )
+            return $responseHandler->handleJsonResponse('La clef à deja été utilisée' , 404 , 'Bad Request');
+
         $user->setUser__confirm(1);
         $userRepository->update( (array) $user);
 

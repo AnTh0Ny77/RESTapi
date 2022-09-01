@@ -25,13 +25,30 @@ Class ForgotPasswordController  extends  BaseController {
                 'name' => 'forgotPassword',
                 'method' => 'GET',
                 'path' => self::path(),
-                'description' => 'Permet d envoyer un lien sur le mail de l utilisateur pour qu il regenre son mot de passe' ,
+                'description' => 'Permet d envoyer un lien sur le mail de l utilisateur pour qu il regenere son mot de passe' ,
+                'reponse' => 'renvoi un message de succès avec un lien ', 
+                "Auth" => 'Public ' 
+             ],
+             [
+                'name' => 'PostPassword',
+                'method' => 'POST',
+                'body' =>  [
+                    'type' => 'application/json',
+                    'fields' => [
+                            'confirm__key' , 
+                            'user__password'
+                    ]
+                    ],
+                'path' => self::path(),
+                'description' => 'Reçois une clefs secrete et nouveau password' ,
                 'reponse' => 'renvoi un message de succès avec un lien ', 
                 "Auth" => 'Public ' 
              ]
         ];
         return $doc;
     }
+
+   
 
     public static function index($method , $data){
         $notFound = new NotFoundController();
@@ -108,7 +125,48 @@ Class ForgotPasswordController  extends  BaseController {
                 $message = 'Un lien afin de réinitialiser votre mot de passe à été envoyé à  '.$_GET['user__mail'].'  '
             ];
             return $responseHandler->handleJsonResponse($response , 401 , 'Unauthorized');
+    }
 
+    
+    public static function post(){
+        $database = new Database();
+        $database->DbConnect();
+        $mailer = new MailerServices();
+        $responseHandler = new ResponseHandler();
+        $userRepository = new UserRepository('User' , $database , User::class);
+        $confirmRepository = new ConfirmRepository('confirm' , $database , Confirm::class);
+
+        $body = json_decode(file_get_contents('php://input'), true);
+
+        if(empty($body['confirm__key']))
+            return $responseHandler->handleJsonResponse('Le champ confirm__key est obligatoire' , 400 , 'Bad Request');
+
+        $confirm =  $confirmRepository->findOneBy(['confirm__key' => $body['confirm__key']] ,true);
+
+        if (!$confirm instanceof Confirm) 
+            return $responseHandler->handleJsonResponse('La confirm__key est incorrecte' , 400 , 'Bad Request');
+
+        if(empty($body['user__password']))
+            return $responseHandler->handleJsonResponse('Le champ user__password est obligatoire' , 400 , 'Bad Request');
+
+        $user = $userRepository->findOneBy(['user__mail' => $confirm->getConfirm__user() ] , true);
+
+        if (!$user instanceof User) 
+            return $responseHandler->handleJsonResponse('Utilisateur introuvable' , 400 , 'Bad Request');
+
+        $confirm->setConfirm__used(1);
+        $confirmRepository->update((array) $confirm);
+
+        $pass  = $user->setUser__password($body['user__password']);
+        if (!$pass instanceof User) 
+            return $responseHandler->handleJsonResponse($pass , 400 , 'Bad Request');
+
+        $password = $userRepository->encrypt_password($body['user__password']);
+        $user->setUser__password($password);
+        $userRepository->update((array) $user);
+
+        return $responseHandler->handleJsonResponse('Le mot de passe à bien été mis à jour' , 200 , 'Bad Request');
+        
     }
 
 }
