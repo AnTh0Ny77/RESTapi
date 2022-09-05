@@ -40,19 +40,81 @@ Class MailerServices {
 
 
     public function header(){
-        return 'Header...<br><br>';
-    }
+        $imageData = base64_encode(file_get_contents('public/img/LOGO.png'));
+        $src = 'data: '.mime_content_type('public/img/LOGO.png').';base64,'.$imageData;
 
+        return '<img width="150" height="auto" src="http://drive.google.com/uc?export=view&id=1-7IjI_qkbEb-ufKfmfPypxeg5Kssn6l8" style="display:block;" width="200" height="87"   alt="Logo" title="Logo" ><br><br>';
+    }
+    
     public function signature(){
-            return '<br><br>Signature...';
+            return '';
     }
 
     public function bodyConfirmUser($link){
-        return 'Voici le lien de confirmation ( valable 24 h ) de votre compte myRecode  <a href="'.$link.'">'. $link.'</a>' ;
+        return '
+            <div class="wrapper">
+                <p style="text-align: center;"><!--StartFragment--><span style="font-size:14px"><span style="font-weight:bold">Validation de votre <br />
+                    EMAIL - MY RECODE</span></span>
+                    <br/>
+                    &nbsp;
+                </p>
+                    <p style="text-align: center;">Pour confirmer votre adresse email, utiliser simplement le bouton ci-dessous<br/>
+                    <br />
+                    <br />
+                    <a  style=" padding-left: 24px; padding-right: 24px;padding-top: 12px; font-weight:bold; padding-bottom: 12px;background: #1FB447;color: white; border-radius: 16px; text-decoration: none;" target="_blank" href="'.$link.'"><span>Je confirme mon adresse email </span></a><br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <span style="font-size:14px" style="font-weight:bold">A tout de suite sur votre espace client.</span><br />
+                    <span style="font-size:14px" style="font-weight:bold">L equipe RECODE !</span>
+                </p>
+            </div>';
     }
 
     public function bodyResetPassword($link){
-        return 'Voici le lien de confirmation ( valable 24 h ) pour la résiliation de votre mot de passe  <a href="'.$link.'">'. $link.'</a>' ;
+        return '<style>
+                .success-link{
+                    padding-left: 24px;
+                    padding-right: 24px;
+                    padding-top: 12px;
+                    padding-bottom: 12px;
+                    background: #1FB447;
+                    color: white;
+                    border-radius: 16px;
+                }
+                .wrapper{
+                    margin-top: 50px;
+                    margin-bottom: 50px;
+                }
+                a:link { text-decoration: none; }
+            
+                a:visited { text-decoration: none; }
+            
+                a:hover { text-decoration: none; }
+            
+                a:active { text-decoration: none; }
+            </style>
+            <div class="wrapper">
+                <p style="text-align: center;"><!--StartFragment--><span style="font-size:14px"><span style="font-weight:bold">Réinitialisation de votre<br />
+                    MOT DE PASSE - MY RECODE</span></span>
+                    <br/>
+                    &nbsp;
+                </p>
+                    <p style="text-align: center;">Pour définir un nouveau mot de passe, utilisez simplement le bouton ci-dessous<br />
+                    <br />
+                    <br />
+                    <a  class="success-link" target="_blank" href="'.$link.'"><span>Je réinitialise mon mot de passe </span></a><br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <span style="font-size:16px" style="font-weight:bold">A tout de suite sur votre espace client.</span><br />
+                    <span style="font-size:16px" style="font-weight:bold">L équipe RECODE !</span>
+                </p>
+            </div>';
     }
 
     public function renderBody($header , $body , $signature){

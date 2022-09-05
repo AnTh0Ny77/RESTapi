@@ -104,6 +104,7 @@ Class LoginController {
                 $confirm->setConfirm__exp( $date);
                 $confirmRepository->update((array)$confirm);
             }
+           
             $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyConfirmUser('http://localhost:8080/myRecode/confirm?confirm__key='.$confirm->getConfirm__key().'&confirm__user='.$confirm->getConfirm__user().''), $mailer->signature());
             $mailer->sendMail($body['user__mail'] , 'confirmation de votre compte Myrecode' ,  $body_mail );
             $response = [
