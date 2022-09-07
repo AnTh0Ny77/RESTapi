@@ -168,6 +168,7 @@ Class UserController {
             $user->setRefresh_token($refresh_token['refresh_token']);
             $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
             $user->setClients($clients);
+           
 
             $body = [
                 $data = $user 
