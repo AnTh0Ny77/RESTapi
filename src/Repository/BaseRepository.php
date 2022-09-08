@@ -95,6 +95,10 @@ Class BaseRepository {
         return trim(preg_replace('/[^A-Za-z0-9\-\ÀÁÂÄÈÉèËÊÎéêëïúöôûâàÓÔÙÚÿ@.]/', '', $string)); 
     }
 
+    public function cleanKeepSpace($string){
+        return trim(preg_replace('/[^A-Za-z0-9\-\ÀÁÂÄÈÉèËÊÎéêëïúöôûâàÓÔÙÚÿ@. ]/', '', $string)); 
+    }
+
    
     public function insert(array $array){
         $column = '( ';
