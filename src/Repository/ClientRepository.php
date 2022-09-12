@@ -85,7 +85,7 @@ Class ClientRepository  extends BaseRepository {
                     return $adr1;
             }
 
-            if (!empty($client_data['cli__adr2'])) {
+            if (isset($client_data['cli__adr2'])) {
                 $adr2 = $client->setCli__adr2($client_data['cli__adr2']);
                 if (!$adr2 instanceof Client) 
                     return $adr2;
@@ -111,7 +111,7 @@ Class ClientRepository  extends BaseRepository {
                     return $pays;
             }
 
-            if (!empty($client_data['cli__tel'])) {
+            if (isset($client_data['cli__tel'])) {
                 $tel = $client->setCli__tel( $client_data['cli__tel']);
                 if (!$tel instanceof Client) 
                     return $tel;

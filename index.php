@@ -7,6 +7,7 @@ use Src\Controllers\RefreshController;
 use Src\Controllers\BasePathController;
 use Src\Controllers\NotFoundController;
 use Src\Controllers\ConfirmUserController;
+use Src\Controllers\ForgotPasswordController;
 
 $request = $_SERVER['REQUEST_URI'];
 $request = explode('?' ,$request, 2);
@@ -42,6 +43,10 @@ switch($request){
 
     case $config->urls->base.ConfirmUserController::path().$data:
         echo ConfirmUserController::index($_SERVER['REQUEST_METHOD'],$data);
+        break;
+
+    case $config->urls->base.ForgotPasswordController::path().$data:
+        echo ForgotPasswordController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
 
 	default:

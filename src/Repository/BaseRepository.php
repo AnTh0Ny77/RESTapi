@@ -188,13 +188,13 @@ Class BaseRepository {
         $arraySetClause = [];
         $array_remplacement = [];
         foreach ($field as $key => $value){
-            if ($key != $identifier and !empty($value)) {
+            if ($key != $identifier ) {
                 $array_remplacement[$key] = $value;
             }
         }
 
         foreach ($array_remplacement as $key => $value){
-            if ($key != $identifier and !empty($value)) {
+            if ($key != $identifier ) {
                     if ($key === array_key_last($array_remplacement)) {
                         $setClause.= ''.$key. '= ? ';
                         array_push($arraySetClause , $value);

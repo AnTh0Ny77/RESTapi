@@ -16,7 +16,7 @@ use Src\Repository\ConfirmRepository;
 Class ForgotPasswordController  extends  BaseController {
 
     public static function path(){
-        return 'forgot/password';
+        return 'forgot';
     }
 
     public static function renderDoc(){
@@ -118,13 +118,13 @@ Class ForgotPasswordController  extends  BaseController {
             }
 
 
-            $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyResetPassword('http://localhost:8080/myRecode/forgot/password?confirm__key='.$confirm->getConfirm__key().'&confirm__user='.$confirm->getConfirm__user().''), $mailer->signature());
-            $mailer->sendMail($_GET['user__mail'] , 'confirmation de votre compte Myrecode' ,  $body_mail );
+            $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyResetPassword('http://localhost:8080/myRecode/reset?confirm__key='.$confirm->getConfirm__key().'&confirm__user='.$confirm->getConfirm__user().''), $mailer->signature());
+            $mailer->sendMail($_GET['user__mail'] , 'Définition de votre nouveau mot de passe ' ,  $body_mail );
             $response = [
                 $data = $_GET['user__mail'] ,
-                $message = 'Un lien afin de réinitialiser votre mot de passe à été envoyé à  '.$_GET['user__mail'].'  '
+                $message = 'Un lien de résiliation votre mot de passe à été envoyé à  '.$_GET['user__mail'].'  '
             ];
-            return $responseHandler->handleJsonResponse($response , 401 , 'Unauthorized');
+            return $responseHandler->handleJsonResponse($response , 200 , 'Success');
     }
 
     
