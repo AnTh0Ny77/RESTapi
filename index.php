@@ -8,6 +8,7 @@ use Src\Controllers\BasePathController;
 use Src\Controllers\NotFoundController;
 use Src\Controllers\ConfirmUserController;
 use Src\Controllers\ForgotPasswordController;
+use Src\Controllers\ImageClientController;
 
 $request = $_SERVER['REQUEST_URI'];
 $request = explode('?' ,$request, 2);
@@ -48,6 +49,12 @@ switch($request){
     case $config->urls->base.ForgotPasswordController::path().$data:
         echo ForgotPasswordController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
+
+    case $config->urls->base.ImageClientController::path().$data:
+        echo ImageClientController::index($_SERVER['REQUEST_METHOD'],$data);
+        break;
+
+        
 
 	default:
 		header('HTTP/1.0 404 not found');
