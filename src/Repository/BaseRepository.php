@@ -174,6 +174,8 @@ Class BaseRepository {
     }
 
     public function update(array $field){
+
+        $array_exclusion  = [ 'token' , 'refresh_token' , 'roles'  , 'clients' , 'password'] ; 
         
         $identifier =  $this->returnPrimaryKey()['COLUMN_NAME'];
         if (!isset($field[$identifier]) or empty($field[$identifier])) {
@@ -183,12 +185,13 @@ Class BaseRepository {
         $column = $this->verifyColumn($field);
         if (!empty($column)) 
             return $column;
+            
         $id = $field[$identifier];
         $setClause = 'SET ';
         $arraySetClause = [];
         $array_remplacement = [];
         foreach ($field as $key => $value){
-            if ($key != $identifier ) {
+            if ($key != $identifier and !in_array($key , $array_exclusion) ) {
                 $array_remplacement[$key] = $value;
             }
         }

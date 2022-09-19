@@ -75,7 +75,7 @@ Class LoginController {
         if (!$login instanceof User) {
             $body = [
                 $data = $body ,
-                $message =$login
+                $message = $login
             ];
             return $responseHandler->handleJsonResponse($body , 401 , 'Unauthorized');
         }
@@ -110,7 +110,7 @@ Class LoginController {
             $response = [
                 $data = $body ,
                 $message = 'vous devez valider votre adresse email avant de vous connecter,
-                 un lien a été envoyé à '.$body['user__mail'].'  '
+                 un lien vous à été envoyé '
             ];
             return $responseHandler->handleJsonResponse($response , 401 , 'Unauthorized');
         }
