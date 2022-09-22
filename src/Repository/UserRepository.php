@@ -78,7 +78,7 @@ Class UserRepository  extends BaseRepository{
         $user = $this->findOneBy(['user__mail' =>  $user_data['user__mail']] , false);
 
         if (empty($user)) 
-            return 'Utilisateur inconnu.';
+            return 'Identifiants invalides.';
 
         $password_authenticity = password_verify($user_data['user__password'],$user['user__password']);
 

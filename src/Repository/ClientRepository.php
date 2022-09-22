@@ -19,7 +19,7 @@ Class ClientRepository  extends BaseRepository {
        
         $client = New Client();
 
-        $nom = $client->setCli__nom( $this->clean($client_data['cli__nom']));
+        $nom = $client->setCli__nom( $this->cleanKeepSpace($client_data['cli__nom']));
         if (!$nom instanceof Client) 
             return $nom;
 
@@ -35,7 +35,7 @@ Class ClientRepository  extends BaseRepository {
         if (!$cp instanceof Client) 
             return $cp;
 
-        $ville = $client->setCli__ville($client_data['cli__ville']);
+        $ville = $client->setCli__ville($this->cleanKeepSpace($client_data['cli__ville']));
         if (!$ville instanceof Client) 
             return $ville;
 
@@ -51,8 +51,8 @@ Class ClientRepository  extends BaseRepository {
         if (!$mail instanceof Client) 
             return $mail;
 
-        $client_data['cli__nom'] = mb_strtoupper($this->clean($client_data['cli__nom']));
-        $client_data['cli__ville'] = mb_strtoupper($this->clean($client_data['cli__ville']));
+        $client_data['cli__nom'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__nom']));
+        $client_data['cli__ville'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__ville']));
 
         $id_client = $this->insert($client_data);
         $client = $this->findOneBy(['cli__id' =>  $id_client] , true );
@@ -72,11 +72,11 @@ Class ClientRepository  extends BaseRepository {
             $client = New Client();
 
             if ($client_data['cli__nom']) {
-                $nom = $client->setCli__nom( $this->clean($client_data['cli__nom']));
+                $nom = $client->setCli__nom( $this->cleanKeepSpace($client_data['cli__nom']));
                 if (!$nom instanceof Client) 
                     return $nom;
 
-                $client_data['cli__nom'] = mb_strtoupper($this->clean($client_data['cli__nom']));
+                $client_data['cli__nom'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__nom']));
             }
            
             if (!empty($client_data['cli__adr1'])) {
@@ -85,7 +85,7 @@ Class ClientRepository  extends BaseRepository {
                     return $adr1;
             }
 
-            if (!empty($client_data['cli__adr2'])) {
+            if (isset($client_data['cli__adr2'])) {
                 $adr2 = $client->setCli__adr2($client_data['cli__adr2']);
                 if (!$adr2 instanceof Client) 
                     return $adr2;
@@ -102,7 +102,7 @@ Class ClientRepository  extends BaseRepository {
                 if (!$ville instanceof Client) 
                     return $ville;
                 
-                $client_data['cli__ville'] = mb_strtoupper($this->clean($client_data['cli__ville']));
+                $client_data['cli__ville'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__ville']));
             }
             
             if (!empty($client_data['cli__pays'])) {
@@ -111,7 +111,7 @@ Class ClientRepository  extends BaseRepository {
                     return $pays;
             }
 
-            if (!empty($client_data['cli__tel'])) {
+            if (isset($client_data['cli__tel'])) {
                 $tel = $client->setCli__tel( $client_data['cli__tel']);
                 if (!$tel instanceof Client) 
                     return $tel;
@@ -122,5 +122,8 @@ Class ClientRepository  extends BaseRepository {
             $client = $this->findOneBy(['cli__id' =>  $client_data['cli__id']] , true );
             return $client;
     }
+
+
+   
 
 }

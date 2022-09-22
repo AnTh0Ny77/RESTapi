@@ -156,7 +156,6 @@ Class ClientController {
             ];
             return $responseHandler->handleJsonResponse($body , 498 , 'Token expired/invalid');
         }
-
         return null;
     }
 
@@ -256,6 +255,8 @@ Class ClientController {
        
     }
 
+
+   
     public static function delete(){
 
     }

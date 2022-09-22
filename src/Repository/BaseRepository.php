@@ -95,6 +95,10 @@ Class BaseRepository {
         return trim(preg_replace('/[^A-Za-z0-9\-\ÀÁÂÄÈÉèËÊÎéêëïúöôûâàÓÔÙÚÿ@.]/', '', $string)); 
     }
 
+    public function cleanKeepSpace($string){
+        return trim(preg_replace('/[^A-Za-z0-9\-\ÀÁÂÄÈÉèËÊÎéêëïúöôûâàÓÔÙÚÿ@. ]/', '', $string)); 
+    }
+
    
     public function insert(array $array){
         $column = '( ';
@@ -170,6 +174,8 @@ Class BaseRepository {
     }
 
     public function update(array $field){
+
+        $array_exclusion  = [ 'token' , 'refresh_token' , 'roles'  , 'clients' , 'password'] ; 
         
         $identifier =  $this->returnPrimaryKey()['COLUMN_NAME'];
         if (!isset($field[$identifier]) or empty($field[$identifier])) {
@@ -179,18 +185,19 @@ Class BaseRepository {
         $column = $this->verifyColumn($field);
         if (!empty($column)) 
             return $column;
+            
         $id = $field[$identifier];
         $setClause = 'SET ';
         $arraySetClause = [];
         $array_remplacement = [];
         foreach ($field as $key => $value){
-            if ($key != $identifier and !empty($value)) {
+            if ($key != $identifier and !in_array($key , $array_exclusion) ) {
                 $array_remplacement[$key] = $value;
             }
         }
 
         foreach ($array_remplacement as $key => $value){
-            if ($key != $identifier and !empty($value)) {
+            if ($key != $identifier ) {
                     if ($key === array_key_last($array_remplacement)) {
                         $setClause.= ''.$key. '= ? ';
                         array_push($arraySetClause , $value);

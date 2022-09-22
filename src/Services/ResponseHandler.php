@@ -10,4 +10,15 @@ Class ResponseHandler {
         header('Content-Type: application/json; charset=utf-8');
         return $data;
     }
+
+
+    // public function handleFileResponse($file , int $ResponseCode, string $message){
+    //     header($_SERVER["SERVER_PROTOCOL"] . " 200 OK");
+    //     header("Cache-Control: public"); // needed for internet explorer
+    //     header("Content-Type: application/zip");
+    //     header("Content-Transfer-Encoding: Binary");
+    //     header("Content-Length:".filesize($file));
+    //     header("Content-Disposition: attachment; filename=file.zip");
+    //     readfile($attachment_location);
+    // }
 }
