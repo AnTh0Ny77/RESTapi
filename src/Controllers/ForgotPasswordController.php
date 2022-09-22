@@ -82,7 +82,7 @@ Class ForgotPasswordController  extends  BaseController {
         $responseHandler = new ResponseHandler();
         $userRepository = new UserRepository('User' , $database , User::class);
         $confirmRepository = new ConfirmRepository('confirm' , $database , Confirm::class);
-
+       
         if (empty($_GET))
             return $responseHandler->handleJsonResponse('Unknow User' , 404, 'Bad Request');
 
@@ -118,7 +118,7 @@ Class ForgotPasswordController  extends  BaseController {
             }
 
 
-            $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyResetPassword('http://localhost:8080/myRecode/forgot/password?confirm__key='.$confirm->getConfirm__key().'&confirm__user='.$confirm->getConfirm__user().''), $mailer->signature());
+            $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyResetPassword('http://localhost/myRecode/reset?confirm__key='.$confirm->getConfirm__key().'&confirm__user='.$confirm->getConfirm__user().''), $mailer->signature());
             $mailer->sendMail($_GET['user__mail'] , 'confirmation de votre compte Myrecode' ,  $body_mail );
             $response = [
                 $data = $_GET['user__mail'] ,
