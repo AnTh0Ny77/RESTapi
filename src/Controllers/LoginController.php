@@ -109,14 +109,11 @@ Class LoginController {
         $login->setToken($security->returnToken($login->getUser__id()));
         $refresh_token = $refreshRepository->insertOne($login->getUser__id());
         $login->setRefresh_token($refresh_token);
-        $test = [
+        $response = [
             'id' =>  $login->getUser__id(),
             'refresh_token' => $login->getRefresh_token(), 
             'token' => $login->getToken()
         ];
-        $body = [
-             $test 
-        ];
-        return $responseHandler->handleJsonResponse($test , 200 , 'success');
+        return $responseHandler->handleJsonResponse($response , 200 , 'success');
     }
 }

@@ -10,6 +10,8 @@ use Src\Controllers\NotFoundController;
 use Src\Controllers\ConfirmUserController;
 use Src\Controllers\ForgotPasswordController;
 use Src\Controllers\ImageClientController;
+use Src\Controllers\MaterielController;
+
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -56,6 +58,10 @@ switch($request){
 
     case $config->urls->base.ImageClientController::path().$data:
         echo ImageClientController::index($_SERVER['REQUEST_METHOD'],$data);
+        break;
+
+    case $config->urls->base.MaterielController::path().$data:
+        echo MaterielController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
 
 	default:

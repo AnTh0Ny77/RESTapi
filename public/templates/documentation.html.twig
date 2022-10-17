@@ -19,19 +19,19 @@
                     <div class="container-operation">
                             {% if step.method == 'POST' %}
                                 <div class="POST py-2 d-flex justify-content-between">{{step.method}}
-                                    <div class="path text-uppercase">/{{step.path}}</div>
+                                    <div class="path text-uppercase">{{step.path}}</div>
                                 </div>
                             {% elseif step.method == 'GET' %}
                                 <div class="GET  py-2 d-flex justify-content-between">{{step.method}}
-                                    <div class="path text-uppercase">/{{step.path}}</div>
+                                    <div class="path text-uppercase">{{step.path}}</div>
                                 </div>
                             {% elseif step.method == 'PUT' %}
                                 <div class="PUT  py-2 d-flex justify-content-between">{{step.method}}
-                                    <div class="path text-uppercase">/{{step.path}}</div>
+                                    <div class="path text-uppercase">{{step.path}}</div>
                                 </div>
                             {% elseif step.method == 'DELETE' %}
                                 <div class="DELETE  py-2 d-flex justify-content-between">{{step.method}}
-                                    <div class="path text-uppercase">/{{step.path}}</div>
+                                    <div class="path text-uppercase">{{step.path}}</div>
                                 </div>
                             {% endif %}
                             <div class=" py-2 d-flex justify-content-between">
