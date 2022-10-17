@@ -16,7 +16,7 @@ use Src\Repository\RefreshRepository;
 Class LoginController {
 
     public static function path(){
-        return 'login';
+        return '/login';
     }
 
     public static function renderDoc(){
@@ -68,7 +68,7 @@ Class LoginController {
         $confirmRepository = new ConfirmRepository('confirm' , $database , Confirm::class);
         $responseHandler = new ResponseHandler();
         $mailer = new MailerServices();
-        $userRepository = new UserRepository('User' , $database , User::class );
+        $userRepository = new UserRepository('user' , $database , User::class );
         $refreshRepository = new RefreshRepository($database);
         $body = json_decode(file_get_contents('php://input'), true);
         $login = $userRepository->loginUser($body);
@@ -109,6 +109,14 @@ Class LoginController {
         $login->setToken($security->returnToken($login->getUser__id()));
         $refresh_token = $refreshRepository->insertOne($login->getUser__id());
         $login->setRefresh_token($refresh_token);
-        return $responseHandler->handleJsonResponse($login , 200 , 'success');
+        $test = [
+            'id' =>  $login->getUser__id(),
+            'refresh_token' => $login->getRefresh_token(), 
+            'token' => $login->getToken()
+        ];
+        $body = [
+             $test 
+        ];
+        return $responseHandler->handleJsonResponse($test , 200 , 'success');
     }
 }

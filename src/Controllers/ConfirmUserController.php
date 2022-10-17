@@ -15,7 +15,7 @@ use Src\Repository\ConfirmRepository;
 Class ConfirmUserController  extends  BaseController {
 
     public static function path(){
-        return 'confirm/user';
+        return '/confirm/user';
     }
 
     public static function renderDoc(){

@@ -16,7 +16,7 @@ use Src\Repository\ConfirmRepository;
 Class ForgotPasswordController  extends  BaseController {
 
     public static function path(){
-        return 'forgot';
+        return '/forgot';
     }
 
     public static function renderDoc(){

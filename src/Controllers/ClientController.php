@@ -10,7 +10,7 @@ use Src\Services\Security;
 Class ClientController {
 
     public static function path(){
-        return 'client';
+        return '/client';
     }
 
     public static function renderDoc(){
