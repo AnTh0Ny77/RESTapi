@@ -9,7 +9,7 @@ use Src\Services\Security;
 Class RefreshController {
 
     public static function path(){
-        return 'refresh';
+        return '/refresh';
     }
 
     public static function renderDoc(){

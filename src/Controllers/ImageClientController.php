@@ -14,7 +14,7 @@ use Src\Services\Security;
 Class ImageClientController  extends  BaseController{
 
     public static function path(){
-        return 'clientimage';
+        return '/clientimage';
     }
 
     public static function renderDoc(){

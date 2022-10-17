@@ -1,4 +1,5 @@
 <?php
+
 require "vendor/autoload.php";
 use Src\Controllers\UserController;
 use Src\Controllers\LoginController;
@@ -9,7 +10,10 @@ use Src\Controllers\NotFoundController;
 use Src\Controllers\ConfirmUserController;
 use Src\Controllers\ForgotPasswordController;
 use Src\Controllers\ImageClientController;
-
+header("Access-Control-Allow-Origin: *");
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 $request = $_SERVER['REQUEST_URI'];
 $request = explode('?' ,$request, 2);
 $data = null;
@@ -53,8 +57,6 @@ switch($request){
     case $config->urls->base.ImageClientController::path().$data:
         echo ImageClientController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
-
-        
 
 	default:
 		header('HTTP/1.0 404 not found');

@@ -13,7 +13,7 @@ use Src\Repository\LienUserClientRepository;
 Class UserController {
 
     public static function path(){
-        return 'user';
+        return '/user';
     }
 
     public static function renderDoc(){
