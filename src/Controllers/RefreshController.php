@@ -62,23 +62,14 @@ Class RefreshController {
         $body = json_decode(file_get_contents('php://input'), true);
 
         if (empty($body['refresh_token'])) {
-            $body = [
-                $data = $body ,
-                $message = 'le refresh token n a pas été trouvé dans la requete'
-            ];
-            return $responseHandler->handleJsonResponse($body , 400 , 'Bad Request');
+            return $responseHandler->handleJsonResponse('le refresh token n a pas été trouvé dans la requete' , 400 , 'Bad Request');
         }
 
         $refresh_token = $refreshRepository->findOneBy(['refresh_token' => $body['refresh_token'] ] , false);
         if (empty($refresh_token)) {
-            $body = [
-                $data = $body ,
-                $message = 'refresh token est invalide'
-            ];
-            return $responseHandler->handleJsonResponse($body , 400 , 'Bad Request');
+            return $responseHandler->handleJsonResponse('refresh token est invalide', 400 , 'Bad Request');
         }
         $token  = $security->returnToken($refresh_token['user__id']);
-
         $data = [
             "token" => $token
         ];

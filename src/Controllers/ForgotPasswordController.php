@@ -120,11 +120,7 @@ Class ForgotPasswordController  extends  BaseController {
             
             $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyResetPassword('http://localhost:8080/myRecode/reset?confirm__key='.$confirm->getConfirm__key().'&confirm__user='.$confirm->getConfirm__user().''), $mailer->signature());
             $mailer->sendMail($_GET['user__mail'] , 'Définition de votre nouveau mot de passe ' ,  $body_mail );
-            $response = [
-                $data = $_GET['user__mail'] ,
-                $message = 'Un lien de résiliation votre mot de passe à été envoyé à  '.$_GET['user__mail'].'  '
-            ];
-            return $responseHandler->handleJsonResponse($response , 200 , 'Success');
+            return $responseHandler->handleJsonResponse('Un lien de résiliation votre mot de passe à été envoyé à  '.$_GET['user__mail'].'  ', 200 , 'Success');
     }
 
     

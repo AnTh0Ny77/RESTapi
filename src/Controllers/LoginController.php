@@ -73,11 +73,7 @@ Class LoginController {
         $body = json_decode(file_get_contents('php://input'), true);
         $login = $userRepository->loginUser($body);
         if (!$login instanceof User) {
-            $body = [
-                $data = $body ,
-                $message = $login
-            ];
-            return $responseHandler->handleJsonResponse($body , 401 , 'Unauthorized');
+            return $responseHandler->handleJsonResponse( $login, 401 , 'Unauthorized');
         }
 
         if (intval($login->getUser__confirm()) == 0) {
@@ -107,20 +103,12 @@ Class LoginController {
            
             $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyConfirmUser('http://localhost:8080/myRecode/confirm?confirm__key='.$confirm->getConfirm__key().'&confirm__user='.$confirm->getConfirm__user().''), $mailer->signature());
             $mailer->sendMail($body['user__mail'] , 'confirmation de votre compte Myrecode' ,  $body_mail );
-            $response = [
-                $data = $body ,
-                $message = 'vous devez valider votre adresse email avant de vous connecter,
-                 un lien vous à été envoyé '
-            ];
-            return $responseHandler->handleJsonResponse($response , 401 , 'Unauthorized');
+            return $responseHandler->handleJsonResponse('vous devez valider votre adresse email avant de vous connecter, un lien vous à été envoyé ' , 401 , 'Unauthorized');
         }
 
         $login->setToken($security->returnToken($login->getUser__id()));
         $refresh_token = $refreshRepository->insertOne($login->getUser__id());
         $login->setRefresh_token($refresh_token);
-        $body = [
-            $message = $login 
-        ];
-        return $responseHandler->handleJsonResponse($body , 200 , 'success');
+        return $responseHandler->handleJsonResponse($login , 200 , 'success');
     }
 }
