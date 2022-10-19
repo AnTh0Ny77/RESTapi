@@ -148,7 +148,7 @@ Class UserController  extends BaseController{
             $body = [
                 $data = $user 
             ];
-            return $responseHandler->handleJsonResponse($body , 200 , 'ok');
+            return $responseHandler->handleJsonResponse($user  , 200 , 'ok');
         }
     }
 
