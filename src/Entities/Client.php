@@ -28,6 +28,10 @@ Class Client {
 
     public $cli__email;
 
+    public $cli__com1;
+
+    public $cli__com2;
+
     public function getCli__id(){
         return $this->cli__id;
     }
@@ -159,5 +163,45 @@ Class Client {
             $this->cli__email = $cli__email;
             return $this;
         }else return 'Le mail saisi n est pas un email valide'; 
+    }
+
+    /**
+     * Get the value of cli__com1
+     */ 
+    public function getCli__com1()
+    {
+        return $this->cli__com1;
+    }
+
+    /**
+     * Set the value of cli__com1
+     *
+     * @return  self
+     */ 
+    public function setCli__com1($cli__com1)
+    {
+        $this->cli__com1 = $cli__com1;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of cli__com2
+     */ 
+    public function getCli__com2()
+    {
+        return $this->cli__com2;
+    }
+
+    /**
+     * Set the value of cli__com2
+     *
+     * @return  self
+     */ 
+    public function setCli__com2($cli__com2)
+    {
+        $this->cli__com2 = $cli__com2;
+
+        return $this;
     }
 }

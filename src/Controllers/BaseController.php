@@ -10,24 +10,24 @@ Class BaseController {
     public static function Auth( ResponseHandler $responseHandler , Security $security){
         $token = $security->getBearerToken();
         if (empty($token)) {
-            $body = [
-                $message = 'JWT not found '
-            ];
-            return $responseHandler->handleJsonResponse($body , 401 , 'Unauthorized');
+            // $body = [
+            //     $message = 'JWT not found '
+            // ];
+            return $responseHandler->handleJsonResponse([
+                'msg' => 'JWT not found '
+            ] , 401 , 'Unauthorized');
         }
         $isAuth = $security->verifyToken($token);
         if ($isAuth == false) {
-            $body = [
-                $message = 'invalid JWT'
-            ];
-            return $responseHandler->handleJsonResponse($body , 498 , 'Token expired/invalid');
+            return $responseHandler->handleJsonResponse([
+                'msg' => 'invalid JWT'
+            ] , 498 , 'Token expired/invalid');
         }
         $isExp = $security->verifyExp($token);
         if($isExp == false){
-            $body = [
-                $message = 'expired JWT'
-            ];
-            return $responseHandler->handleJsonResponse($body , 498 , 'Token expired/invalid');
+            return $responseHandler->handleJsonResponse([
+                'msg' => 'expired JWT'
+            ] , 498 , 'Token expired/invalid');
         }
 
         return null;

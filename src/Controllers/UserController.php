@@ -1,16 +1,17 @@
 <?php
 namespace Src\Controllers;
 require  '././vendor/autoload.php';
-use Src\Services\ResponseHandler;
 use Src\Database;
-use Src\Controllers\NotFoundController;
-use Src\Services\Security;
-use Src\Repository\UserRepository;
-use Src\Repository\RefreshRepository;
 use Src\Entities\User;
+use Src\Services\Security;
+use Src\Services\ResponseHandler;
+use Src\Repository\UserRepository;
+use Src\Controllers\BaseController;
+use Src\Repository\RefreshRepository;
+use Src\Controllers\NotFoundController;
 use Src\Repository\LienUserClientRepository;
 
-Class UserController {
+Class UserController  extends BaseController{
 
     public static function path(){
         return '/user';
@@ -87,32 +88,6 @@ Class UserController {
 
     }
 
-
-    public static function Auth( ResponseHandler $responseHandler , Security $security){
-        $token = $security->getBearerToken();
-        if (empty($token)) {
-            $body = [
-                $message = 'JWT not found '
-            ];
-            return $responseHandler->handleJsonResponse($body , 401 , 'Unauthorized');
-        }
-        $isAuth = $security->verifyToken($token);
-        if ($isAuth == false) {
-            $body = [
-                $message = 'invalid JWT'
-            ];
-            return $responseHandler->handleJsonResponse($body , 498 , 'Token expired/invalid');
-        }
-        $isExp = $security->verifyExp($token);
-        if($isExp == false){
-            $body = [
-                $message = 'expired JWT'
-            ];
-            return $responseHandler->handleJsonResponse($body , 498 , 'Token expired/invalid');
-        }
-
-        return null;
-    }
 
     public static function returnId__user(Security $security){
         $token = $security->getBearerToken();

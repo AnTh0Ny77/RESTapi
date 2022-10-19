@@ -6,11 +6,12 @@ use Src\Controllers\LoginController;
 use Src\Controllers\ClientController;
 use Src\Controllers\RefreshController;
 use Src\Controllers\BasePathController;
-use Src\Controllers\NotFoundController;
-use Src\Controllers\ConfirmUserController;
-use Src\Controllers\ForgotPasswordController;
-use Src\Controllers\ImageClientController;
 use Src\Controllers\MaterielController;
+use Src\Controllers\NotFoundController;
+use Src\Controllers\CommercialController;
+use Src\Controllers\ConfirmUserController;
+use Src\Controllers\ImageClientController;
+use Src\Controllers\ForgotPasswordController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -25,6 +26,7 @@ if (isset($request[1]))
 
 $request = $request[0] . $data ; 
 $config =  json_decode(file_get_contents('config.json'));
+
 
 switch($request){
 	
@@ -62,6 +64,10 @@ switch($request){
 
     case $config->urls->base.MaterielController::path().$data:
         echo MaterielController::index($_SERVER['REQUEST_METHOD'],$data);
+        break;
+
+    case $config->urls->base.CommercialController::path().$data:
+        echo CommercialController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
 
 	default:
