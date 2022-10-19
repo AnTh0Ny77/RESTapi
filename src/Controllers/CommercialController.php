@@ -82,7 +82,7 @@ Class COmmercialController extends BaseController {
         }
 
         return $responseHandler->handleJsonResponse([
-            'msg' => (array) $com ,
+            'com' => (array) $com ,
         ] , 200 , 'Bad Request');
 
     }
