@@ -107,16 +107,12 @@ Class LoginController {
            
             $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyConfirmUser('http://localhost:8080/myRecode/confirm?confirm__key='.$confirm->getConfirm__key().'&confirm__user='.$confirm->getConfirm__user().''), $mailer->signature());
             $mailer->sendMail($body['user__mail'] , 'confirmation de votre compte Myrecode' ,  $body_mail );
-<<<<<<< HEAD
-            return $responseHandler->handleJsonResponse('vous devez valider votre adresse email avant de vous connecter, un lien vous à été envoyé ' , 401 , 'Unauthorized');
-=======
             $response = [
                 $data = $body ,
                 $msg = 'vous devez valider votre adresse email avant de vous connecter,
                  un lien vous à été envoyé '
             ];
             return $responseHandler->handleJsonResponse($response , 401 , 'Unauthorized');
->>>>>>> 67406d2dd9631b8d6f700cf31804eed6dd7546e1
         }
 
         $login->setToken($security->returnToken($login->getUser__id()));
