@@ -130,7 +130,7 @@ Class UserController  extends BaseController{
             $responseHandler = new ResponseHandler();
             $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
             $refreshRepository = new RefreshRepository($database);
-            $userRepository = new UserRepository('User' , $database , User::class );
+            $userRepository = new UserRepository('user' , $database , User::class );
 
             $security = new Security();
             $auth = self::Auth($responseHandler,$security);
