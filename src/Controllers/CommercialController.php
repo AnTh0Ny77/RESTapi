@@ -77,12 +77,12 @@ Class CommercialController extends BaseController {
         $com = $commercialRepository->findOneBy(['com__id' =>  $_GET['com__id']] , true);
         if (!$com instanceof Commercial) {
             return $responseHandler->handleJsonResponse([
-                'msg' => 'Le comemrcial n a pas été trouvé'
+                'msg' => 'Le commercial n a pas été trouvé'
             ] , 400 , 'Bad Request');
         }
 
         return $responseHandler->handleJsonResponse([
-            'com' => (array) $com ,
+            'com' =>  $com ,
         ] , 200 , 'Bad Request');
 
     }
