@@ -74,8 +74,8 @@ Class LoginController {
         $login = $userRepository->loginUser($body);
         if (!$login instanceof User) {
             $body = [
-                $data = $body ,
-                $message = $login
+                 'msg' => $login, 
+                 'data' =>  (array) $body 
             ];
             return $responseHandler->handleJsonResponse($body , 401 , 'Unauthorized');
         }
@@ -109,7 +109,7 @@ Class LoginController {
             $mailer->sendMail($body['user__mail'] , 'confirmation de votre compte Myrecode' ,  $body_mail );
             $response = [
                 $data = $body ,
-                $message = 'vous devez valider votre adresse email avant de vous connecter,
+                $msg = 'vous devez valider votre adresse email avant de vous connecter,
                  un lien vous à été envoyé '
             ];
             return $responseHandler->handleJsonResponse($response , 401 , 'Unauthorized');

@@ -119,7 +119,6 @@ Class UserController {
         return $security->readToken($token);
     }
 
-
 	public static function post(){
         $database = new Database();
         $database->DbConnect();
@@ -155,28 +154,23 @@ Class UserController {
             $responseHandler = new ResponseHandler();
             $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
             $refreshRepository = new RefreshRepository($database);
-            $userRepository = new UserRepository('User' , $database , User::class );
+            $userRepository = new UserRepository('user' , $database , User::class );
 
             $security = new Security();
             $auth = self::Auth($responseHandler,$security);
             if ($auth != null) 
                 return $auth;
 
-            $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
+            $user =  $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
             $user = $userRepository->getRole($user);
             $refresh_token = $refreshRepository->findOneBy(['user__id' => $user->getUser__id()] ,false );
             $user->setRefresh_token($refresh_token['refresh_token']);
-            $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
+            $clients =  $lienUserClientRepository->getUserClients($user->getUser__id());
             $user->setClients($clients);
-           
 
-            $body = [
-                $data = $user 
-            ];
-            return $responseHandler->handleJsonResponse($body , 200 , 'ok');
+            $user = (array) $user;
+            
+            return $responseHandler->handleJsonResponse($user , 200 , 'ok');
         }
     }
-
-   
-
 }
