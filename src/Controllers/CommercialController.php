@@ -13,7 +13,7 @@ use Src\Repository\MaterielRepository;
 use Src\Repository\CommercialRepository;
 use Src\Repository\LienUserClientRepository;
 
-Class COmmercialController extends BaseController {
+Class CommercialController extends BaseController {
 
     public static function path(){
         return '/commercial';
