@@ -99,6 +99,18 @@ Class BaseRepository {
         return trim(preg_replace('/[^A-Za-z0-9\-\ÀÁÂÄÈÉèËÊÎéêëïúöôûâàÓÔÙÚÿ@. ]/', '', $string)); 
     }
 
+
+    public function getOrder($get_array){
+        $array_order = [];
+        foreach ($get_array as $key => $value) {
+            if ( strtoupper($value)  == 'DESC' or  strtoupper($value)  == 'ASC') {
+                $array_order[$key]  =  $value;
+                unset($value);
+                unset($get_array[$key]);
+            }
+        }
+        return $array_order;
+    }
    
     public function insert(array $array){
         $column = '( ';
