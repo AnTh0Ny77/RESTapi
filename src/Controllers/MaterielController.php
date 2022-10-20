@@ -153,7 +153,7 @@ Class MaterielController extends BaseController {
                 }
 
                 foreach ($inclause as $key => $value){
-                    if (empty($inclause[$key])) 
+                    if (empty($value)) 
                         unset($inclause[$key]);
                 }
 
@@ -173,6 +173,10 @@ Class MaterielController extends BaseController {
             }
         }else {
             //recherche standard dans le parc client :
+            foreach ($inclause as $key => $value){
+                if (empty($value)) 
+                    unset($inclause[$key]);
+            }
             $list = $materielRepository->findMat($inclause , [] , 30 , []);
             if (empty($list)) {
                 return $responseHandler->handleJsonResponse([
