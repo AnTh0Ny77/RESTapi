@@ -1,15 +1,16 @@
 <?php
 namespace Src\Controllers;
 require  '././vendor/autoload.php';
-use Src\Services\ResponseHandler;
 use Src\Database;
-use Src\Repository\MaterielRepository;
-use Src\Repository\UserRepository;
-use Src\Repository\LienUserClientRepository;
 use Src\Entities\User;
-use Src\Controllers\UserController;
 use Src\Entities\Client;
+use Src\Entities\Materiel;
 use Src\Services\Security;
+use Src\Services\ResponseHandler;
+use Src\Repository\UserRepository;
+use Src\Controllers\UserController;
+use Src\Repository\MaterielRepository;
+use Src\Repository\LienUserClientRepository;
 
 Class MaterielController extends BaseController {
 
@@ -61,7 +62,7 @@ Class MaterielController extends BaseController {
         $database = new Database();
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
-        $materielRepository = new MaterielRepository('materiel' , $database , Client::class );
+        $materielRepository = new MaterielRepository('materiel' , $database , Materiel::class );
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
         $userRepository = new UserRepository('user' , $database , User::class );
         $security = new Security();
