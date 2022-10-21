@@ -109,7 +109,8 @@ Class MaterielController extends BaseController {
                         'msg' => 'Aucun materiel n a été trouvé'
                     ] , 404 , 'not found');
                 } else {
-                    return $responseHandler->handleJsonResponse( [$list ], 200 , 'ok ');
+                    return $responseHandler->handleJsonResponse( [
+                        "data" => $list ], 200 , 'ok ');
                 }
 
             }else{
@@ -170,7 +171,8 @@ Class MaterielController extends BaseController {
                         'msg' => 'Aucun materiel n a été trouvé'
                     ] , 404 , 'not found');
                 } else {
-                    return $responseHandler->handleJsonResponse( [$list ], 200 , 'ok ');
+                    return $responseHandler->handleJsonResponse( [
+                        "data" => $list ], 200 , 'ok ');
                 }
             }
         }else {
@@ -186,7 +188,8 @@ Class MaterielController extends BaseController {
                     'msg' => 'Aucun materiel n a été trouvé'
                 ] , 404 , 'not found');
             } else {
-                return $responseHandler->handleJsonResponse( [$list ] , 200 , 'ok ');
+                return $responseHandler->handleJsonResponse( [
+                    "data" => $list ] , 200 , 'ok ');
             }
         }
 
