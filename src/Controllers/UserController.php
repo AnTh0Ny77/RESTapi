@@ -99,7 +99,7 @@ Class UserController  extends BaseController{
         $database = new Database();
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
-        $userRepository = new UserRepository('User' , $database , User::class );
+        $userRepository = new UserRepository('user' , $database , User::class );
         $refreshRepository = new RefreshRepository($database);
         $body = json_decode(file_get_contents('php://input'), true);
 
@@ -143,7 +143,7 @@ Class UserController  extends BaseController{
             $user->setRefresh_token($refresh_token['refresh_token']);
             $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
             $user->setClients($clients);
-            return $responseHandler->handleJsonResponse($user  , 200 , 'ok');
+            return $responseHandler->handleJsonResponse( [ $user ]  , 200 , 'ok');
         }
     }
 
