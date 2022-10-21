@@ -162,7 +162,7 @@ Class MaterielController extends BaseController {
                 }
             
                 $list = $materielRepository->findMat($inclause , [] , $limit , $order_array);
-            
+                var_dump($list);
                 if (empty($list)) {
                     return $responseHandler->handleJsonResponse([
                         'msg' => 'Aucun materiel n a été trouvé'
