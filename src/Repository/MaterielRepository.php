@@ -88,7 +88,7 @@ Class MaterielRepository  extends BaseRepository {
         }
         
         $request = 'SELECT * FROM '.$this->Table.' WHERE 1 = 1 '.$where_clause .' ' . $in_clause . ' '. $orderclause . $limitclause ;
-        var_dump($request);
+       
         $request = $this->Db->Pdo->query($request);
         
         $request = $request->fetchAll(PDO::FETCH_ASSOC);

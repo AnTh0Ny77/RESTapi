@@ -63,7 +63,7 @@ Class MaterielController extends BaseController {
         $responseHandler = new ResponseHandler();
         $materielRepository = new MaterielRepository('materiel' , $database , Client::class );
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
-        $userRepository = new UserRepository('User' , $database , User::class );
+        $userRepository = new UserRepository('user' , $database , User::class );
         $security = new Security();
         $auth = self::Auth($responseHandler,$security);
         if ($auth != null) 
@@ -162,7 +162,6 @@ Class MaterielController extends BaseController {
                 }
             
                 $list = $materielRepository->findMat($inclause , [] , $limit , $order_array);
-                var_dump($list);
                 if (empty($list)) {
                     return $responseHandler->handleJsonResponse([
                         'msg' => 'Aucun materiel n a été trouvé'
