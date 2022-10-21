@@ -113,7 +113,7 @@ Class MaterielController extends BaseController {
                 }
 
             }else{
-                var_dump($materielRepository->getOrder($_GET));   //parametre cli__id est specifique :
+                  //parametre cli__id est specifique :
                 $order_array =  $materielRepository->getOrder($_GET);
                 
                 if(!empty($_GET['mat__cli__id'])){
