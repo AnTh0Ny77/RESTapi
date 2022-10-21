@@ -93,7 +93,7 @@ Class MaterielController extends BaseController {
 
         // cas de parametre spécifiés :
         if (!empty($_GET)){
-
+            var_dump('hello');
             if (!empty($_GET['search'])) {
                 if (!empty($_GET['limit'])) {
                     $limit = intval($_GET['limit']);
