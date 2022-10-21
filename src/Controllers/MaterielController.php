@@ -114,7 +114,7 @@ Class MaterielController extends BaseController {
 
             }else{
                   //parametre cli__id est specifique :
-                $order_array =  $materielRepository->getOrder($_GET);
+                // $order_array =  $materielRepository->getOrder($_GET);
                 
                 if(!empty($_GET['mat__cli__id'])){
                     $temp = [];
@@ -164,7 +164,7 @@ Class MaterielController extends BaseController {
                     $limit = intval($_GET['limit']);
                 }
             
-                $list = $materielRepository->findMat($inclause , [] , $limit , $order_array);
+                $list = $materielRepository->findMat($inclause , [] , $limit , []);
                 if (empty($list)) {
                     return $responseHandler->handleJsonResponse([
                         'msg' => 'Aucun materiel n a été trouvé'
