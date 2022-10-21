@@ -181,7 +181,7 @@ Class MaterielController extends BaseController {
                 if (empty($value)) 
                     unset($inclause[$key]);
             }
-            var_dump($inclause);
+           
             $list = $materielRepository->findMat($inclause , [] , 30 , []);
             if (empty($list)) {
                 return $responseHandler->handleJsonResponse([
@@ -189,7 +189,7 @@ Class MaterielController extends BaseController {
                 ] , 404 , 'not found');
             } else {
                 return $responseHandler->handleJsonResponse( [
-                    "data" => $list ] , 200 , 'ok ');
+                    "data" => [$list] ] , 200 , 'ok ');
             }
         }
 
