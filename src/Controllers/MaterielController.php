@@ -72,7 +72,7 @@ Class MaterielController extends BaseController {
         $id_user = UserController::returnId__user($security)['uid'];
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
-        var_dump($clients);
+        
         $user->setClients($clients);
         $inclause = [
             'mat__cli__id'  => [] ,

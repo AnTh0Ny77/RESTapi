@@ -12,7 +12,7 @@ use Src\Services\ResponseHandler;
 Class MaterielRepository  extends BaseRepository {
 
     public function findMat(array $in ,  $clause,  int $limit , array $order ){
-
+        var_dump('hello');
         $limitclause = '';
         switch ($limit) {
             case 0:
