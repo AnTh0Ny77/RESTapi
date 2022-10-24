@@ -21,6 +21,7 @@ Class UserController  extends BaseController{
         $doc = [
              [
                 'name' => 'postUser',
+                "tittle" => 'Utilisateurs', 
                 'method' => 'POST',
                 'path' => self::path(),
                 'description' => 'Crée un nouveau User' ,

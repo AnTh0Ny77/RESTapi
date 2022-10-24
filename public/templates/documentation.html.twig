@@ -16,6 +16,9 @@
         <h2 class="h2-api">Documentation API MYRecode</h2>
         {% for key , operation in doc %}
                     {% for step in operation %}
+                    {% if step.tittle %}
+                        <h2 class="h4-api">{{step.tittle}}</h2>
+                    {% endif %}
                     <div class="container-operation">
                             {% if step.method == 'POST' %}
                                 <div class="POST py-2 d-flex justify-content-between">{{step.method}}

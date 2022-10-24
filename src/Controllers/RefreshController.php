@@ -16,6 +16,7 @@ Class RefreshController {
         $doc = [
               [
                 'name' => 'refreshToken',
+                "tittle" => 'Rafraichissement de jeton', 
                 'method' => 'POST',
                 'path' => self::path(),
                 'description' => 'permet d obtenir un nouveau JWT' ,

@@ -23,6 +23,7 @@ Class LoginController {
         $doc = [
            [
                 'name' => 'login',
+                "tittle" => 'Login', 
                 'method' => 'POST',
                 'path' => self::path(),
                 'description' => 'permet à l utilisateur de se connecter ' ,

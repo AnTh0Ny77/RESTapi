@@ -18,6 +18,7 @@ Class ClientController extends BaseController {
         $doc = [
              [
                 'name' => 'getClient',
+                "tittle" => 'Client', 
                 'method' => 'GET',
                 'path' => self::path(),
                 'description' => 'Permet de consulter une liste de societés, 
@@ -148,8 +149,12 @@ Class ClientController extends BaseController {
         if ($auth != null) 
             return $auth;
 
-        if (empty($_GET))
-            return $responseHandler->handleJsonResponse('Unknow Client' , 401, 'Bad Request');
+        if (empty($_GET)){
+            return $responseHandler->handleJsonResponse([
+                'msg' => 'parametre de la requete non specifies '
+            ] , 401 , 'bad request');
+        }
+            
 
         if (!empty($_GET['search'])){
             $params = [];
@@ -162,19 +167,21 @@ Class ClientController extends BaseController {
             }
             $column = $clientRepository->verifyColumn($_GET);
             if (!empty($column)) {
-                $body = [
-                    $message = $clientRepository->verifyColumn($_GET)
-                ];
-                return $responseHandler->handleJsonResponse($body , 401 , 'Bad Request');
+                return $responseHandler->handleJsonResponse([
+                    'msg' => $clientRepository->verifyColumn($_GET)
+                ] , 401 , 'bad request');
             }
             $results =  $clientRepository->searchBy($params, true);
            
             if (!empty($results)) {
-                $body = [
-                    $clients =  $results
-                ];
-                return $responseHandler->handleJsonResponse($body , 200 , 'Success');
-            }else  return $responseHandler->handleJsonResponse('Aucun clients trouvés' , 404 , 'Not Found');
+                return $responseHandler->handleJsonResponse([
+                    'data' => $results
+                ] , 200 , 'ok');
+            }else  {
+                return $responseHandler->handleJsonResponse([
+                    'msg' => 'aucun client trouvé'
+                ] , 404 , 'not found');
+            }
 
         }else{
             $column = $clientRepository->verifyColumn($_GET);
@@ -212,20 +219,19 @@ Class ClientController extends BaseController {
 
         $body = json_decode(file_get_contents('php://input'), true);
 
-        if (empty($body)) 
-            return $responseHandler->handleJsonResponse('empty body' , 400 , 'Bad Request');
+        if (empty($body)) {
+            return $responseHandler->handleJsonResponse([
+                'msg' => 'le body ne peut pas etre vide'
+            ] , 401 , 'bad request');
+        } 
 
         $client =  $clientRepository->UpdateOne($body); 
         if (!$client instanceof Client ) {
-            $body = [
-                $data = $body ,
-                $message = $client
-            ];
-            return $responseHandler->handleJsonResponse($body , 400 , 'Bad Request');
+            return $responseHandler->handleJsonResponse([
+                'msg' => $client
+            ] , 401 , 'bad request');
         }
-
         $body = [
-            $message =  'le client à été mis à jour correctement', 
             $data = $client
         ];
         return $responseHandler->handleJsonResponse($body , 200 , 'Success');

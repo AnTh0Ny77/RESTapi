@@ -22,6 +22,7 @@ Class ConfirmUserController  extends  BaseController {
         $doc = [
              [
                 'name' => 'confirmUser',
+                "tittle" => 'Confirmation d utilsateurs', 
                 'method' => 'GET',
                 'path' => self::path(),
                 'description' => 'Permet de confirmer un utilisateur' ,

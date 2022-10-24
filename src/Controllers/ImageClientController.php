@@ -21,6 +21,7 @@ Class ImageClientController  extends  BaseController{
         $doc = [
              [
                 'name' => 'postImageClient',
+                "tittle" => 'Mise a jour de photo de profil', 
                 'method' => 'POST',
                 'body' =>  [
                     'type' => 'form-data',

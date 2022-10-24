@@ -12,6 +12,7 @@ use Src\Controllers\CommercialController;
 use Src\Controllers\ConfirmUserController;
 use Src\Controllers\ImageClientController;
 use Src\Controllers\ForgotPasswordController;
+use Src\Controllers\TicketController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -68,8 +69,12 @@ switch($request){
         echo MaterielController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
 
-    case $config->urls->base.CommercialController::path().$data:
-        echo CommercialController::index($_SERVER['REQUEST_METHOD'],$data);
+    case $config->urls->base.MaterielController::path().$data:
+        echo MaterielController::index($_SERVER['REQUEST_METHOD'],$data);
+        break;
+
+    case $config->urls->base.TicketController::path().$data:
+        echo TicketController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
 
 	default:

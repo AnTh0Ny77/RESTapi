@@ -23,12 +23,13 @@ Class CommercialController extends BaseController {
         $doc = [
              [
                 'name' => 'getcommercial',
+                "tittle" => 'Commerciaux', 
                 'method' => 'GET',
                 'path' => self::path(),
                 'description' => 'Permet de consulter une liste de commerciaux',
                 'reponse' => 'renvoi un tableau d array de commerciaux', 
                 "Auth" => 'JWT'
-             ],
+             ]
         ];
         return $doc;
     }

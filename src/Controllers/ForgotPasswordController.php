@@ -23,6 +23,7 @@ Class ForgotPasswordController  extends  BaseController {
         $doc = [
              [
                 'name' => 'forgotPassword',
+                "tittle" => 'Mot de passe oubliés', 
                 'method' => 'GET',
                 'path' => self::path(),
                 'description' => 'Permet d envoyer un lien sur le mail de l utilisateur pour qu il regenere son mot de passe' ,

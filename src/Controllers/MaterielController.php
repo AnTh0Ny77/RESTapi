@@ -22,12 +22,55 @@ Class MaterielController extends BaseController {
         $doc = [
              [
                 'name' => 'getMateriel',
+                "tittle" => 'Materiels', 
                 'method' => 'GET',
                 'path' => self::path(),
                 'description' => 'Permet de consulter une liste de materiels, 
                 le parametre "search" peut etre précisé afin d effectuer une recherche.',
-                'reponse' => 'renvoi un tableau d objet de type client', 
+                'reponse' => 'renvoi un tableau d objet de type materiel', 
                 "Auth" => 'JWT'
+             ],[
+                'name' => 'postMateriel',
+                'method' => 'POST',
+                'path' => self::path(),
+                'description' => 'Permet de creer un materiels',
+                'reponse' => 'renvoi un tableau d objet de type materiel', 
+                "Auth" => 'JWT',
+                'body' =>  [
+                    'type' => 'application/json',
+                    'fields' => [
+                            'mat__id',
+                            'mat__cli__id', 
+                            'mat__type', 
+                            'mat__marque',
+                            'mat__model', 
+                            'mat__pn',  
+                            'mat__memo',
+                            'mat__sn', 
+                            'mat__idnec'
+                    ]
+                    ],
+             ],[
+                'name' => 'postMateriel',
+                'method' => 'PUT',
+                'path' => self::path(),
+                'description' => 'Permet de mettre a jour un matériel',
+                'reponse' => 'renvoi un tableau d objet de type materiel', 
+                "Auth" => 'JWT',
+                'body' =>  [
+                    'type' => 'application/json',
+                    'fields' => [
+                            'mat__id',
+                            'mat__cli__id', 
+                            'mat__type', 
+                            'mat__marque',
+                            'mat__model', 
+                            'mat__pn',  
+                            'mat__memo',
+                            'mat__sn', 
+                            'mat__idnec'
+                    ]
+                    ],
              ],
         ];
         return $doc;
@@ -37,7 +80,7 @@ Class MaterielController extends BaseController {
         $notFound = new NotFoundController();
         switch ($method) {
             case 'POST':
-                return $notFound::index();
+                return self::post();
                 break;
 
             case 'GET':
@@ -191,11 +234,84 @@ Class MaterielController extends BaseController {
                 return $responseHandler->handleJsonResponse( [
                     "data" => $list] , 200 , 'ok ');
             }
+        }  
+    }
+
+    public static function post(){
+        $database = new Database();
+        $database->DbConnect();
+        $responseHandler = new ResponseHandler();
+        $materielRepository = new MaterielRepository('materiel' , $database , Materiel::class );
+        $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
+        $userRepository = new UserRepository('user' , $database , User::class );
+        $security = new Security();
+
+        $auth = self::Auth($responseHandler,$security);
+        if ($auth != null) 
+            return $auth;
+
+        $id_user = UserController::returnId__user($security)['uid'];
+        $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
+        $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
+        $user->setClients($clients);
+        $body = json_decode(file_get_contents('php://input'), true);
+
+        if (empty($body)) {
+            return $responseHandler->handleJsonResponse([
+                'msg' => 'le body ne peut pas etre vide'
+            ] , 401 , 'bad request');
+        } 
+
+        $materiel = $materielRepository->postMateriel($body , $user);
+        if (!$materiel instanceof Materiel) {
+            return $responseHandler->handleJsonResponse([
+                'msg' => $materiel
+            ] , 401 , 'bad request');
         }
 
+        return $responseHandler->handleJsonResponse([
+            'data' => $materiel
+        ] , 201 , 'ressource created');
 
-    
-        
     }
+
+    public static function put(){
+        $database = new Database();
+        $database->DbConnect();
+        $responseHandler = new ResponseHandler();
+        $materielRepository = new MaterielRepository('materiel' , $database , Materiel::class );
+        $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
+        $userRepository = new UserRepository('user' , $database , User::class );
+        $security = new Security();
+
+        $auth = self::Auth($responseHandler,$security);
+        if ($auth != null) 
+            return $auth;
+
+        $id_user = UserController::returnId__user($security)['uid'];
+        $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
+        $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
+        $user->setClients($clients);
+        $body = json_decode(file_get_contents('php://input'), true);
+
+        if (empty($body)) {
+            return $responseHandler->handleJsonResponse([
+                'msg' => 'le body ne peut pas etre vide'
+            ] , 401 , 'bad request');
+        } 
+
+        $materiel = $materielRepository->postMateriel($body , $user);
+        if (!$materiel instanceof Materiel) {
+            return $responseHandler->handleJsonResponse([
+                'msg' => $materiel
+            ] , 401 , 'bad request');
+        }
+
+        return $responseHandler->handleJsonResponse([
+            'data' => $materiel
+        ] , 201 , 'ressource created');
+
+    }
+    
 
 }
