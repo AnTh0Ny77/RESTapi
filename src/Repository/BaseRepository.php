@@ -110,7 +110,6 @@ Class BaseRepository {
                 unset($get_array[$key]);
             }
         }
-        var_dump($array_order);
         return $array_order;
     }
    

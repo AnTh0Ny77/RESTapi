@@ -97,6 +97,7 @@ Class MaterielController extends BaseController {
             if (!empty($_GET['search'])) {
                 if (!empty($_GET['limit'])) {
                     $limit = intval($_GET['limit']);
+                 
                 }
                 $order_array =  $materielRepository->getOrder($_GET);
                 unset($inclause['mat__marque']);
@@ -114,9 +115,8 @@ Class MaterielController extends BaseController {
                 }
 
             }else{
-                  //parametre cli__id est specifique :
-                // $order_array =  $materielRepository->getOrder($_GET);
-                
+
+                $order_array =  $materielRepository->getOrder($_GET);
                 if(!empty($_GET['mat__cli__id'])){
                     $temp = [];
                     foreach ($_GET['mat__cli__id'] as $value) {
@@ -165,7 +165,7 @@ Class MaterielController extends BaseController {
                     $limit = intval($_GET['limit']);
                 }
             
-                $list = $materielRepository->findMat($inclause , [] , $limit , []);
+                $list = $materielRepository->findMat($inclause , [] , $limit , $order_array);
                 if (empty($list)) {
                     return $responseHandler->handleJsonResponse([
                         'msg' => 'Aucun materiel n a été trouvé'
