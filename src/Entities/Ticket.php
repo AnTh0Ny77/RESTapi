@@ -32,9 +32,8 @@ Class Tickets {
      * @return  self
      */ 
     public function setTk__id($tk__id)
-    {
+    {   
         $this->tk__id = $tk__id;
-
         return $this;
     }
 
@@ -53,8 +52,10 @@ Class Tickets {
      */ 
     public function setTk__motif($tk__motif)
     {
+        if (!empty($tk__motif))
+            return 'le motif du ticket ne peut pas etre vide';
+         
         $this->tk__motif = $tk__motif;
-
         return $this;
     }
 
@@ -93,8 +94,10 @@ Class Tickets {
      */ 
     public function setTk__titre($tk__titre)
     {
-        $this->tk__titre = $tk__titre;
+        if (!empty($tk__titre))
+            return 'le titre du ticket ne peut pas etre vide';
 
+        $this->tk__titre = $tk__titre;
         return $this;
     }
 
