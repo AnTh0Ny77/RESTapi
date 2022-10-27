@@ -10,9 +10,6 @@ Class BaseController {
     public static function Auth( ResponseHandler $responseHandler , Security $security){
         $token = $security->getBearerToken();
         if (empty($token)) {
-            // $body = [
-            //     $message = 'JWT not found '
-            // ];
             return $responseHandler->handleJsonResponse([
                 'msg' => 'JWT not found '
             ] , 401 , 'Unauthorized');

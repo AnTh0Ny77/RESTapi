@@ -156,9 +156,8 @@ Class MaterielController extends BaseController {
                     return $responseHandler->handleJsonResponse( [
                         "data" => $list ], 200 , 'ok ');
                 }
-
             }else{
-
+                
                 $order_array =  $materielRepository->getOrder($_GET);
                 if(!empty($_GET['mat__cli__id'])){
                     $temp = [];
@@ -169,7 +168,7 @@ Class MaterielController extends BaseController {
                                 }
                             }
                     }
-                    $inclause['mat__cli__id']  = $temp ;
+                    $inclause['mat__cli__id']  = $temp;
                     unset($_GET['mat__cli__id']);
                 }
                 if(empty($inclause['mat__cli__id'])){

@@ -52,7 +52,7 @@ Class Tickets {
      */ 
     public function setTk__motif($tk__motif)
     {
-        if (!empty($tk__motif))
+        if (empty($tk__motif))
             return 'le motif du ticket ne peut pas etre vide';
          
         $this->tk__motif = $tk__motif;
@@ -94,7 +94,7 @@ Class Tickets {
      */ 
     public function setTk__titre($tk__titre)
     {
-        if (!empty($tk__titre))
+        if (empty($tk__titre))
             return 'le titre du ticket ne peut pas etre vide';
 
         $this->tk__titre = $tk__titre;

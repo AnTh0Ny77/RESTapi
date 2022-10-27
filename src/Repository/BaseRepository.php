@@ -4,18 +4,19 @@ require  '././vendor/autoload.php';
 require  '././src/Entities/User.php';
 use Src\Database;
 use PDO;
+use PDOException;
 use Src\Entities\User;
 use ReflectionClass;
 use Src\Services\ResponseHandler;
 
 Class BaseRepository {
 
-
     public string $Table;
     public  $Class;
-    public Database $Db;
+    public  $Db;
 
     public function __construct(string $table , $db , $class){
+       
         $this->Table = $table;
         $this->Db = $db;
         $this->Class = $class;
@@ -114,6 +115,8 @@ Class BaseRepository {
     }
    
     public function insert(array $array){
+      
+        $error = null;
         $column = '( ';
         $value = '( ';
         foreach ($array as $key => $val) {
@@ -129,17 +132,28 @@ Class BaseRepository {
         $value .=  ') ';
         $request = "INSERT INTO " .$this->Table." ";
         $request .= $column . ' VALUES ' . $value ; 
+
+        try {
+            $request = $this->Db->Pdo->prepare($request);
+            foreach ($array as $key => $val) {
+                $value =  ':'.$key.'';
+                $request->bindValue($value, $val);
+            }
+            $request->execute();
        
-        $request = $this->Db->Pdo->prepare($request);
-        foreach ($array as $key => $val) {
-            $value =  ':'.$key.'';
-            $request->bindValue($value, $val);
+        } catch (PDOException $e) {
+            $error = $e->getMessage();
         }
-        
-        $request->execute();
-        $user__id = $this->Db->Pdo->lastInsertId();
-        return $user__id;
+        if ($error != null) {
+           
+            return $error;
+        }
+        $id = $this->Db->Pdo->lastInsertId();
+      
+        return $id;
     }
+
+    
 
     public function delete(array $array){
         $clause = '';

@@ -2,6 +2,7 @@
 namespace Src\Controllers;
 require  '././vendor/autoload.php';
 use Src\Database;
+use Src\Sossuke;
 use Src\Entities\User;
 use Src\Entities\Client;
 use Src\Entities\Materiel;
@@ -16,7 +17,7 @@ Use Src\Repository\TicketLigneRepository;
 use Src\Entities\TicketsLigneChamp;
 use Src\Repository\TicketLigneChampRepository;
 use Src\Repository\LienUserClientRepository;
-use src\Sossuke;
+
 
 Class TicketController extends BaseController {
 
@@ -103,10 +104,10 @@ Class TicketController extends BaseController {
     public static function post(){
         $database = new Database();
         $database->DbConnect();
+        $sossuke = new Sossuke();
+        $sossuke->DbConnect();
         $responseHandler = new ResponseHandler();
         $TicketRepository = new TicketRepository('ticket' , $database , Tickets::class );
-        // $TicketLigneRepository = new TicketLigneRepository('ticket_ligne' , $database , TicketsLigne::class );
-        // $TicketLigneChampRepository = new TicketLigneChampRepository('ticket_ligne_champ' , $database , TicketsLigneChamp::class );
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
         $userRepository = new UserRepository('user' , $database , User::class );
         $security = new Security();
@@ -119,34 +120,34 @@ Class TicketController extends BaseController {
         $user->setClients($clients);
 
         $body = json_decode(file_get_contents('php://input'), true);
-
+        
         if (empty($body)) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'le body ne peut pas etre vide'
             ] , 401 , 'bad request');
         } 
- 
-        $sossuke = new Sossuke();
-        $sossuke->DbConnect();
+      
         $TicketRepositorySossuke = new TicketRepository('ticket' , $sossuke , Tickets::class );
-
         $new_ticket = $TicketRepositorySossuke->checkTicket($body);
         if (!$new_ticket instanceof Tickets) {
             return $responseHandler->handleJsonResponse([
                 'msg' => $new_ticket
             ] , 401 , 'bad request');
         }
-        $id_new_ticket = $TicketRepositorySossuke->insert( (array ) $new_ticket);
+    
+        $id_new_ticket = $TicketRepositorySossuke->insert($body);
         $verify = $TicketRepositorySossuke->findOneBy(array('tk__id' => $id_new_ticket ) , true);
+       
         if (!$verify instanceof Tickets) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'un problemene est survenu durant la creation du ticket dans la base de donnée sossuke'
             ] , 500 , 'internal server error');
         }
         $new_ticket->setTk__id($id_new_ticket);
-        $myRecode_ticket_id = $TicketRepository->insert((array )$new_ticket);
-
-        $new_ticket = $TicketRepository->findOneBy(array('tk__id' => $myRecode_ticket_id ) , true);
+        $body['tk__id'] = $id_new_ticket;
+        $myRecode_ticket_id = $TicketRepository->insert($body);
+        
+        $new_ticket = $TicketRepository->findOneBy(array('tk__id' => $id_new_ticket) , true);
         if (!$new_ticket instanceof Tickets) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'un problemene est survenu durant la creation du ticket'
@@ -154,7 +155,7 @@ Class TicketController extends BaseController {
         }
 
         return $responseHandler->handleJsonResponse([
-            'data' => [ 'tk__id' => $myRecode_ticket_id]
+            'data' => [ 'tk__id' => $id_new_ticket]
         ] , 201 , 'ressource created');
 
     }

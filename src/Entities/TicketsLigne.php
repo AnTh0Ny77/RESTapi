@@ -56,6 +56,9 @@ Class TicketsLigne {
      */ 
     public function setTkl__tk_id($tkl__tk_id)
     {
+        if (empty($tkl__tk_id)) {
+            return 'l ID du ticket est obligatoire';
+        }
         $this->tkl__tk_id = $tkl__tk_id;
 
         return $this;
@@ -76,6 +79,9 @@ Class TicketsLigne {
      */ 
     public function setTkl__user_id($tkl__user_id)
     {
+        if (empty($tkl__user_id)) {
+             return ' l ID de l utilisateur ne peut pas etre vide ';
+        }
         $this->tkl__user_id = $tkl__user_id;
 
         return $this;
@@ -94,10 +100,9 @@ Class TicketsLigne {
      *
      * @return  self
      */ 
-    public function setTkl__dt($tkl__dt)
+    public function setTkl__dt()
     {
-        $this->tkl__dt = $tkl__dt;
-
+        $this->tkl__dt = date('Y-m-d H:i:s');
         return $this;
     }
 
@@ -156,8 +161,10 @@ Class TicketsLigne {
      */ 
     public function setTkl__user_id_dest($tkl__user_id_dest)
     {
-        $this->tkl__user_id_dest = $tkl__user_id_dest;
-
+        if (empty($tkl__user_id_dest)) {
+            return ' l ID de l utilisateur destinataire ne peut pas etre vide ';
+       }
+       $this->tkl__user_id_dest = $tkl__user_id_dest;
         return $this;
     }
 

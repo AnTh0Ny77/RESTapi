@@ -13,6 +13,7 @@ use Src\Controllers\ConfirmUserController;
 use Src\Controllers\ImageClientController;
 use Src\Controllers\ForgotPasswordController;
 use Src\Controllers\TicketController;
+use Src\Controllers\TicketLigneController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -75,6 +76,10 @@ switch($request){
 
     case $config->urls->base.TicketController::path().$data:
         echo TicketController::index($_SERVER['REQUEST_METHOD'],$data);
+        break;
+
+    case $config->urls->base.TicketLigneController::path().$data:
+        echo TicketLigneController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
 
 	default:

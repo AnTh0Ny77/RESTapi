@@ -128,20 +128,24 @@ Class UserController  extends BaseController{
         if (empty($data)){
             $database = new Database();
             $database->DbConnect();
+           
             $responseHandler = new ResponseHandler();
             $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
             $refreshRepository = new RefreshRepository($database);
             $userRepository = new UserRepository('user' , $database , User::class );
-
+            
             $security = new Security();
             $auth = self::Auth($responseHandler,$security);
             if ($auth != null) 
                 return $auth;
-
+              
             $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
+            
             $user = $userRepository->getRole($user);
+           
             $refresh_token = $refreshRepository->findOneBy(['user__id' => $user->getUser__id()] ,false );
             $user->setRefresh_token($refresh_token['refresh_token']);
+           
             $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
             $user->setClients($clients);
             return $responseHandler->handleJsonResponse( [ 
