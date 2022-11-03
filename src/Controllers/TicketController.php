@@ -77,11 +77,9 @@ Class TicketController extends BaseController {
         $database = new Database();
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
-
         $TicketRepository = new TicketRepository('ticket' , $database , Tickets::class );
         $TicketLigneRepository = new TicketLigneRepository('ticket_ligne' , $database , TicketsLigne::class );
         $TicketLigneChampRepository = new TicketLigneChampRepository('ticket_ligne_champ' , $database , TicketsLigneChamp::class );
-
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
         $userRepository = new UserRepository('user' , $database , User::class );
         $security = new Security();

@@ -8,8 +8,25 @@ use PDO;
 use Src\Repository\BaseRepository;
 use Src\Entities\Client;
 use Src\Entities\TicketsLigne;
+use Src\Entities\TicketsLigneChamp;
 use Src\Services\ResponseHandler;
 
 Class TicketLigneChampRepository  extends BaseRepository {
 
+
+    public function checkTicket($tickets){
+        
+        $ticket = new TicketsLigneChamp();
+        
+        $id_ticket = $ticket->setTklc__id($tickets['tklc__id']);
+        if (!$id_ticket instanceof TicketsLigneChamp) 
+            return $id_ticket;
+
+        $id_ticket = $ticket->setTklc__nom_champ($tickets['tklc__nom_champ']);
+        if (!$id_ticket instanceof TicketsLigneChamp) 
+            return $id_ticket;
+
+        return $ticket;
+        
+    }
 }

@@ -27,8 +27,10 @@ Class TicketsLigneChamp {
      */ 
     public function setTklc__id($tklc__id)
     {
+        if (empty($tklc__id)) {
+           return 'L ID de la ligne doit etre reseigné';
+        }
         $this->tklc__id = $tklc__id;
-
         return $this;
     }
 
@@ -47,6 +49,9 @@ Class TicketsLigneChamp {
      */ 
     public function setTklc__nom_champ($tklc__nom_champ)
     {
+        if (empty($tklc__nom_champ)) {
+            return 'Le nom du champ ne peut pas etre vide';
+         }
         $this->tklc__nom_champ = $tklc__nom_champ;
 
         return $this;

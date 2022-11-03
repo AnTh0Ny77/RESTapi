@@ -66,6 +66,45 @@ Class TicketChampsController extends BaseController {
     }
 
     public static function post(){
+        $database = new Database();
+        $database->DbConnect();
+        $sossuke = new Sossuke();
+        $sossuke->DbConnect();
+        $responseHandler = new ResponseHandler();
+        $TicketLigneRepository = new TicketLigneRepository('ticket_ligne_champ' , $database , TicketsLigneChamp::class );
+        $TicketLigneSossukeRepository = new TicketLigneRepository('ticket_ligne_champ' , $database , TicketsLigneChamp::class );
+        $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
+        $userRepository = new UserRepository('user' , $database , User::class );
+        $security = new Security();
+        $auth = self::Auth($responseHandler,$security);
+        if ($auth != null) 
+            return $auth;
+        $id_user = UserController::returnId__user($security)['uid'];
+        $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
+        $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
+        $user->setClients($clients);
+        $body = json_decode(file_get_contents('php://input'), true);
+        if(empty($body)){
+            return $responseHandler->handleJsonResponse([
+                'msg' => 'le body ne peut pas etre vide'
+            ] , 401 , 'bad request');
+        } 
 
+        $check = $TicketLigneRepository->checkTicket($body);
+        if (!$check instanceof TicketsLigneChamp) {
+            return $responseHandler->handleJsonResponse([
+                'msg' => $check
+            ] , 401 , 'bad request');
+        }
+
+        $id_new_ticket_ligne = $TicketLigneSossukeRepository->insert($body);
+        $TicketLigneRepository->insert($body);
+        
+        $verify = $TicketLigneSossukeRepository->findOneBy(array('tklc__id' => $id_new_ticket_ligne ) , true);
+        if (!$verify instanceof TicketsLigneChamp) {
+            return $responseHandler->handleJsonResponse([
+                'msg' => 'Un probleme est survenu durant la creation dans la base de donnée sossuke'
+            ] , 500 , 'bad request');
+        }
     }
 }
