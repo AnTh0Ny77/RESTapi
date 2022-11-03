@@ -57,6 +57,7 @@ Class MaterielRepository  extends BaseRepository {
                 "mat__type",
                 "mat__marque" ,
                 "mat__memo" , 
+                "mat__sn",
                 "mat__idnec" , 
                 "mat__ident" , 
                 "mat__contrat_id"

@@ -91,11 +91,9 @@ Class TicketController extends BaseController {
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
         $user->setClients($clients);
 
-        if (!empty($_GET['search'])){
-
-        }else {
-            
-        }
+        var_dump($TicketRepository->search([
+            "tk__id" => [1209,1210,1211]
+        ], 'charlie' , 10 ,["tk__id" => "ASC"],[])) ;
        
     }
 

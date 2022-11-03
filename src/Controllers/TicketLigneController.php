@@ -83,7 +83,6 @@ Class TicketLigneController extends BaseController {
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
         $user->setClients($clients);
-
         $body = json_decode(file_get_contents('php://input'), true);
         
         if (empty($body)) {
