@@ -104,6 +104,7 @@ Class MaterielController extends BaseController {
     public static function get($data){
         $database = new Database();
         $database->DbConnect();
+        
         $responseHandler = new ResponseHandler();
         $materielRepository = new MaterielRepository('materiel' , $database , Materiel::class );
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
@@ -112,8 +113,11 @@ Class MaterielController extends BaseController {
         $auth = self::Auth($responseHandler,$security);
         if ($auth != null) 
             return $auth;
+
+        
         $id_user = UserController::returnId__user($security)['uid'];
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
+        
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
         
         $user->setClients($clients);
@@ -178,9 +182,11 @@ Class MaterielController extends BaseController {
                 }
                 
                 if(!empty($_GET['mat__marque'])){
+                   
                     foreach ($_GET['mat__marque'] as $value) {
                             array_push($inclause['mat__marque'] , $value);   
                     }
+                   
                     unset($_GET['mat__marque']);
                 }
 
@@ -219,6 +225,7 @@ Class MaterielController extends BaseController {
             }
         }else {
             //recherche standard dans le parc client :
+           
             foreach ($inclause as $key => $value){
                 if (empty($value)) 
                     unset($inclause[$key]);

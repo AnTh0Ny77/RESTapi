@@ -1,12 +1,18 @@
 {
     "urls": {
-        "base": "/api"
+        "base": "/RESTapi/"
     }, 
     "database": {
         "host":  "localhost", 
-        "user": "api",
+        "user": "root",
         "name" : "myrecode",
-        "pass" : "anthony1234"
+        "pass" : ""
+    },
+    "sossuke": {
+        "host":  "localhost", 
+        "user": "root",
+        "name" : "devis",
+        "pass" : ""
     },
     "security": {
         "app_secret" : "sec!ReT423*&"

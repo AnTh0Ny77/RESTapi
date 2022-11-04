@@ -38,9 +38,9 @@ Class MaterielRepository  extends BaseRepository {
                 $in_clause.= 'AND ' . $key . ' IN (  ';
                 foreach ($array_of_type as $iteration => $val) {
                     if ( $iteration === array_key_last($array_of_type)){ 
-                        $in_clause.=   '"'.$val . '"';
+                        $in_clause.=   "'".$val . "'";
                     } else{
-                        $in_clause.=  '"'. $val . '", ';
+                        $in_clause.=  "'". $val . "', ";
                     }
                 }
                 $in_clause.= ' ) ';
@@ -90,7 +90,7 @@ Class MaterielRepository  extends BaseRepository {
         }
         
         $request = 'SELECT * FROM '.$this->Table.' WHERE 1 = 1 '.$where_clause .' ' . $in_clause . ' '. $orderclause . $limitclause ;
-
+       
         $request = $this->Db->Pdo->query($request);
         
         $request = $request->fetchAll(PDO::FETCH_ASSOC);

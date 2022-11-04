@@ -57,6 +57,7 @@ Class BaseRepository {
             $clause .=  'AND ' . $key . ' = ' .$value.'';
         }
         $request = 'SELECT * FROM '.$this->Table.' WHERE 1 = 1 '.$clause .' ' . $orderclause . $limitclause ;
+        
         $request = $this->Db->Pdo->query($request);
        
         return  $request->fetchAll(PDO::FETCH_ASSOC);
