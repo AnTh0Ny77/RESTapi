@@ -164,6 +164,9 @@ Class MaterielController extends BaseController {
             }else{
               
                 $order_array =  $materielRepository->getOrder($_GET);
+
+                var_dump('au secourrrr');
+                die();
                 if(!empty($_GET['mat__cli__id'])){
                     $temp = [];
                     foreach ($_GET['mat__cli__id'] as $value) {
