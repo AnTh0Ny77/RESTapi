@@ -163,7 +163,7 @@ Class MaterielController extends BaseController {
                 }
             }else{
               
-                $order_array =  $materielRepository->getOrder($_GET);
+                // $order_array =  $materielRepository->getOrder($_GET);
 
                
                 if(!empty($_GET['mat__cli__id'])){
