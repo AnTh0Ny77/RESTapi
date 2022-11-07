@@ -73,7 +73,7 @@ Class LoginController {
         $refreshRepository = new RefreshRepository($database);
         $body = json_decode(file_get_contents('php://input'), true);
         $login = $userRepository->loginUser($body);
-        var_dump('hey');
+       
         if (!$login instanceof User){
             $response = [
                  'msg' => $login, 
