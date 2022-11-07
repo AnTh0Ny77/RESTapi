@@ -173,7 +173,7 @@ Class MaterielController extends BaseController {
                             }
                     }
                     $inclause['mat__cli__id']  = $temp;
-                    unset($_GET['mat__cli__id']);
+                    $_GET['mat__cli__id'] = "";
                 }
                 if(empty($inclause['mat__cli__id'])){
                     return $responseHandler->handleJsonResponse([
@@ -187,33 +187,35 @@ Class MaterielController extends BaseController {
                             array_push($inclause['mat__marque'] , $value);   
                     }
                    
-                    unset($_GET['mat__marque']);
+                    $_GET['mat__marque'] = "";
                 }
 
                 if(!empty($_GET['mat__kw_tg'])){
                     foreach ($_GET['mat__kw_tg'] as $value) {
                             array_push($inclause['mat__kw_tg']  ,$value);      
                     }
-                    unset($_GET['mat__kw_tg']);
+                    $_GET['mat__kw_tg'] = "";
                 }
 
                 if(!empty($_GET['mat__type'])){
                     foreach ($_GET['mat__type'] as $value) {
                             array_push($inclause['mat__type']  ,$value);      
                     }
-                    unset($_GET['mat__type']);
+                    $_GET['mat__type'] = "";
                 }
-
+                
+                $new_clause = null;
                 foreach ($inclause as $key => $value){
-                    if (empty($value)) 
-                        unset($inclause[$key]);
+                    if (!empty($value) ){
+                        $new_clause[$key] = $value;
+                    }
+                       
                 }
-
                 if (!empty($_GET['limit'])) {
                     $limit = intval($_GET['limit']);
                 }
             
-                $list = $materielRepository->findMat($inclause , [] , $limit , $order_array);
+                $list = $materielRepository->findMat($new_clause , [] , $limit , $order_array);
                 if (empty($list)) {
                     return $responseHandler->handleJsonResponse([
                         'msg' => 'Aucun materiel n a été trouvé'
@@ -225,13 +227,15 @@ Class MaterielController extends BaseController {
             }
         }else {
             //recherche standard dans le parc client :
-           
+            $new_clause = null;
             foreach ($inclause as $key => $value){
-                if (empty($value)) 
-                    unset($inclause[$key]);
+                if (!empty($value) ){
+                    $new_clause[$key] = $value;
+                }
+                       
             }
            
-            $list = $materielRepository->findMat($inclause , [] , 30 , []);
+            $list = $materielRepository->findMat($new_clause , [] , 30 , []);
             if (empty($list)) {
                 return $responseHandler->handleJsonResponse([
                     'msg' => 'Aucun materiel n a été trouvé'
