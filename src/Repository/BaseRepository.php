@@ -103,7 +103,6 @@ Class BaseRepository {
 
 
     public function getOrder($get_array){
-        
         $array_order = [];
         foreach ($get_array as $key => $value) {
             if ( strtoupper($value)  === 'DESC' or  strtoupper($value)  === 'ASC') {

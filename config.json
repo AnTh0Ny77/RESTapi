@@ -8,6 +8,12 @@
         "name" : "myrecode",
         "pass" : "anthony1234"
     },
+    "sossuke": {
+        "host":  "192.168.1.124", 
+        "user": "root",
+        "name" : "devis",
+        "pass" : ""
+    },
     "security": {
         "app_secret" : "sec!ReT423*&"
     },
