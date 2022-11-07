@@ -67,8 +67,7 @@ Class UserRepository  extends BaseRepository{
             array_push($roles ,  $value['ur__role']);
         }
         $user->setRoles($roles);
-       var_dump($user);
-       die();
+      
         return $user;
     } 
 
