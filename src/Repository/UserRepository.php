@@ -88,8 +88,9 @@ Class UserRepository  extends BaseRepository{
              return 'Identifiants invalides.';
 
         $user = $this->findOneBy(['user__mail' =>  $user_data['user__mail']] , true);
-        var_dump('hey');
+        
         $user = $this->getRole($user);
+        var_dump('hey');
         return $user;
         
     }
