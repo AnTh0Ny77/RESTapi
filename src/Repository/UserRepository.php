@@ -62,7 +62,8 @@ Class UserRepository  extends BaseRepository{
         $roleRepository = new  RoleRepository($this->Db);
       
         $arrayRoles = $roleRepository->findBy(['ur__user_id' =>  $user->getUser__id()] , 50 , ['ur__role' => 'ASC' ]);
-        
+        var_dump('hey');
+        die();
         foreach ($arrayRoles as $key => $value) {
             array_push($roles ,  $value['ur__role']);
         }
@@ -90,7 +91,7 @@ Class UserRepository  extends BaseRepository{
         $user = $this->findOneBy(['user__mail' =>  $user_data['user__mail']] , true);
         
         $user = $this->getRole($user);
-        var_dump('hey');
+        
         return $user;
         
     }
