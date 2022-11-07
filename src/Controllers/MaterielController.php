@@ -142,7 +142,7 @@ Class MaterielController extends BaseController {
         if (!empty($_GET)){
             
             if (!empty($_GET['search'])) {
-                var_dump('hey');
+                
                 if (!empty($_GET['limit'])) {
                     $limit = intval($_GET['limit']);
                  
@@ -162,7 +162,8 @@ Class MaterielController extends BaseController {
                         "data" => $list ], 200 , 'ok ');
                 }
             }else{
-                
+                var_dump('hey');
+                die();
                 $order_array =  $materielRepository->getOrder($_GET);
                 if(!empty($_GET['mat__cli__id'])){
                     $temp = [];
