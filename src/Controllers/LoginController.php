@@ -119,8 +119,7 @@ Class LoginController {
 
         $login->setToken($security->returnToken($login->getUser__id()));
         $refresh_token = $refreshRepository->insertOne($login->getUser__id());
-        var_dump($login);
-        die();
+        
         $login->setRefresh_token($refresh_token);
         $response = [
             'id' =>  $login->getUser__id(),
