@@ -162,9 +162,10 @@ Class MaterielController extends BaseController {
                         "data" => $list ], 200 , 'ok ');
                 }
             }else{
+                
+                $order_array =  $materielRepository->getOrder($_GET);
                 var_dump('hey');
                 die();
-                $order_array =  $materielRepository->getOrder($_GET);
                 if(!empty($_GET['mat__cli__id'])){
                     $temp = [];
                     foreach ($_GET['mat__cli__id'] as $value) {
