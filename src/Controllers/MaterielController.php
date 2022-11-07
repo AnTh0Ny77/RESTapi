@@ -151,7 +151,7 @@ Class MaterielController extends BaseController {
                 unset($inclause['mat__marque']);
                 unset($inclause['mat__kw_tg']);
                 unset($inclause['mat__type']);
-                $list = $materielRepository->findMat($inclause , $_GET['search'] , $limit , $order_array);
+                $list = $materielRepository->findMat($inclause , $_GET['search'] , $limit ,  $order_array);
 
                 if (empty($list)) {
                     return $responseHandler->handleJsonResponse([
@@ -163,8 +163,7 @@ Class MaterielController extends BaseController {
                 }
             }else{
               
-                // $order_array =  $materielRepository->getOrder($_GET);
-
+                $order_array =  $materielRepository->getOrder($_GET);
                
                 if(!empty($_GET['mat__cli__id'])){
                     $temp = [];
@@ -210,7 +209,7 @@ Class MaterielController extends BaseController {
                 
                 $new_clause = null;
                 foreach ($inclause as $key => $value){
-                    if (!empty($value) ){
+                    if (!empty($value)  and $value != 'ASC' and $value != 'DESC'){
                         $new_clause[$key] = $value;
                     }
                        
