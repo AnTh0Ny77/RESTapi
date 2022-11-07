@@ -112,7 +112,8 @@ Class BaseRepository {
                 $value = "";
             }
         }
-       
+        var_dump( $array_order);
+        die();
         return $array_order;
     }
    
