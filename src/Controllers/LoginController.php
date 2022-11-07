@@ -73,8 +73,7 @@ Class LoginController {
         $refreshRepository = new RefreshRepository($database);
         $body = json_decode(file_get_contents('php://input'), true);
         $login = $userRepository->loginUser($body);
-        var_dump($login);
-        die();
+       
         if (!$login instanceof User){
             $response = [
                  'msg' => $login, 
@@ -120,6 +119,8 @@ Class LoginController {
 
         $login->setToken($security->returnToken($login->getUser__id()));
         $refresh_token = $refreshRepository->insertOne($login->getUser__id());
+        var_dump($login);
+        die();
         $login->setRefresh_token($refresh_token);
         $response = [
             'id' =>  $login->getUser__id(),
