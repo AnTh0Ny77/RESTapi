@@ -54,6 +54,9 @@ switch($request){
         echo RefreshController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
 
+    case $config->urls->base.CommercialController::path().$data:
+        echo CommercialController::index($_SERVER['REQUEST_METHOD'],$data);
+
     case $config->urls->base.ConfirmUserController::path().$data:
         echo ConfirmUserController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
