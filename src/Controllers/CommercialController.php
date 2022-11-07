@@ -68,23 +68,22 @@ Class CommercialController extends BaseController {
         $auth = self::Auth($responseHandler,$security);
         if ($auth != null) 
             return $auth;
-
+       
         if(empty($_GET['com__id'])){
             return $responseHandler->handleJsonResponse([
                 'msg' => 'Le parametre com__id n est pas spécifié'
             ] , 400 , 'Bad Request');
         }
-
+        
         $com = $commercialRepository->findOneBy(['com__id' =>  $_GET['com__id']] , true);
         if (!$com instanceof Commercial) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'Le commercial n a pas été trouvé'
             ] , 400 , 'Bad Request');
         }
-
         return $responseHandler->handleJsonResponse(
             $com 
-         , 200 , 'Bad Request');
+         , 200 , 'OK');
 
     }
 
