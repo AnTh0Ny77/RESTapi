@@ -219,7 +219,7 @@ Class MaterielController extends BaseController {
                     $limit = intval($_GET['limit']);
                 }
             
-                $list = $materielRepository->findMat($new_clause , [] , $limit , $order_array);
+                $list = $materielRepository->findMat($new_clause , [] , $limit ,[]);
                 if (empty($list)) {
                     return $responseHandler->handleJsonResponse([
                         'msg' => 'Aucun materiel n a été trouvé'
