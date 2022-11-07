@@ -10,9 +10,9 @@
     },
     "sossuke": {
         "host":  "192.168.1.124", 
-        "user": "root",
+        "user": "remoteroot",
         "name" : "devis",
-        "pass" : ""
+        "pass" : "remotepassword1234!"
     },
     "security": {
         "app_secret" : "sec!ReT423*&"
