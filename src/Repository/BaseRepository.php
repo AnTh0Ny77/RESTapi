@@ -108,8 +108,9 @@ Class BaseRepository {
         foreach ($get_array as $key => $value) {
             if ( strtoupper($value)  == 'DESC' or  strtoupper($value)  == 'ASC') {
                 $array_order[$key]  =  $value;
-                unset($value);
-                unset($get_array[$key]);
+                $value = "";
+                // unset($value);
+                // unset($get_array[$key]);
             }
         }
         return $array_order;
