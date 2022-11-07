@@ -78,12 +78,12 @@ Class UserRepository  extends BaseRepository{
             return 'Le champ mail ne peut pas etre vide.';
        
         $user = $this->findOneBy(['user__mail' =>  $user_data['user__mail']] , false);
-        var_dump('hey');
+        
         if (empty($user)) 
             return 'Identifiants invalides.';
 
         $password_authenticity = password_verify($user_data['user__password'],$user['user__password']);
-
+        var_dump('hey');
         if ($password_authenticity == false )
              return 'Identifiants invalides.';
 
