@@ -161,7 +161,7 @@ Class MaterielController extends BaseController {
                         "data" => $list ], 200 , 'ok ');
                 }
             }else{
-                
+                var_dump('hey');
                 $order_array =  $materielRepository->getOrder($_GET);
                 if(!empty($_GET['mat__cli__id'])){
                     $temp = [];
@@ -175,7 +175,7 @@ Class MaterielController extends BaseController {
                     $inclause['mat__cli__id']  = $temp;
                     $_GET['mat__cli__id'] = "";
                 }
-                var_dump('hey');
+                
                 if(empty($inclause['mat__cli__id'])){
                     return $responseHandler->handleJsonResponse([
                         'msg' => 'Vous ne pouvez pas consulter le parc matériel des autres sites'
