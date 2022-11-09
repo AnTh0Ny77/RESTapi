@@ -125,7 +125,8 @@ Class MaterielController extends BaseController {
             'mat__cli__id'  => [] ,
             'mat__marque' => [], 
             'mat__kw_tg' => [] , 
-            'mat__type' => []
+            'mat__type' => [], 
+            'mat__id' => []
         ];
         $limit = 30 ;
         foreach($user->getClients() as $client){
@@ -151,6 +152,7 @@ Class MaterielController extends BaseController {
                 unset($inclause['mat__marque']);
                 unset($inclause['mat__kw_tg']);
                 unset($inclause['mat__type']);
+                unset($inclause['mat__id']);
                 $list = $materielRepository->findMat($inclause , $_GET['search'] , $limit ,  $order_array);
 
                 if (empty($list)) {
@@ -181,6 +183,13 @@ Class MaterielController extends BaseController {
                     return $responseHandler->handleJsonResponse([
                         'msg' => 'Vous ne pouvez pas consulter le parc matériel des autres sites'
                     ] , 404 , 'not found');
+                }
+
+                if (!empty($_GET['mat__id'])) {
+                    foreach ($_GET['mat__id'] as $value) {
+                        array_push($inclause['mat__id'] , $value);   
+                    }
+                    $_GET['mat__id'] = "";
                 }
                 
                 if(!empty($_GET['mat__marque'])){
