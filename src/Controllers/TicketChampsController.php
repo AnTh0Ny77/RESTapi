@@ -14,7 +14,7 @@ use Src\Entities\Tickets;
 use Src\Repository\TicketRepository;
 Use Src\Entities\TicketsLigne;
 Use Src\Repository\TicketLigneRepository;
-use Src\Entities\TicketsLigneChamp;
+use Src\Entities\TicketLigneChamp;
 use Src\Repository\TicketLigneChampRepository;
 use Src\Repository\LienUserClientRepository;
 
@@ -83,15 +83,17 @@ Class TicketChampsController extends BaseController {
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
         $user->setClients($clients);
+       
         $body = json_decode(file_get_contents('php://input'), true);
         if(empty($body)){
             return $responseHandler->handleJsonResponse([
                 'msg' => 'le body ne peut pas etre vide'
             ] , 401 , 'bad request');
         } 
-
+        
         $check = $TicketLigneRepository->checkTicket($body);
-        if (!$check instanceof TicketsLigneChamp) {
+        
+        if (!$check instanceof TicketLigneChamp) {
             return $responseHandler->handleJsonResponse([
                 'msg' => $check
             ] , 401 , 'bad request');
@@ -101,7 +103,7 @@ Class TicketChampsController extends BaseController {
         $TicketLigneRepository->insert($body);
         
         $verify = $TicketLigneSossukeRepository->findOneBy(array('tklc__id' => $id_new_ticket_ligne ) , true);
-        if (!$verify instanceof TicketsLigneChamp) {
+        if (!$verify instanceof TicketLigneChamp) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'Un probleme est survenu durant la creation dans la base de donnée sossuke'
             ] , 500 , 'bad request');

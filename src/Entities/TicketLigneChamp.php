@@ -2,7 +2,7 @@
 namespace Src\Entities;
 require  '././vendor/autoload.php';
 
-Class TicketsLigneChamp {
+Class TicketLigneChamp {
 
     public $tklc__id;
 
