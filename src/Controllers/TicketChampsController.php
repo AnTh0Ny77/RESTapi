@@ -72,7 +72,7 @@ Class TicketChampsController extends BaseController {
         $sossuke->DbConnect();
         $responseHandler = new ResponseHandler();
         $TicketLigneRepository = new TicketLigneChampRepository('ticket_ligne_champ' , $database , TicketsLigneChamp::class );
-        $TicketLigneSossukeRepository = new TicketLigneChampRepository('ticket_ligne_champ' , $database , TicketsLigneChamp::class );
+        $TicketLigneSossukeRepository = new TicketLigneChampRepository('ticket_ligne_champ' , $sossuke , TicketsLigneChamp::class );
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
         $userRepository = new UserRepository('user' , $database , User::class );
         $security = new Security();
