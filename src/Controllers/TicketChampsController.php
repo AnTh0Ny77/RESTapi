@@ -102,7 +102,7 @@ Class TicketChampsController extends BaseController {
         $id_new_ticket_ligne = $TicketLigneSossukeRepository->insert($body);
         $TicketLigneRepository->insert($body);
         
-        $verify = $TicketLigneSossukeRepository->findOneBy(array('tklc__id' => $id_new_ticket_ligne ) , true);
+        $verify = $TicketLigneRepository->findOneBy(array('tklc__id' => $id_new_ticket_ligne ) , true);
         if (!$verify instanceof TicketLigneChamp) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'Un probleme est survenu durant la creation dans la base de donnée sossuke'
