@@ -66,7 +66,7 @@ Class TicketRepository  extends BaseRepository {
     }
 
     public function max(){
-        $clause = 'SELECT MAX(tk__groupe) FROM ticket' ;
+        $clause = 'SELECT MAX(tk__groupe) as max__tk__groupe FROM ticket' ;
         $request = $this->Db->Pdo->query($clause);
         return  $request->fetch(PDO::FETCH_ASSOC);
     }
