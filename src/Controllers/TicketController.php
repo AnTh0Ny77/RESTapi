@@ -90,11 +90,10 @@ Class TicketController extends BaseController {
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
         $user->setClients($clients);
-
-        var_dump($TicketRepository->search([
-            "tk__id" => [1209,1210,1211]
-        ], 'charlie' , 10 ,["tk__id" => "ASC"],[])) ;
-       
+        $request = $TicketRepository->search(["tk__id" => [1209,1210,1211] ], 'charlie' , 10 ,["tk__id" => "ASC"],[]);
+        foreach ($request as $key => $value) {
+            
+        }
     }
 
     public static function post(){

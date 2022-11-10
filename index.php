@@ -14,6 +14,7 @@ use Src\Controllers\ImageClientController;
 use Src\Controllers\ForgotPasswordController;
 use Src\Controllers\TicketController;
 use Src\Controllers\TicketLigneController;
+use Src\Controllers\TicketChampsController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -84,6 +85,10 @@ switch($request){
 
     case $config->urls->base.TicketLigneController::path().$data:
         echo TicketLigneController::index($_SERVER['REQUEST_METHOD'],$data);
+        break;
+
+    case $config->urls->base.TicketChampsController::path().$data:
+        echo TicketChampsController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
 
 	default:
