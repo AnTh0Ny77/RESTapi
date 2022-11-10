@@ -72,7 +72,7 @@ Class TicketLigneController extends BaseController {
         $sossuke->DbConnect();
         $responseHandler = new ResponseHandler();
         $TicketLigneRepository = new TicketLigneRepository('ticket_ligne' , $database , TicketsLigne::class );
-        $TicketLigneSossukeRepository = new TicketLigneRepository('ticket_ligne' , $database , TicketsLigne::class );
+        $TicketLigneSossukeRepository = new TicketLigneRepository('ticket_ligne' , $sossuke , TicketsLigne::class );
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
         $userRepository = new UserRepository('user' , $database , User::class );
         $security = new Security();

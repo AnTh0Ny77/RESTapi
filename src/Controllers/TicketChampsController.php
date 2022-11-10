@@ -93,7 +93,7 @@ Class TicketChampsController extends BaseController {
         
         $check = $TicketLigneRepository->checkTicket($body);
         
-        if (!$check instanceof TicketLigneChamp) {
+        if (!$check instanceof TicketLigneChamp){
             return $responseHandler->handleJsonResponse([
                 'msg' => $check
             ] , 401 , 'bad request');
