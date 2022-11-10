@@ -105,8 +105,8 @@ Class TicketChampsController extends BaseController {
         $verify = $TicketLigneRepository->findOneBy(array('tklc__id' => $id_new_ticket_ligne ) , true);
         if (!$verify instanceof TicketLigneChamp) {
             return $responseHandler->handleJsonResponse([
-                'msg' => 'Un probleme est survenu durant la creation dans la base de donnée sossuke'
-            ] , 500 , 'bad request');
+                'msg' => 'crée avec succès'
+            ] , 201 , 'ressource created');
         }
     }
 }
