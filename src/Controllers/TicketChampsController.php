@@ -101,7 +101,6 @@ Class TicketChampsController extends BaseController {
 
         $id_new_ticket_ligne = $TicketLigneSossukeRepository->insert($body);
         $TicketLigneRepository->insert($body);
-        
         $verify = $TicketLigneRepository->findOneBy(array('tklc__id' => $id_new_ticket_ligne ) , true);
         if (!$verify instanceof TicketLigneChamp) {
             return $responseHandler->handleJsonResponse([

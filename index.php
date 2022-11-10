@@ -15,6 +15,7 @@ use Src\Controllers\ForgotPasswordController;
 use Src\Controllers\TicketController;
 use Src\Controllers\TicketLigneController;
 use Src\Controllers\TicketChampsController;
+use Src\Controllers\MaxController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -89,6 +90,10 @@ switch($request){
 
     case $config->urls->base.TicketChampsController::path().$data:
         echo TicketChampsController::index($_SERVER['REQUEST_METHOD'],$data);
+        break;
+
+    case $config->urls->base.MaxController::path().$data:
+        echo MaxController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
 
 	default:
