@@ -16,6 +16,8 @@ use Src\Controllers\TicketController;
 use Src\Controllers\TicketLigneController;
 use Src\Controllers\TicketChampsController;
 use Src\Controllers\MaxController;
+use Src\Controllers\KeywordController;
+use Src\Controllers\UserSitesController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -32,7 +34,6 @@ if (isset($request[1]))
 
 $request = $request[0] . $data ; 
 $config =  json_decode(file_get_contents('config.json'));
-
 
 switch($request){
 	
@@ -94,6 +95,14 @@ switch($request){
 
     case $config->urls->base.MaxController::path().$data:
         echo MaxController::index($_SERVER['REQUEST_METHOD'],$data);
+        break;
+
+    case $config->urls->base.KeywordController::path().$data:
+        echo KeywordController::index($_SERVER['REQUEST_METHOD'],$data);
+        break;
+
+    case $config->urls->base.UserSitesController::path().$data:
+        echo UserSitesController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
 
 	default:
