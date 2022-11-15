@@ -47,8 +47,15 @@ Class BaseRepository {
                 break;
         }
         $orderclause = '';
-        foreach ($order as $key => $value) {
-            $orderclause .= 'ORDER BY '.$key . ' ' . $value . ' ' ;
+        if (!empty($order)) {
+            $orderclause .= ' ORDER BY ' ;
+            foreach ($order as $key => $value) {
+                if ($key === array_key_last($order)){
+                    $orderclause .= ' '.$key . ' ' . $value . ' ' ;
+                }else {
+                    $orderclause .= ' '.$key . ' ' . $value . ', ' ;
+                }
+            }
         }
         
         $clause = '';
