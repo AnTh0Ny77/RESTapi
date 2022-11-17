@@ -83,7 +83,7 @@ Class UserSitesController extends BaseController {
         $user->setClients($clients);
         $array_user =  [] ;
         foreach($user->getClients() as $client){
-            $array_links = $lienUserClientRepository->findBy(['luc__cli__id' => $client->getCli__id() ],1000, [ 'luc__order' => 'ASC']);
+            $array_links = $lienUserClientRepository->findBy(['luc__cli__id' => $client->getCli__id() ],1000, []);
             
             foreach ($array_links as $match) {
                 

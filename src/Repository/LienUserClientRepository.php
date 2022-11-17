@@ -15,7 +15,7 @@ Class LienUserClientRepository  extends BaseRepository {
     public function getUserClients($user__id){
         $clientRepository = new ClientRepository('client' , $this->Db , Client::class );
         
-        $clients = $this->findBy(['luc__user__id' => $user__id ], 50 , []);
+        $clients = $this->findBy(['luc__user__id' => $user__id ], 50 , [ 'luc__order' => 'ASC'] );
         
         $responses = [];
         foreach ($clients as $key => $value) {
