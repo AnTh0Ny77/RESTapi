@@ -73,6 +73,7 @@ Class TicketRepository  extends BaseRepository {
 
 
     public function search(array $in ,  $clause,  int $limit , array $order  , array $parameters ){
+        
         $params = [
             'self' => [
                 'name' => 'ticket' , 
@@ -87,7 +88,7 @@ Class TicketRepository  extends BaseRepository {
                 'alias' => 'm',
                 'type' => 'LEFT',
                 'on' => [
-                    'mat__id' => 'tk__motif'
+                    'mat__id' => 't.tk__motif_id'
                 ],
                 'field' => [
                     'mat__id' => 'in' ,
@@ -99,7 +100,28 @@ Class TicketRepository  extends BaseRepository {
                     'mat__idnec' => 'like'
                 ]
             ], 
-            
+            'lien_user_client' => [
+                'alias' => 'l',
+                'type' => 'LEFT',
+                'on' => [
+                    'luc__cli__id' => 'm.mat__cli__id'
+                ],
+                'field' => [
+                   
+                ]
+            ], 
+            'client' => [
+                'alias' => 'c',
+                'type' => 'LEFT',
+                'on' => [
+                    'cli__id' => 'l.luc__cli__id'
+                ],
+                'field' => [
+                    'cli__id' => 'like' ,
+                    'cli__nom' => 'like' , 
+                    'cli__ville' => 'like'
+                ]
+            ], 
         ];
 
         $limit_clause = '';
@@ -113,7 +135,7 @@ Class TicketRepository  extends BaseRepository {
             if ($key != 'self' ) {
                 $left_clause .=   ' ' . $value['type'] . ' JOIN '.$key.' as '.  $value['alias'] .'  ON  ( ' . $value['alias'].'.';
                 foreach ($value['on'] as $keys => $entry) {
-                    $left_clause .=  $keys.' = ' . $params['self']['alias'] .'.'.$entry;
+                    $left_clause .=  $keys.' = '.$entry;
                 }
                 $left_clause .= ' ) ';
             }
@@ -194,6 +216,7 @@ Class TicketRepository  extends BaseRepository {
         }
 
         $clause = 'SELECT * FROM ' . $params['self']['name'] . ' as ' . $params['self']['alias'].' '. $left_clause . ' WHERE 1 = 1 ' . $in_clause . ' ' . $where_clause . ' ' .  $orderclause  .' ' . $limit_clause;
+       
         $request = $this->Db->Pdo->query($clause);
         return  $request->fetchAll(PDO::FETCH_ASSOC);
     }

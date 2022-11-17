@@ -90,10 +90,19 @@ Class TicketController extends BaseController {
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
         $user->setClients($clients);
-        $request = $TicketRepository->search(["tk__id" => [1209,1210,1211] ], 'charlie' , 10 ,["tk__id" => "ASC"],[]);
-        foreach ($request as $key => $value) {
-            
+        $request = $TicketRepository->search([], 'google' , 100 ,["tk__id" => "ASC"],[]);
+        $array_format_for_response = [];
+        
+        foreach ($request as $results){
+            $ticket = $TicketRepository->findOneBy(['tk__id' => $results['tk__id']] , false);
+            array_push($array_format_for_response , $ticket); 
         }
+
+        return $responseHandler->handleJsonResponse([
+            'data' => $array_format_for_response
+        ] , 200 , 'bad request');
+       
+
     }
 
     public static function post(){

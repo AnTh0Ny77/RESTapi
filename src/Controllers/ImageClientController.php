@@ -76,7 +76,6 @@ Class ImageClientController  extends  BaseController{
         if (empty($_POST['cli__id'])) 
             return $responseHandler->handleJsonResponse('La  société n est pas précisée' , 401 , 'Bad Request');
 
-        
         $client = $clientRepository->findOneBy(['cli__id' => intval($_POST['cli__id']) ] , true);
         if (!$client instanceof CLient) 
             return $responseHandler->handleJsonResponse('Le client est inconnu' , 404 , 'NOT FOUND');
