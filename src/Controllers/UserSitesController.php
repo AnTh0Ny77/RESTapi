@@ -96,13 +96,19 @@ Class UserSitesController extends BaseController {
         $definitve_array = [];
         
         foreach ($array_user as $users) {
+
             $subject = $userRepository->findOneBy(['user__id' => $users] , true);
             $clients = $lienUserClientRepository->getUserClients($users);
             $subject->setClients($clients);
             $subject = $userRepository->getRole($subject);
-            array_push($definitve_array , $subject );
+            array_push($definitve_array , (array ) $subject );
         }
-       
+
+
+        
+        $prenom  = array_column($definitve_array, strtolower('user__prenom'));
+        $nom = array_column($definitve_array, strtolower('user__nom'));
+        array_multisort( $nom, SORT_STRING, $prenom, SORT_STRING, $definitve_array);
         return $responseHandler->handleJsonResponse( [ 
             "data" => $definitve_array ]  , 200 , 'ok');
 
