@@ -191,7 +191,7 @@ Class TicketRepository  extends BaseRepository {
                         if (!empty($value['field'])) {
                             foreach ($value['field'] as $field => $input) {
                                 if($input == 'like'){
-                                    $where_clause  .=  'AND   ( ' ;
+                                    $where_clause  .=  'AND ( ' ;
                                     for ($i = 0; $i < $nb_mots_filtre; $i++){
                                         if ($i == 0 ){
                                             $where_clause .=  $value['alias'].'.'.$field  . ' LIKE "%' .$mots_filtre[$i] .'%"';
@@ -208,7 +208,7 @@ Class TicketRepository  extends BaseRepository {
                         if (!empty($value['field'])) {
                             foreach ($value['field'] as $field => $input) {
                                 if($input == 'like'){
-                                    $where_clause  .=  'OR   ( ' ;
+                                    $where_clause  .=  'OR  ( ' ;
                                     for ($i = 0; $i < $nb_mots_filtre; $i++){
                                         if ($i == 0 ){
                                             $where_clause .=  $value['alias'].'.'.$field  . ' LIKE "%' .$mots_filtre[$i] .'%"';
@@ -230,8 +230,7 @@ Class TicketRepository  extends BaseRepository {
             $orderclause .= 'ORDER BY '.$key . ' ' . $value . ' ' ;
         }
 
-        $clause = 'SELECT * FROM ' . $params['self']['name'] . ' as ' . $params['self']['alias'].' '. $left_clause . ' WHERE 1 = 1 ' . $in_clause . ' ' . $where_clause . ' ' .  $orderclause  .' ' . $limit_clause;
-        
+        $clause = 'SELECT DISTINCT  t.tk__id FROM ' . $params['self']['name'] . ' as ' . $params['self']['alias'].' '. $left_clause . ' WHERE 1 = 1 ' . $in_clause . ' ' . $where_clause . ' ' .  $orderclause  .'  ' . $limit_clause . '';
         $request = $this->Db->Pdo->query($clause);
         return  $request->fetchAll(PDO::FETCH_ASSOC);
     }
