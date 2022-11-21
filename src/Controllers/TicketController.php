@@ -90,7 +90,7 @@ Class TicketController extends BaseController {
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
         $user->setClients($clients);
-        $request = $TicketRepository->search([], 'google' , 100 ,["tk__id" => "ASC"],[]);
+        $request = $TicketRepository->search([], '' , 100 ,["tk__id" => "ASC"],[]);
         $array_format_for_response = [];
         
         foreach ($request as $results){
