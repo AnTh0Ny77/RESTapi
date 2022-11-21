@@ -136,6 +136,13 @@ Class TicketController extends BaseController {
             }
         }
 
+        if (!empty($_GET['mat__id'])) {
+            $in_clause['mat__id'] = [];
+            foreach ($_GET['mat__id'] as $key => $value) {
+                array_push($in_clause['mat__id'] , $value);
+            }
+        }
+
         //////////////////////////////////
         $request = $TicketRepository->search($in_clause, $search , 100 ,["tk__id" => "ASC"],[]);
         //////////////////////////////////
