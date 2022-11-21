@@ -80,6 +80,8 @@ Class TicketRepository  extends BaseRepository {
                 'alias' => 't',
                 'field' => [
                     'tk__id' => 'in' ,
+                    'tk__lu' => 'in',
+                    'tk__motif' => 'in',
                     'tk__titre' => 'like' , 
                     'tk__groupe' => 'in', 
                 ]
@@ -121,6 +123,16 @@ Class TicketRepository  extends BaseRepository {
                     'cli__nom' => 'like' , 
                     'cli__ville' => 'like'
                 ]
+            ], 'ticket_ligne' => [
+                'alias' => 'y',
+                'type' => 'LEFT',
+                'on' => [
+                    'tkl__tk_id' => 't.tk__id'
+                ],
+                'field' => [
+                    'tkl__user_id_dest' => 'in',
+                    'tkl__user_id' => 'in'
+                ]
             ], 
         ];
 
@@ -128,7 +140,7 @@ Class TicketRepository  extends BaseRepository {
         if (!empty($limit)) {
             $limit_clause .= ' LIMIT ' . intval($limit);
         }
-
+       
 
         $left_clause = '';
         foreach ($params as $key => $value) {
@@ -144,15 +156,17 @@ Class TicketRepository  extends BaseRepository {
         foreach ($params as $key => $value) {
             foreach ($value['field'] as $ref => $entry) {
                 if ( $entry == 'in') {
+                   
                     foreach ($in as $search => $option) {
+                        
                         if (!empty($option) ) {
                             if ($search == $ref) {
                                 $in_clause .= ' AND ( '.$value['alias'].'.'.$ref. ' IN ( ';
                                 foreach ($in[$search] as $index =>  $input) {
                                      if ($index === array_key_last($in[$search])){
-                                         $in_clause .=  $input . ' ) ';
+                                         $in_clause .=   '"'. $input . '" ) ';
                                      }else{
-                                         $in_clause .= $input . ' , ';
+                                         $in_clause .= '"' . $input . '" , ';
                                      }
                                 }  
                                 $in_clause .= ' )  ';
@@ -162,6 +176,7 @@ Class TicketRepository  extends BaseRepository {
                 }
             }
         }
+        
         $where_clause = '';
        
         if (!empty($clause)) {
@@ -209,14 +224,14 @@ Class TicketRepository  extends BaseRepository {
                     }
             }
         }
-        
+       
         $orderclause = '';
         foreach ($order as $key => $value) {
             $orderclause .= 'ORDER BY '.$key . ' ' . $value . ' ' ;
         }
 
         $clause = 'SELECT * FROM ' . $params['self']['name'] . ' as ' . $params['self']['alias'].' '. $left_clause . ' WHERE 1 = 1 ' . $in_clause . ' ' . $where_clause . ' ' .  $orderclause  .' ' . $limit_clause;
-       
+        
         $request = $this->Db->Pdo->query($clause);
         return  $request->fetchAll(PDO::FETCH_ASSOC);
     }

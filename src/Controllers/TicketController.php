@@ -90,18 +90,78 @@ Class TicketController extends BaseController {
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
         $user->setClients($clients);
-        $request = $TicketRepository->search([], '' , 100 ,["tk__id" => "ASC"],[]);
-        $array_format_for_response = [];
         
+        ////////////////////////////// traitrement des variable de recherche à inserer dans la fonction : 
+        //textuelle : 
+        $search = '';
+        if (!empty($_GET['search'])) 
+            $search = $_GET['search'];
+        //clause in  :
+        $in_clause = [];
+        if (!empty($_GET['tkl__user_id'])) {
+            $in_clause['tkl__user_id'] = [];
+            foreach ($_GET['tkl__user_id'] as $key => $value) {
+                array_push($in_clause['tkl__user_id'] , $value);
+            }
+        }
+       
+        if (!empty($_GET['tkl__user_id_dest'])) {
+            $in_clause['tkl__user_id_dest'] = [];
+            foreach ($_GET['tkl__user_id_dest'] as $key => $value) {
+                array_push($in_clause['tkl__user_id_dest'] , $value);
+            }
+        }
+        if (!empty($_GET['tk__groupe'])){
+            $in_clause['tk__groupe'] = [];
+            foreach ($_GET['tk__groupe'] as $key => $value) {
+                array_push($in_clause['tk__groupe'] , $value);
+            }
+        }
+        if (!empty($_GET['tk__id'])){
+            $in_clause['tk__groupe'] = [];
+            foreach ($_GET['tk__groupe'] as $key => $value) {
+                array_push($in_clause['tk__groupe'] , $value);
+            }
+        }
+        if (!empty($_GET['tk__motif'])) {
+            $in_clause['tk__motif'] = [];
+            foreach ($_GET['tk__motif'] as $key => $value) {
+                array_push($in_clause['tk__motif'] , $value);
+            }
+        }
+        if (!empty($_GET['tk__lu'])) {
+            $in_clause['tk__lu'] = [];
+            foreach ($_GET['tk__lu'] as $key => $value) {
+                array_push($in_clause['tk__lu'] , $value);
+            }
+        }
+
+        //////////////////////////////////
+        $request = $TicketRepository->search($in_clause, $search , 100 ,["tk__id" => "ASC"],[]);
+        //////////////////////////////////
+       
+        ///////////////////////////////// format de la réponse avec toutes les infos utiles : 
+        $array_format_for_response = [];
         foreach ($request as $results){
             $ticket = $TicketRepository->findOneBy(['tk__id' => $results['tk__id']] , false);
+            $lignes = $TicketLigneRepository->findBy(['tkl__tk_id' => $results['tk__id']] , 100 , ['tkl__dt' => 'ASC']);
+            $array_lines = [];
+            foreach ($lignes as $result) {
+                $result['tkl__user_id'] = $userRepository->findOneBy(['user__id' => $result['tkl__user_id'] ],false);
+                $result['tkl__user_id_dest'] = $userRepository->findOneBy(['user__id' => $result['tkl__user_id_dest'] ],false);
+                $result['tkl__user_id_dest']['user__password'] = null;
+                $result['tkl__user_id']['user__password'] = null;
+                $result['champs'] = $TicketLigneChampRepository->findBy(['tklc__id' => $result['tkl__id']] , 100 , [ 'tklc__ordre' => 'ASC']);
+                array_push($array_lines ,  $result);
+            }
+            $ticket['lignes'] = $array_lines;
+
             array_push($array_format_for_response , $ticket); 
         }
 
         return $responseHandler->handleJsonResponse([
             'data' => $array_format_for_response
         ] , 200 , 'bad request');
-       
 
     }
 
