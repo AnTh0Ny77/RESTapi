@@ -196,10 +196,10 @@ Class ClientController extends BaseController {
                     $results =  $clientRepository->findOneBy([$key => $clientRepository->clean($value)] , true);
                    
                     if ($results instanceof Client) {
-                        $body = [
-                            $client =  $results
-                        ];
-                        return $responseHandler->handleJsonResponse($body , 200 , 'Success');
+                       
+                         return $responseHandler->handleJsonResponse([
+                            'data' => $results
+                        ] , 200 , 'ok');
                     } else return $responseHandler->handleJsonResponse('Aucun clients trouvés' , 404 , 'Not Found');
                 }
             }
