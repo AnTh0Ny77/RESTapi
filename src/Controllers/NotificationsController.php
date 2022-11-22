@@ -22,7 +22,7 @@ use Src\Repository\LienUserClientRepository;
 Class NotificationsController extends BaseController {
 
     public static function path(){
-        return '/notifiations';
+        return '/notifications';
     }
 
     public static function renderDoc(){
