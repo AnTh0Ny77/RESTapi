@@ -196,7 +196,7 @@ Class TicketRepository  extends BaseRepository {
                                         if ($i == 0 ){
                                             $where_clause .=  $value['alias'].'.'.$field  . ' LIKE "%' .$mots_filtre[$i] .'%"';
                                         }else {
-                                            $where_clause .=   ' OR ' .  $value['alias'].'.'.$field  .'  LIKE "%' .$mots_filtre[$i] .'%"';
+                                            $where_clause .=   ' AND ' .  $value['alias'].'.'.$field  .'  LIKE "%' .$mots_filtre[$i] .'%"';
                                         }
                                     }
                                     $where_clause .=  ' ) ';
@@ -208,12 +208,12 @@ Class TicketRepository  extends BaseRepository {
                         if (!empty($value['field'])) {
                             foreach ($value['field'] as $field => $input) {
                                 if($input == 'like'){
-                                    $where_clause  .=  'AND  ( ' ;
+                                    $where_clause  .=  ' OR  ( ' ;
                                     for ($i = 0; $i < $nb_mots_filtre; $i++){
                                         if ($i == 0 ){
                                             $where_clause .=  $value['alias'].'.'.$field  . ' LIKE "%' .$mots_filtre[$i] .'%"';
                                         }else {
-                                            $where_clause .=   ' OR ' .  $value['alias'].'.'.$field  .'  LIKE "%' .$mots_filtre[$i] .'%"';
+                                            $where_clause .=   ' AND ' .  $value['alias'].'.'.$field  .'  LIKE "%' .$mots_filtre[$i] .'%"';
                                         }
                                     }
                                     $where_clause .=  ' ) ';
