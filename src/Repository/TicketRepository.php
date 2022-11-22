@@ -208,7 +208,7 @@ Class TicketRepository  extends BaseRepository {
                         if (!empty($value['field'])) {
                             foreach ($value['field'] as $field => $input) {
                                 if($input == 'like'){
-                                    $where_clause  .=  'OR  ( ' ;
+                                    $where_clause  .=  'AND  ( ' ;
                                     for ($i = 0; $i < $nb_mots_filtre; $i++){
                                         if ($i == 0 ){
                                             $where_clause .=  $value['alias'].'.'.$field  . ' LIKE "%' .$mots_filtre[$i] .'%"';

@@ -82,7 +82,7 @@ Class NotificationsController extends BaseController {
                 'msg' => 'GET ne peut pas etre vide'
             ] , 401 , 'bad request');
         } 
-
+        
         //si un id de matériel à été passé :
         if(!empty($_GET['mat__id'])){
 
