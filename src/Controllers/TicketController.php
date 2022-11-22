@@ -118,9 +118,9 @@ Class TicketController extends BaseController {
             }
         }
         if (!empty($_GET['tk__id'])){
-            $in_clause['tk__groupe'] = [];
-            foreach ($_GET['tk__groupe'] as $key => $value) {
-                array_push($in_clause['tk__groupe'] , $value);
+            $in_clause['tk__id'] = [];
+            foreach ($_GET['tk__id'] as $key => $value) {
+                array_push($in_clause['tk__id'] , $value);
             }
         }
         if (!empty($_GET['tk__motif'])) {
