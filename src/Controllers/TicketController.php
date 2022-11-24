@@ -157,7 +157,7 @@ Class TicketController extends BaseController {
         }
 
         //////////////////////////////////
-        $request = $TicketRepository->search($in_clause, $search , 100 ,[ "tk__lu" => "ASC"  , "tk__id" => "DESC"],[]);
+        $request = $TicketRepository->search($in_clause, $search , 100 ,[  "tk__lu" => "ASC"  , "tk__id" => "DESC"],[]);
         //////////////////////////////////
        
         ///////////////////////////////// format de la réponse avec toutes les infos utiles : 
