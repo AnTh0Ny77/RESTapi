@@ -71,7 +71,7 @@ Class MaterielRepository  extends BaseRepository {
                         if ($i == 0 ){
                             $where_clause .=  $value . ' LIKE "%' .$mots_filtre[$i] .'%"';
                         }else {
-                            $where_clause .=   ' OR ' .  $value .'  LIKE "%' .$mots_filtre[$i] .'%"';
+                            $where_clause .=   ' AND ' .  $value .'  LIKE "%' .$mots_filtre[$i] .'%"';
                         }
                     }
                     $where_clause .=  ' ) ';
@@ -81,7 +81,7 @@ Class MaterielRepository  extends BaseRepository {
                         if ($i == 0 ){
                             $where_clause .=  $value . ' LIKE "%' .$mots_filtre[$i] .'%"';
                         }else {
-                            $where_clause .= ' OR ' .  $value .'  LIKE "%' .$mots_filtre[$i] .'%"';
+                            $where_clause .= ' AND ' .  $value .'  LIKE "%' .$mots_filtre[$i] .'%"';
                         }
                     }
                     $where_clause .=  ' ) ' ;
