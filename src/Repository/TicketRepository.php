@@ -227,8 +227,12 @@ Class TicketRepository  extends BaseRepository {
         }
        
         $orderclause = '';
+        if (!empty($order)) {
+            $orderclause .= 'ORDER BY';
+        }
         foreach ($order as $key => $value) {
-            $orderclause .= 'ORDER BY '.$key . ' ' . $value . ' ' ;
+
+            $orderclause .= ' '.$key . ' ' . $value . ' ' ;
         }
 
         $clause = 'SELECT DISTINCT  t.tk__id FROM ' . $params['self']['name'] . ' as ' . $params['self']['alias'].' '. $left_clause . ' WHERE 1 = 1 ' . $in_clause . ' ' . $where_clause . ' ' .  $orderclause  .'  ' . $limit_clause . '';
