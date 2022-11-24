@@ -231,11 +231,15 @@ Class TicketRepository  extends BaseRepository {
             $orderclause .= 'ORDER BY';
         }
         foreach ($order as $key => $value) {
-
-            $orderclause .= ' '.$key . ' ' . $value . ' ' ;
+            if ($key === array_key_last($order)){
+                $orderclause .= ' '.$key . ' ' . $value . ' ' ;
+            }else {
+                $orderclause .= ' '.$key . ' ' . $value . ', ' ;
+            }
+           
         }
 
-        $clause = 'SELECT DISTINCT  t.tk__id FROM ' . $params['self']['name'] . ' as ' . $params['self']['alias'].' '. $left_clause . ' WHERE 1 = 1 ' . $in_clause . ' ' . $where_clause . ' ' .  $orderclause  .'  ' . $limit_clause . '';
+        $clause = 'SELECT   t.tk__id FROM ' . $params['self']['name'] . ' as ' . $params['self']['alias'].' '. $left_clause . ' WHERE 1 = 1 ' . $in_clause . ' ' . $where_clause . ' ' .  $orderclause  .'  ' . $limit_clause . '';
         var_dump($clause);
         die();
         $request = $this->Db->Pdo->query($clause);
