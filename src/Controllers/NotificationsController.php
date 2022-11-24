@@ -102,9 +102,9 @@ Class NotificationsController extends BaseController {
                 if ($value['tk__lu'] == 1) 
                     $en_cours ++;
                 
-                if ($value['tk__lu'] == 0) 
+                if ($value['tk__lu'] == 0) {
                     $en_cours ++; $non_lus++;
-                
+                }
             }
 
             $response = [

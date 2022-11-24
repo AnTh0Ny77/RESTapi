@@ -94,6 +94,7 @@ Class TicketRepository  extends BaseRepository {
                 ],
                 'field' => [
                     'mat__id' => 'in' ,
+                    'mat__cli__id' => 'in' ,
                     'mat__type' => 'like' , 
                     'mat__marque' => 'like', 
                     'mat__model' => 'like', 
