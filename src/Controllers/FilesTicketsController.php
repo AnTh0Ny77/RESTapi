@@ -24,7 +24,7 @@ Class FilesTicketsController  extends  BaseController{
         $doc = [
             [
                 'name' => 'postFilesTickets',
-                "tittle" => 'enregistre un fichier pour les tickets', 
+                "tittle" => 'Fichier', 
                 'method' => 'POST',
                 'body' =>  [
                     'type' => 'form-data',
@@ -36,7 +36,14 @@ Class FilesTicketsController  extends  BaseController{
                 'description' => 'Permet d uploader ou de mettre à jour un fichier ' ,
                 'reponse' => 'renvoi la variable data ou msg en cas d echec', 
                 "Auth" => 'JWT ' 
-            ]
+                ],[
+                    'name' => 'getFilesTickets',
+                    'method' => 'GET',
+                    'path' => self::path(),
+                    'description' => 'Permet d uploader ou de mettre à jour un fichier ' ,
+                    'reponse' => 'renvoi la variable data ou msg en cas d echec', 
+                    "Auth" => 'JWT ' 
+                ]
         ];
         return $doc;
     }
@@ -90,19 +97,14 @@ Class FilesTicketsController  extends  BaseController{
                 'msg' =>  ' Aucun fichier pour cette ligne '
             ] , 404 , 'bad request');
         }
-       
-        
+         
         $zip = new ZipArchive();
-       
         $zip->open('ligne'.$_GET['tkl__id'].'.zip', ZipArchive::CREATE);
-       
         $pathToFile = scandir($pathToFile);
-        
         foreach($pathToFile as $file) {
            if (strlen($file) > 4) {
             $zip->addFile('public/img/tickets/'. $_GET["tkl__id"] .'/' .$file,  $file );
            }
-           
         }
         header($_SERVER["SERVER_PROTOCOL"] . " 200 OK");
         header("Cache-Control: public"); // needed for internet explorer
@@ -113,8 +115,6 @@ Class FilesTicketsController  extends  BaseController{
         
         readfile('ligne'. $_GET["tkl__id"] .'.zip');
         $zip->close();
-       
-       
     }
 
     public static function post(){
