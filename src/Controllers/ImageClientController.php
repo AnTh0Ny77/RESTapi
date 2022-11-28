@@ -19,7 +19,7 @@ Class ImageClientController  extends  BaseController{
 
     public static function renderDoc(){
         $doc = [
-             [
+            [
                 'name' => 'postImageClient',
                 "tittle" => 'Mise a jour de photo de profil', 
                 'method' => 'POST',
@@ -34,7 +34,7 @@ Class ImageClientController  extends  BaseController{
                 'description' => 'Permet d uploader ou de mettre à jour une image pour le client ' ,
                 'reponse' => 'renvoi un tableau d objet de type client', 
                 "Auth" => 'JWT + ADMIN ROLE' 
-             ]
+            ]
         ];
         return $doc;
     }

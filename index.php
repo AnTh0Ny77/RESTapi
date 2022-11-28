@@ -19,6 +19,7 @@ use Src\Controllers\MaxController;
 use Src\Controllers\KeywordController;
 use Src\Controllers\UserSitesController;
 use Src\Controllers\NotificationsController;
+use Src\Controllers\FilesTicketsController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -108,6 +109,10 @@ switch($request){
 
     case $config->urls->base.NotificationsController::path().$data:
         echo NotificationsController::index($_SERVER['REQUEST_METHOD'],$data);
+        break;
+
+    case $config->urls->base.FilesTicketsController::path().$data:
+        echo FilesTicketsController::index($_SERVER['REQUEST_METHOD'],$data);
         break;
 
 	default:

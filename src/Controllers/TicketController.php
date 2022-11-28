@@ -92,14 +92,14 @@ Class TicketController extends BaseController {
         $user->setClients($clients);
         
         ////////////////////////////// traitrement des variable de recherche à inserer dans la fonction : 
-        //textuelle : 
+        //textuelle: 
         $search = '';
         if (!empty($_GET['search'])) 
             $search = $_GET['search'];
-        //clause in  :
+        //clause in:
         $in_clause = [];
 
-        //////////////recupère les clients liés au users : 
+        //////////////recupère les clients liés au users: 
         $in_clause['mat__cli__id'] = [];
         if (empty($user->getClients())) {
             return $responseHandler->handleJsonResponse([
@@ -160,7 +160,7 @@ Class TicketController extends BaseController {
         $request = $TicketRepository->search($in_clause, $search , 100 ,[ "tk__lu" => "ASC"  ,  "tkl__dt" => "DESC" ,   "tk__id" => "DESC"],[]);
         //////////////////////////////////
        
-        ///////////////////////////////// format de la réponse avec toutes les infos utiles : 
+        ///////////////////////////////// format de la réponse avec toutes les infos utiles: 
         $array_format_for_response = [];
         foreach ($request as $results){
             $ticket = $TicketRepository->findOneBy(['tk__id' => $results['tk__id']] , false);
