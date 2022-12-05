@@ -71,6 +71,8 @@ Class TicketLigneController extends BaseController {
         $sossuke = new Sossuke();
         $sossuke->DbConnect();
         $responseHandler = new ResponseHandler();
+        $tick = new TicketRepository('ticket' , $database , Tickets::class);
+        $tickSossuke = new TicketRepository('ticket' , $sossuke , Tickets::class);
         $TicketLigneRepository = new TicketLigneRepository('ticket_ligne' , $database , TicketsLigne::class );
         $TicketLigneSossukeRepository = new TicketLigneRepository('ticket_ligne' , $sossuke , TicketsLigne::class );
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
@@ -98,15 +100,19 @@ Class TicketLigneController extends BaseController {
             ] , 401 , 'bad request');
         }
         $body['tkl__dt'] = date('Y-m-d H:i:s');
+        $tick->update(['tk__id' => $body['tkl__tk_id'] , 'tk__lu' => 3 ]);
+        $tickSossuke->update(['tk__id' => $body['tkl__tk_id'] , 'tk__lu' => 3 ]);
+        if ($body['tkl__motif_ligne'] === 'CLO') {
+            $tick->update(['tk__id' => $body['tkl__tk_id'] , 'tk__lu' => 9 ]);
+            $tickSossuke->update(['tk__id' => $body['tkl__tk_id'] , 'tk__lu' => 9 ]);
+        }
         $id_new_ticket_ligne = $TicketLigneSossukeRepository->insert($body);
-        
-        $verify = $TicketLigneSossukeRepository->findOneBy(array('tkl__id' => $id_new_ticket_ligne ) , true);
+        $verify = $TicketLigneSossukeRepository->findOneBy(array('tkl__id' => $id_new_ticket_ligne ),true);
         if (!$verify instanceof TicketsLigne) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'Un probleme est survenu durant la creation dans la base de donnée sossuke'
             ] , 500 , 'bad request');
         }
-
         $body['tkl__id'] = $id_new_ticket_ligne ;
         $id_ligne_myrecode = $TicketLigneRepository->insert($body);
         $verify = $TicketLigneRepository->findOneBy(array('tkl__id' => $id_new_ticket_ligne ) , true);

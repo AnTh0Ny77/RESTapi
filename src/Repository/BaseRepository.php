@@ -23,7 +23,7 @@ Class BaseRepository {
     }
 
     public function verifyColumn(array $array){
-        $object = new $this->Class();
+        $object = new $this->Class();     
         foreach ($array as $key => $value) { 
             if ($key != 'search') {
                 if (!property_exists($object , $key )) {
@@ -31,7 +31,6 @@ Class BaseRepository {
                 }
             }
         }
-        return null;
     }
 
     public function findBy(array $array , int $limit , array $order){
@@ -57,16 +56,12 @@ Class BaseRepository {
                 }
             }
         }
-        
         $clause = '';
-       
         foreach ($array as $key => $value) {
             $clause .=  'AND ' . $key . ' = ' .$value.'';
         }
         $request = 'SELECT * FROM '.$this->Table.' WHERE 1 = 1 '.$clause .' ' . $orderclause . $limitclause ;
-        
         $request = $this->Db->Pdo->query($request);
-       
         return  $request->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -116,12 +111,10 @@ Class BaseRepository {
                 $array_order[$key]  =  $value;
             }
         }
-       
         return $array_order;
     }
    
     public function insert(array $array){
-      
         $error = null;
         $column = '( ';
         $value = '( ';
@@ -155,7 +148,6 @@ Class BaseRepository {
             return $error;
         }
         $id = $this->Db->Pdo->lastInsertId();
-      
         return $id;
     }
 
@@ -211,11 +203,13 @@ Class BaseRepository {
         $array_exclusion  = [ 'token' , 'refresh_token' , 'roles'  , 'clients' , 'password'] ; 
         
         $identifier =  $this->returnPrimaryKey()['COLUMN_NAME'];
+      
         if (!isset($field[$identifier]) or empty($field[$identifier])) {
             return 'le champ '.$identifier.' doit etre renseigné pour effectuer la mise à jour';
         }
-
+        
         $column = $this->verifyColumn($field);
+        
         if (!empty($column)) 
             return $column;
             
@@ -242,7 +236,7 @@ Class BaseRepository {
         }
         
         $clause = 'WHERE  ( 1 = 1 AND  ' . $identifier . ' = ' . $id . ' )';
-        
+       
         $request = $this->Db->Pdo->prepare('UPDATE '.$this->Table.' '.$setClause.' '. $clause. ' ');
         $request->execute($arraySetClause);
     }

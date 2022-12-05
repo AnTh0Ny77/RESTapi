@@ -238,7 +238,8 @@ Class TicketRepository  extends BaseRepository {
            
         }
 
-        $clause = 'SELECT DISTINCT  t.tk__id , t.tk__lu , y.tkl__dt FROM ' . $params['self']['name'] . ' as ' . $params['self']['alias'].' '. $left_clause . ' WHERE 1 = 1 ' . $in_clause . ' ' . $where_clause . ' ' .  $orderclause  .'  ' . $limit_clause . '';
+        $clause = 'SELECT DISTINCT  t.tk__id , t.tk__lu  FROM ' . $params['self']['name'] . ' as ' . $params['self']['alias'].' '. $left_clause . ' WHERE 1 = 1 ' . $in_clause . ' ' . $where_clause . ' ' .  $orderclause  .'  ' . $limit_clause . '';
+      
         $request = $this->Db->Pdo->query($clause);
         return  $request->fetchAll(PDO::FETCH_ASSOC);
     }
