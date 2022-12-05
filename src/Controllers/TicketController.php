@@ -60,7 +60,7 @@ Class TicketController extends BaseController {
                 break;
 
             case 'PUT':
-                return $notFound::index();
+                return self::put();
                 break;
 
             case 'DELETE':
@@ -241,6 +241,71 @@ Class TicketController extends BaseController {
         return $responseHandler->handleJsonResponse([
             'data' => [ 'tk__id' => $id_new_ticket]
         ] , 201 , 'ressource created');
+
+    }
+
+
+    public static function put(){
+        $database = new Database();
+        $database->DbConnect();
+        $responseHandler = new ResponseHandler();
+        $TicketRepository = new TicketRepository('ticket' , $database , Tickets::class );
+        $sossuke = new Sossuke();
+        $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
+        $userRepository = new UserRepository('user' , $database , User::class );
+        $security = new Security();
+        $auth = self::Auth($responseHandler,$security);
+        if ($auth != null) 
+            return $auth;
+        $id_user = UserController::returnId__user($security)['uid'];
+        $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
+        $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
+        $user->setClients($clients);
+        $TicketRepositorySossuke = new TicketRepository('ticket' , $sossuke , Tickets::class );
+        $body = json_decode(file_get_contents('php://input'), true);
+
+        if (empty($body)) {
+            return $responseHandler->handleJsonResponse([
+                'msg' => 'le body ne peut pas etre vide'
+            ] , 401 , 'bad request');
+        } 
+
+        if(empty($body['tk__id'])){
+            return $responseHandler->handleJsonResponse([
+                'msg' => 'l identifiant du ticket n est pas renseigné'
+            ] , 401 , 'bad request');
+        }
+
+        $ticket_check = $TicketRepository->findOneBy(['tk__id' => $body['tk__id']] , true);
+        if (!$ticket_check  instanceof Tickets) {
+            return $responseHandler->handleJsonResponse([
+                'msg' => 'ticket inconnu'
+            ] , 401 , 'bad request');
+        }
+
+        if (!empty($body['tk__lu'])) {
+            if (intval($body['tk__lu']) != 3 and intval($body['tk__lu']) != 5 and intval($body['tk__lu']) != 9 ) {
+                return $responseHandler->handleJsonResponse([
+                    'msg' => 'la valeur de tk__lu n est pas conforme '
+                ] , 401 , 'bad request');
+            }
+            $ticket_check->setTk__lu($body['tk__lu']);
+        }
+
+        if (!empty($body['tk__titre'])) {
+            if ( strlen($body['tk__titre'] < 2 and strlen($body['tk__titre'] > 250) ) ){
+                return $responseHandler->handleJsonResponse([
+                    'msg' => 'le titre demandé n est pas conforme '
+                ] , 401 , 'bad request');
+            }
+            $ticket_check->setTk__titre($body['tk__titre']);
+        }
+
+        $update = $TicketRepository->update(( array) $ticket_check);
+
+        return $responseHandler->handleJsonResponse([
+            'data' => 'le ticket a été mis a jours '
+        ] , 200 , 'ok ');
 
     }
 
