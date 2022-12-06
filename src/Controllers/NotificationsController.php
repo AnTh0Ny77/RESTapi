@@ -126,7 +126,7 @@ Class NotificationsController extends BaseController {
             $id_user = UserController::returnId__user($security)['uid'];
             $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
             $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
-            
+           
             $user->setClients($clients);
             if (empty($user->getClients())) {
                 return $responseHandler->handleJsonResponse([
@@ -134,12 +134,13 @@ Class NotificationsController extends BaseController {
                 ] , 404 , 'bad request');
             }
             $in_clause = [];
-            
-            foreach ($user->clients as  $client){
+            var_dump($user->getClients());
+            die();
+            foreach ($user->getClients() as  $client){
                
                 array_push($in_clause['mat__cli__id'] , $client->cli__id);
             }
-            var_dump('hey');
+            
             $request = $TicketRepository->search($in_clause, null , 100 ,[ "tk__lu" => "ASC" , "tk__id" => "DESC"],[]);
             $array_format_for_response = [];
             foreach ($request as $results){
