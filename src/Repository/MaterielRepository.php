@@ -46,6 +46,8 @@ Class MaterielRepository  extends BaseRepository {
                 $in_clause.= ' ) ';
             }
         }
+
+        
         if (!empty($clause)) {
             $filtre = str_replace("-", ' ', $clause);
             $filtre = str_replace("'", ' ',$clause);

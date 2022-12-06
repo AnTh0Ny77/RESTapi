@@ -110,6 +110,7 @@ Class MaterielController extends BaseController {
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
         $userRepository = new UserRepository('user' , $database , User::class );
         $security = new Security();
+      
         $auth = self::Auth($responseHandler,$security);
         if ($auth != null) 
             return $auth;
@@ -117,9 +118,9 @@ Class MaterielController extends BaseController {
         
         $id_user = UserController::returnId__user($security)['uid'];
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
-        
+       
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
-        
+       
         $user->setClients($clients);
         $inclause = [
             'mat__cli__id'  => [] ,
@@ -143,7 +144,7 @@ Class MaterielController extends BaseController {
         if (!empty($_GET)){
             
             if (!empty($_GET['search'])) {
-                
+               
                 if (!empty($_GET['limit'])) {
                     $limit = intval($_GET['limit']);
                  
@@ -153,6 +154,7 @@ Class MaterielController extends BaseController {
                 unset($inclause['mat__kw_tg']);
                 unset($inclause['mat__type']);
                 unset($inclause['mat__id']);
+                
                 $list = $materielRepository->findMat($inclause , $_GET['search'] , $limit ,  $order_array);
 
                 if (empty($list)) {
@@ -242,8 +244,7 @@ Class MaterielController extends BaseController {
             foreach ($inclause as $key => $value){
                 if (!empty($value) ){
                     $new_clause[$key] = $value;
-                }
-                       
+                }     
             }
            
             $list = $materielRepository->findMat($new_clause , [] , 30 , []);
