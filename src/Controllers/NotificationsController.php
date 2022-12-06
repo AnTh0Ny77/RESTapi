@@ -126,7 +126,7 @@ Class NotificationsController extends BaseController {
             $id_user = UserController::returnId__user($security)['uid'];
             $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
             $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
-            var_dump($clients);
+            
             $user->setClients($clients);
             if (empty($user->getClients())) {
                 return $responseHandler->handleJsonResponse([
