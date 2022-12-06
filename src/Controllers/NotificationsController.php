@@ -135,6 +135,8 @@ Class NotificationsController extends BaseController {
             foreach ($user->getClients() as  $clients){
                 array_push($in_clause['mat__cli__id'] , $clients->getCli__id());
             }
+            var_dump($user->getClients());
+            die();
             $request = $TicketRepository->search($in_clause, null , 100 ,[ "tk__lu" => "ASC" , "tk__id" => "DESC"],[]);
             $array_format_for_response = [];
             foreach ($request as $results){
