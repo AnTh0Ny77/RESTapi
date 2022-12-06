@@ -120,7 +120,7 @@ Class MaterielController extends BaseController {
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
        
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
-       
+        
         $user->setClients($clients);
         $inclause = [
             'mat__cli__id'  => [] ,
@@ -129,17 +129,18 @@ Class MaterielController extends BaseController {
             'mat__type' => [], 
             'mat__id' => []
         ];
+       
         $limit = 30 ;
         foreach($user->getClients() as $client){
             array_push($inclause['mat__cli__id'] , $client->getCli__id());
         }
-
+        
         if (empty($inclause['mat__cli__id'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'Vous n avez aucun sites en gestion'
             ] , 404 , 'not found');
         }
-
+        
         // cas de parametre spécifiés :
         if (!empty($_GET)){
             
