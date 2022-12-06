@@ -133,9 +133,10 @@ Class NotificationsController extends BaseController {
                 ] , 404 , 'bad request');
             }
             $in_clause = [];
-            var_dump($user->getClients());
-            die();
+            
             foreach ($user->getClients() as  $clients){
+                var_dump($clients->getCli__id());
+            die();
                 array_push($in_clause['mat__cli__id'] , $clients->getCli__id());
             }
            
