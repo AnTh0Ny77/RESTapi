@@ -68,7 +68,7 @@ Class MaterielRepository  extends BaseRepository {
             foreach ($array_key as $key => $value) {
                
                 if ($value == $first) {
-                    $where_clause .=  'AND   ( ' ;
+                    $where_clause .=  'AND  (  ( ' ;
                     for ($i = 0; $i < $nb_mots_filtre; $i++){
                         if ($i == 0 ){
                             $where_clause .=  $value . ' LIKE "%' .$mots_filtre[$i] .'%"';
@@ -91,8 +91,8 @@ Class MaterielRepository  extends BaseRepository {
             }
         }
         
-        $request = 'SELECT * FROM '.$this->Table.' WHERE 1 = 1 '.$where_clause .' ' . $in_clause . ' '. $orderclause . $limitclause ;
-       
+        $request = 'SELECT * FROM '.$this->Table.' WHERE 1 = 1 '.$where_clause .' ) ' . $in_clause . ' '. $orderclause . $limitclause ;
+        
         $request = $this->Db->Pdo->query($request);
         
         $request = $request->fetchAll(PDO::FETCH_ASSOC);
