@@ -134,12 +134,12 @@ Class NotificationsController extends BaseController {
                 ] , 404 , 'bad request');
             }
             $in_clause = [];
-            var_dump($user->getClients());
-            foreach ($user->getClients() as  $clients){
+            
+            foreach ($user->clients as  $client){
                
-                array_push($in_clause['mat__cli__id'] , $clients->getCli__id());
+                array_push($in_clause['mat__cli__id'] , $client->cli__id);
             }
-            die();
+            
             $request = $TicketRepository->search($in_clause, null , 100 ,[ "tk__lu" => "ASC" , "tk__id" => "DESC"],[]);
             $array_format_for_response = [];
             foreach ($request as $results){
