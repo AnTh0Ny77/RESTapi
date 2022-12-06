@@ -119,6 +119,8 @@ Class NotificationsController extends BaseController {
             ] , 200 , 'bad request');
         } 
         if (!empty($_GET['user__id'])){
+            var_dump('hey');
+            die();
             $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class);
             $TicketLigneRepository = new TicketLigneRepository('ticket_ligne' , $database , TicketsLigne::class );
             $TicketRepository = new TicketRepository('ticket' , $database , Tickets::class );
@@ -135,8 +137,7 @@ Class NotificationsController extends BaseController {
             foreach ($user->getClients() as  $clients){
                 array_push($in_clause['mat__cli__id'] , $clients->getCli__id());
             }
-            var_dump($user->getClients());
-            die();
+            
             $request = $TicketRepository->search($in_clause, null , 100 ,[ "tk__lu" => "ASC" , "tk__id" => "DESC"],[]);
             $array_format_for_response = [];
             foreach ($request as $results){
