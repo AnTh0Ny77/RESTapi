@@ -135,7 +135,7 @@ Class NotificationsController extends BaseController {
             $in_clause = [];
             
             foreach ($user->getClients() as  $clients){
-                var_dump($clients);
+                var_dump($clients->cli__id);
                 array_push($in_clause['mat__cli__id'] , $clients->getCli__id());
             }
             die();
