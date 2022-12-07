@@ -131,60 +131,18 @@ Class MaterielController extends BaseController {
         ];
        
         $limit = 30 ;
-        foreach($user->getClients() as $client){
-            array_push($inclause['mat__cli__id'] , $client->getCli__id());
-        }
         
-        if (empty($inclause['mat__cli__id'])) {
-            return $responseHandler->handleJsonResponse([
-                'msg' => 'Vous n avez aucun sites en gestion'
-            ] , 404 , 'not found');
-        }
-        
-        // cas de parametre spécifiés :
-        if (!empty($_GET)){
-            
-            if (!empty($_GET['search'])) {
-               
-                if (!empty($_GET['limit'])) {
-                    $limit = intval($_GET['limit']);
-                 
+                $string = '';
+                if (!empty($_GET['search'])) {
+                    $string = $_GET['search'];
                 }
-                $order_array =  $materielRepository->getOrder($_GET);
-                unset($inclause['mat__marque']);
-                unset($inclause['mat__kw_tg']);
-                unset($inclause['mat__type']);
-                unset($inclause['mat__id']);
+                foreach($user->getClients() as $client){
+                    array_push($inclause['mat__cli__id'] , $client->getCli__id());
+                }
                 
-                $list = $materielRepository->findMat($inclause , $_GET['search'] , $limit ,  $order_array);
-
-                if (empty($list)) {
+                if (empty($inclause['mat__cli__id'])) {
                     return $responseHandler->handleJsonResponse([
-                        'msg' => 'Aucun materiel n a été trouvé'
-                    ] , 404 , 'not found');
-                } else {
-                    return $responseHandler->handleJsonResponse( [
-                        "data" => $list ], 200 , 'ok ');
-                }
-            }else{
-                // $order_array =  $materielRepository->getOrder($_GET);
-                
-                if(!empty($_GET['mat__cli__id'])){
-                    $temp = [];
-                    foreach ($_GET['mat__cli__id'] as $value) {
-                            foreach ($inclause['mat__cli__id'] as $cli) {
-                                if ($value == $cli) {
-                                        array_push($temp , $cli);
-                                }
-                            }
-                    }
-                    $inclause['mat__cli__id']  = $temp;
-                    $_GET['mat__cli__id'] = "";
-                }
-                
-                if(empty($inclause['mat__cli__id'])){
-                    return $responseHandler->handleJsonResponse([
-                        'msg' => 'Vous ne pouvez pas consulter le parc matériel des autres sites'
+                        'msg' => 'Vous n avez aucun sites en gestion'
                     ] , 404 , 'not found');
                 }
 
@@ -196,11 +154,9 @@ Class MaterielController extends BaseController {
                 }
                 
                 if(!empty($_GET['mat__marque'])){
-                   
                     foreach ($_GET['mat__marque'] as $value) {
                             array_push($inclause['mat__marque'] , $value);   
                     }
-                   
                     $_GET['mat__marque'] = "";
                 }
 
@@ -218,18 +174,11 @@ Class MaterielController extends BaseController {
                     $_GET['mat__type'] = "";
                 }
                 
-                $new_clause = null;
-                foreach ($inclause as $key => $value){
-                    if (!empty($value)  and $value != 'ASC' and $value != 'DESC'){
-                        $new_clause[$key] = $value;
-                    }
-                       
-                }
                 if (!empty($_GET['limit'])) {
                     $limit = intval($_GET['limit']);
                 }
-            
-                $list = $materielRepository->findMat($new_clause , [] , $limit ,[]);
+                 $list = $materielRepository->search($inclause ,$string , $limit ,  [], []);
+               
                 if (empty($list)) {
                     return $responseHandler->handleJsonResponse([
                         'msg' => 'Aucun materiel n a été trouvé'
@@ -238,26 +187,7 @@ Class MaterielController extends BaseController {
                     return $responseHandler->handleJsonResponse( [
                         "data" => $list ], 200 , 'ok ');
                 }
-            }
-        }else {
-            //recherche standard dans le parc client :
-            $new_clause = null;
-            foreach ($inclause as $key => $value){
-                if (!empty($value) ){
-                    $new_clause[$key] = $value;
-                }     
-            }
-           
-            $list = $materielRepository->findMat($new_clause , [] , 30 , []);
-            if (empty($list)) {
-                return $responseHandler->handleJsonResponse([
-                    'msg' => 'Aucun materiel n a été trouvé'
-                ] , 404 , 'not found');
-            } else {
-                return $responseHandler->handleJsonResponse( [
-                    "data" => $list] , 200 , 'ok ');
-            }
-        }  
+            
     }
 
     public static function post(){

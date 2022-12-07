@@ -168,6 +168,135 @@ Class MaterielRepository  extends BaseRepository {
         
     }
 
+    public function search(array $in ,  $clause,  int $limit , array $order  , array $parameters ){
+        
+        $params = [
+            'self' => [
+                'name' => 'materiel' , 
+                'alias' => 'm',
+                'field' => [
+                    'mat__id' => 'in' ,
+                    'mat__cli__id' => 'in',
+                    'mat__type' => 'in',
+                    'mat__marque' => 'like' , 
+                    'mat__model' => 'like', 
+                    'mat__memo' => 'like', 
+                    'mat__sn' => 'like',
+                    'mat__idnec' => 'like',
+                    'mat__ident' => 'like', 
+                    "mat__contrat_id" => 'like',
+                    "mat__kw_tg" => 'in'
+                ]
+            ]
+        ];
+
+        $limit_clause = '';
+        if (!empty($limit)) {
+            $limit_clause .= ' LIMIT ' . intval($limit);
+        }
+       
+
+        $left_clause = '';
+        foreach ($params as $key => $value) {
+            if ($key != 'self' ) {
+                $left_clause .=   ' ' . $value['type'] . ' JOIN '.$key.' as '.  $value['alias'] .'  ON  ( ' . $value['alias'].'.';
+                foreach ($value['on'] as $keys => $entry) {
+                    $left_clause .=  $keys.' = '.$entry;
+                }
+                $left_clause .= ' ) ';
+            }
+        }
+        $in_clause = '';
+        foreach ($params as $key => $value) {
+            foreach ($value['field'] as $ref => $entry) {
+                if ( $entry == 'in') {
+                   
+                    foreach ($in as $search => $option) {
+                        
+                        if (!empty($option) ) {
+                            if ($search == $ref) {
+                                $in_clause .= ' AND ( '.$value['alias'].'.'.$ref. ' IN ( ';
+                                foreach ($in[$search] as $index =>  $input) {
+                                     if ($index === array_key_last($in[$search])){
+                                         $in_clause .=   '"'. $input . '" ) ';
+                                     }else{
+                                         $in_clause .= '"' . $input . '" , ';
+                                     }
+                                }  
+                                $in_clause .= ' )  ';
+                             }
+                        }   
+                    }
+                }
+            }
+        }
+        
+        $where_clause = '';
+       
+        if (!empty($clause)) {
+           
+            $filtre = str_replace("-", ' ', $clause);
+            $filtre = str_replace("'", ' ',$clause);
+            $nb_mots_filtre = str_word_count($filtre, 0, "0123456789");
+            $mots_filtre = str_word_count($filtre, 1, '0123456789');
+            $first = reset($params);
+            foreach ($params as $key => $value) {
+                    if ($first ==  $value) {
+                        if (!empty($value['field'])) {
+                            foreach ($value['field'] as $field => $input) {
+                                if($input == 'like'){
+                                    $where_clause  .=  'AND ( ' ;
+                                    for ($i = 0; $i < $nb_mots_filtre; $i++){
+                                        if ($i == 0 ){
+                                            $where_clause .=  $value['alias'].'.'.$field  . ' LIKE "%' .$mots_filtre[$i] .'%"';
+                                        }else {
+                                            $where_clause .=   ' OR ' .  $value['alias'].'.'.$field  .'  LIKE "%' .$mots_filtre[$i] .'%"';
+                                        }
+                                    }
+                                    $where_clause .=  ' ) ';
+                                }
+                            }
+                           
+                        }
+                    } else {
+                        if (!empty($value['field'])) {
+                            foreach ($value['field'] as $field => $input) {
+                                if($input == 'like'){
+                                    $where_clause  .=  ' OR  ( ' ;
+                                    for ($i = 0; $i < $nb_mots_filtre; $i++){
+                                        if ($i == 0 ){
+                                            $where_clause .=  $value['alias'].'.'.$field  . ' LIKE "%' .$mots_filtre[$i] .'%"';
+                                        }else {
+                                            $where_clause .=   ' OR ' .  $value['alias'].'.'.$field  .'  LIKE "%' .$mots_filtre[$i] .'%"';
+                                        }
+                                    }
+                                    $where_clause .=  ' ) ';
+                                }
+                            }
+                        }
+                    }
+            }
+        }
+       
+        $orderclause = '';
+        if (!empty($order)) {
+            $orderclause .= 'ORDER BY';
+        }
+        foreach ($order as $key => $value) {
+            if ($key === array_key_last($order)){
+                $orderclause .= ' '.$key . ' ' . $value . ' ' ;
+            }else {
+                $orderclause .= ' '.$key . ' ' . $value . ', ' ;
+            }
+           
+        }
+
+        $clause = 'SELECT DISTINCT  *  FROM ' . $params['self']['name'] . ' as ' . $params['self']['alias'].' '. $left_clause . ' WHERE 1 = 1 ' . $in_clause . ' ' . $where_clause . ' ' .  $orderclause  .'  ' . $limit_clause . '';
+     
+        $request = $this->Db->Pdo->query($clause);
+        return  $request->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
 
 }

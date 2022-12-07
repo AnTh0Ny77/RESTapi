@@ -96,13 +96,13 @@ Class NotificationsController extends BaseController {
             $non_lus = 0 ;
             foreach ($tickets_list as  $value) {
                 
-                if ($value['tk__lu'] == 2) 
+                if ($value['tk__lu'] == 9) 
                     $cloture ++ ;
                 
-                if ($value['tk__lu'] == 1) 
+                if ($value['tk__lu'] == 5) 
                     $en_cours ++;
                 
-                if ($value['tk__lu'] == 0) {
+                if ($value['tk__lu'] == 3) {
                     $en_cours ++; $non_lus++;
                 }
             }
