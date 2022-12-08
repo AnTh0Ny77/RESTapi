@@ -93,13 +93,13 @@ Class TicketController extends BaseController {
         
         ////////////////////////////// traitrement des variable de recherche à inserer dans la fonction : 
         //textuelle: 
-        var_dump('hey');
+        
         $search = '';
         if (!empty($_GET['search'])) 
             $search = $_GET['search'];
         //clause in:
         $in_clause = [];
-
+        var_dump('hey');
         //////////////recupère les clients liés au users: 
         $in_clause['mat__cli__id'] = [];
         if (empty($user->getClients())) {
