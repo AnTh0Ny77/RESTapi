@@ -320,7 +320,8 @@ Class TicketRepository  extends BaseRepository {
         if (!empty($limit)) {
             $limit_clause .= ' LIMIT ' . intval($limit);
         }
-        
+        var_dump('hey');
+        die();
         ///////////////////////////////////////////////////////////////////////////// LEFT ///////////////////////////////////////////////////////////////////
         $left_clause = '';
         foreach ($params as $key => $value) {
@@ -357,8 +358,7 @@ Class TicketRepository  extends BaseRepository {
                     }
                 }
             }
-            var_dump($in_clause);
-            die();
+         
        ////////////////////////////////////////////////////////////////////////////// WHERE ///////////////////////////////////////////////////////////
             $where_clause = '';
             if (!empty($clause)) {
