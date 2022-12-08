@@ -357,7 +357,8 @@ Class TicketRepository  extends BaseRepository {
                     }
                 }
             }
-
+            var_dump($in_clause);
+            die();
        ////////////////////////////////////////////////////////////////////////////// WHERE ///////////////////////////////////////////////////////////
             $where_clause = '';
             if (!empty($clause)) {
@@ -398,8 +399,7 @@ Class TicketRepository  extends BaseRepository {
                     }
                 }
             }
-            var_dump('test');
-            die();
+         
      ////////////////////////////////////////////////////////////////////////////// ORDER ///////////////////////////////////////////////////////////
      $orderclause = " ";
         // foreach ($order as $key => $value) {
