@@ -99,7 +99,7 @@ Class TicketController extends BaseController {
             $search = $_GET['search'];
         //clause in:
         $in_clause = [];
-        var_dump('hey');
+        
         //////////////recupère les clients liés au users: 
         $in_clause['mat__cli__id'] = [];
         if (empty($user->getClients())) {
@@ -111,7 +111,7 @@ Class TicketController extends BaseController {
         foreach ($user->getClients() as  $clients) {
            array_push($in_clause['mat__cli__id'] , $clients->getCli__id());
         }
-
+        var_dump('hey');
         // if (!empty($_GET['RECODE__PASS'])) {
         //         if ($_GET['RECODE__PASS'] == 'secret') {
         //             $in_clause['mat__cli__id'] = [];
