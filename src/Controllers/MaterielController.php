@@ -147,6 +147,7 @@ Class MaterielController extends BaseController {
                 }
 
                 if (!empty($_GET['mat__cli__id'])) {
+                    $inclause['mat__cli__id']  = [];
                     foreach ($_GET['mat__cli__id'] as $value) {
                         array_push($inclause['mat__cli__id'] , $value);   
                     }
