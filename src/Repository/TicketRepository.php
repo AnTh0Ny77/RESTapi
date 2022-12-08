@@ -320,7 +320,7 @@ Class TicketRepository  extends BaseRepository {
         if (!empty($limit)) {
             $limit_clause .= ' LIMIT ' . intval($limit);
         }
-        var_dump('hey');
+        
         ///////////////////////////////////////////////////////////////////////////// LEFT ///////////////////////////////////////////////////////////////////
         $left_clause = '';
         foreach ($params as $key => $value) {
