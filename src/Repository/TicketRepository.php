@@ -397,14 +397,9 @@ Class TicketRepository  extends BaseRepository {
                         }
                     }
                 }
-            
-        
-                $orderclause = '';
-                if (!empty($order)) {
-                    $orderclause .= 'ORDER BY';
-                }  
             }
-
+            var_dump('test');
+            die();
      ////////////////////////////////////////////////////////////////////////////// ORDER ///////////////////////////////////////////////////////////
      $orderclause = " ";
         // foreach ($order as $key => $value) {
@@ -414,8 +409,7 @@ Class TicketRepository  extends BaseRepository {
         //         $orderclause .= ' '.$key . ' ' . $value . ', ' ;
         //     }
         // }
-        var_dump('test');
-        die();
+       
     ///////////////////////////////////////////////////////////////////////////////// FINAL ////////////////////////////////////////////////////////////////////////
         $clause = 'SELECT DISTINCT  t.tk__id  FROM ' . $params['self']['name'] . ' as ' . $params['self']['alias'].' '. $left_clause . ' WHERE 1 = 1 ' . $in_clause . ' ' . $where_clause . ' ' .  $orderclause  .'  ' . $limit_clause . '';
         
