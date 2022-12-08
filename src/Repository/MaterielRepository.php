@@ -299,7 +299,6 @@ Class MaterielRepository  extends BaseRepository {
 
 
     public function search2(array $in ,  $clause,  int $limit , array $order  , array $parameters ){
-       
 
         //////////////////////////////////////////////////////////////////////// CONFIG ///////////////////////////////////////////////////////////////////
         $params = [
@@ -311,8 +310,7 @@ Class MaterielRepository  extends BaseRepository {
                     'mat__cli__id' => 'in',
                     'mat__type' => 'in',
                     "mat__kw_tg" => 'in' ,
-                    'mat__marque' => 'in' , 
-                    'mat__marque' => 'like' , 
+                    'mat__marque' => 'double' , 
                     'mat__model' => 'like', 
                     'mat__memo' => 'like', 
                     'mat__sn' => 'like',
@@ -320,7 +318,9 @@ Class MaterielRepository  extends BaseRepository {
                     'mat__ident' => 'like', 
                     "mat__contrat_id" => 'like'
                    
-                ]
+                ],
+                'start' => 'mat__marque',
+                'end' => 'mat__contrat_id'
             ]
         ];
 
@@ -330,8 +330,6 @@ Class MaterielRepository  extends BaseRepository {
             $limit_clause .= ' LIMIT ' . intval($limit);
         }
        
-
-
         ///////////////////////////////////////////////////////////////////////////// LEFT ///////////////////////////////////////////////////////////////////
         $left_clause = '';
         foreach ($params as $key => $value) {
@@ -348,8 +346,7 @@ Class MaterielRepository  extends BaseRepository {
             $in_clause = '';
             foreach ($params as $key => $value) {
                 foreach ($value['field'] as $ref => $entry) {
-                    if ( $entry == 'in') {
-                    
+                    if ( $entry == 'in' or $entry == 'double') {
                         foreach ($in as $search => $option) {
                             
                             if (!empty($option) ) {
@@ -369,6 +366,7 @@ Class MaterielRepository  extends BaseRepository {
                     }
                 }
             }
+
        ////////////////////////////////////////////////////////////////////////////// WHERE ///////////////////////////////////////////////////////////
             $where_clause = '';
             if (!empty($clause)) {
@@ -377,28 +375,38 @@ Class MaterielRepository  extends BaseRepository {
                 $nb_mots_filtre = str_word_count($filtre, 0, "0123456789");
                 $mots_filtre = str_word_count($filtre, 1, '0123456789');
                 $first = reset($params);
-                $where_clause .= ' AND ( ';
                 for ($i = 0; $i < $nb_mots_filtre; $i++){
                     foreach ($params as $key => $value) {
                         if (!empty($value['field'])) {
                             foreach ($value['field'] as $field => $input) {
-                                if($input == 'like'){
+                                if($input == 'like' or $input == 'double'){
                                     if ($i == 0 ){
-                                        if ($field == 'mat__marque') {
-                                            $where_clause .=  '  ( ' .  $value['alias'].'.'.$field  . ' LIKE "%' .$mots_filtre[$i] .'%" )';
+                                        if ($field == $params['self']['start']) {
+                                            $where_clause .=  ' AND ( ( ' .  $value['alias'].'.'.$field  . ' LIKE "%' .$mots_filtre[$i] .'%" )';
                                         }else {
                                             $where_clause .=  ' OR  ( ' .  $value['alias'].'.'.$field  . ' LIKE "%' .$mots_filtre[$i] .'%" ) ';
                                         }
+                                        if ($field == $params['self']['end']) {
+                                            $where_clause .= ' ) ';
+                                        }
                                         
                                     }else {
-                                        $where_clause .=   ' OR ( ' .  $value['alias'].'.'.$field  .'  LIKE "%' .$mots_filtre[$i] .'%" ) ';
+                                        if ($field == $params['self']['start']) {
+                                            $where_clause .=   ' AND ( ( ' .  $value['alias'].'.'.$field  .'  LIKE "%' .$mots_filtre[$i] .'%" ) ';
+                                        }else {
+                                            $where_clause .=   ' OR ( ' .  $value['alias'].'.'.$field  .'  LIKE "%' .$mots_filtre[$i] .'%" ) ';
+                                        }
+                                        if ($field == $params['self']['end']) {
+                                            $where_clause .= ' ) ';
+                                        }
+                                       
                                     }
                                 }
                             }
                         }
                     }
                 }
-                $where_clause .=  ' ) ';
+            
         
                 $orderclause = '';
                 if (!empty($order)) {
@@ -407,6 +415,7 @@ Class MaterielRepository  extends BaseRepository {
             }
 
      ////////////////////////////////////////////////////////////////////////////// ORDER ///////////////////////////////////////////////////////////
+     $orderclause = " ";
         foreach ($order as $key => $value) {
             if ($key === array_key_last($order)){
                 $orderclause .= ' '.$key . ' ' . $value . ' ' ;
@@ -417,6 +426,7 @@ Class MaterielRepository  extends BaseRepository {
 
     ///////////////////////////////////////////////////////////////////////////////// FINAL ////////////////////////////////////////////////////////////////////////
         $clause = 'SELECT DISTINCT  *  FROM ' . $params['self']['name'] . ' as ' . $params['self']['alias'].' '. $left_clause . ' WHERE 1 = 1 ' . $in_clause . ' ' . $where_clause . ' ' .  $orderclause  .'  ' . $limit_clause . '';
+       
         $request = $this->Db->Pdo->query($clause);
         return  $request->fetchAll(PDO::FETCH_ASSOC);
     }
