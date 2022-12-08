@@ -336,29 +336,32 @@ Class TicketRepository  extends BaseRepository {
         ////////////////////////////////////////////////////////////////////////////// IN ///////////////////////////////////////////////////////////
             $in_clause = '';
             foreach ($params as $key => $value) {
-                foreach ($value['field'] as $ref => $entry) {
-                    if ( $entry == 'in' or $entry == 'double') {
-                        foreach ($in as $search => $option) {
-                            
-                            if (!empty($option) ) {
-                                if ($search == $ref) {
-                                    $in_clause .= ' AND ( '.$value['alias'].'.'.$ref. ' IN ( ';
-                                    foreach ($in[$search] as $index =>  $input) {
-                                        if ($index === array_key_last($in[$search])){
-                                            $in_clause .=   '"'. $input . '" ) ';
-                                        }else{
-                                            $in_clause .= '"' . $input . '" , ';
-                                        }
-                                    }  
-                                    $in_clause .= ' )  ';
-                                }
-                            }   
+                if ($key != 'start' and $key != 'end' ) {
+                    foreach ($value['field'] as $ref => $entry) {
+                        if ( $entry == 'in' or $entry == 'double') {
+                            foreach ($in as $search => $option) {
+                                
+                                if (!empty($option) ) {
+                                    if ($search == $ref) {
+                                        $in_clause .= ' AND ( '.$value['alias'].'.'.$ref. ' IN ( ';
+                                        foreach ($in[$search] as $index =>  $input) {
+                                            if ($index === array_key_last($in[$search])){
+                                                $in_clause .=   '"'. $input . '" ) ';
+                                            }else{
+                                                $in_clause .= '"' . $input . '" , ';
+                                            }
+                                        }  
+                                        $in_clause .= ' )  ';
+                                    }
+                                }   
+                            }
                         }
                     }
                 }
+                
             }
-            var_dump($in_clause);
-            die();
+           var_dump( $in_clause);
+           die();
        ////////////////////////////////////////////////////////////////////////////// WHERE ///////////////////////////////////////////////////////////
             $where_clause = '';
             if (!empty($clause)) {
