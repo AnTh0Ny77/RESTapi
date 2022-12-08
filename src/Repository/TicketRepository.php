@@ -413,7 +413,8 @@ Class TicketRepository  extends BaseRepository {
         // }
        
     ///////////////////////////////////////////////////////////////////////////////// FINAL ////////////////////////////////////////////////////////////////////////
-        $clause = 'SELECT DISTINCT  t.tk__id  FROM ' . $params['self']['name'] . ' as ' . $params['self']['alias'].' '. $left_clause . ' WHERE 1 = 1 ' . $in_clause . ' ' . $where_clause . ' ' .  $orderclause  .'  ' . $limit_clause . '';
+        $clause = 'SELECT DISTINCT  t.tk__id  max(y.ticket_ligne.tkl__dt) AS MTIME   FROM ' . $params['self']['name'] . ' as ' . $params['self']['alias'].' '. $left_clause . ' WHERE 1 = 1 ' . $in_clause . ' GROUP BY ticket.tk__id
+        ORDER BY ticket.tk__lu ASC , MTIME DESC LIMIT 50 ';
       
         $request = $this->Db->Pdo->query($clause);
         return  $request->fetchAll(PDO::FETCH_ASSOC);
