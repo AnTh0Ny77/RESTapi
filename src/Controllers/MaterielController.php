@@ -140,18 +140,18 @@ Class MaterielController extends BaseController {
                     array_push($inclause['mat__cli__id'] , $client->getCli__id());
                 }
                 
-                if (empty($inclause['mat__cli__id'])) {
-                    return $responseHandler->handleJsonResponse([
-                        'msg' => 'Vous n avez aucun sites en gestion'
-                    ] , 404 , 'not found');
-                }
-
                 if (!empty($_GET['mat__cli__id'])) {
                     $inclause['mat__cli__id']  = [];
                     foreach ($_GET['mat__cli__id'] as $value) {
                         array_push($inclause['mat__cli__id'] , $value);   
                     }
                     $_GET['mat__cli__id'] = "";
+                }
+
+                if (empty($inclause['mat__cli__id'])) {
+                    return $responseHandler->handleJsonResponse([
+                        'msg' => 'Vous n avez aucun sites en gestion'
+                    ] , 404 , 'not found');
                 }
 
                 if (!empty($_GET['mat__id'])) {
