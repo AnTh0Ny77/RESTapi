@@ -93,6 +93,7 @@ Class TicketController extends BaseController {
         
         ////////////////////////////// traitrement des variable de recherche à inserer dans la fonction : 
         //textuelle: 
+        var_dump('hey');
         $search = '';
         if (!empty($_GET['search'])) 
             $search = $_GET['search'];
