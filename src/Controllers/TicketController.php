@@ -111,12 +111,12 @@ Class TicketController extends BaseController {
         foreach ($user->getClients() as  $clients) {
            array_push($in_clause['mat__cli__id'] , $clients->getCli__id());
         }
-        var_dump('hey');
-        // if (!empty($_GET['RECODE__PASS'])) {
-        //         if ($_GET['RECODE__PASS'] == 'secret') {
-        //             $in_clause['mat__cli__id'] = [];
-        //         }
-        // }
+        
+        if (!empty($_GET['RECODE__PASS'])) {
+                if ($_GET['RECODE__PASS'] == 'secret') {
+                    $in_clause['mat__cli__id'] = [];
+                }
+        }
 
         if (!empty($_GET['tkl__user_id'])) {
             $in_clause['tkl__user_id'] = [];
@@ -162,7 +162,7 @@ Class TicketController extends BaseController {
                 array_push($in_clause['mat__id'] , $value);
             }
         }
-
+        var_dump('hey');
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         $request = $TicketRepository->search2($in_clause, $search , 100 ,[ "tk__lu" => "ASC","tk__id" =>"DESC"],[]);
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
