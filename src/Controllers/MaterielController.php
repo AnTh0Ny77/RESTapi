@@ -146,6 +146,13 @@ Class MaterielController extends BaseController {
                     ] , 404 , 'not found');
                 }
 
+                if (!empty($_GET['mat__cli__id'])) {
+                    foreach ($_GET['mat__cli__id'] as $value) {
+                        array_push($inclause['mat__cli__id'] , $value);   
+                    }
+                    $_GET['mat__cli__id'] = "";
+                }
+
                 if (!empty($_GET['mat__id'])) {
                     foreach ($_GET['mat__id'] as $value) {
                         array_push($inclause['mat__id'] , $value);   
