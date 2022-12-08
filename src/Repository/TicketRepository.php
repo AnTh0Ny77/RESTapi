@@ -332,8 +332,7 @@ Class TicketRepository  extends BaseRepository {
                 $left_clause .= ' ) ';
             }
         }
-        var_dump($left_clause );
-        die();
+       
         ////////////////////////////////////////////////////////////////////////////// IN ///////////////////////////////////////////////////////////
             $in_clause = '';
             foreach ($params as $key => $value) {
@@ -358,7 +357,8 @@ Class TicketRepository  extends BaseRepository {
                     }
                 }
             }
-         
+            var_dump($in_clause);
+            die();
        ////////////////////////////////////////////////////////////////////////////// WHERE ///////////////////////////////////////////////////////////
             $where_clause = '';
             if (!empty($clause)) {
