@@ -310,14 +310,16 @@ Class MaterielRepository  extends BaseRepository {
                     'mat__id' => 'in' ,
                     'mat__cli__id' => 'in',
                     'mat__type' => 'in',
+                    "mat__kw_tg" => 'in' ,
                     'mat__marque' => 'in' , 
+                    'mat__marque' => 'like' , 
                     'mat__model' => 'like', 
                     'mat__memo' => 'like', 
                     'mat__sn' => 'like',
                     'mat__idnec' => 'like',
                     'mat__ident' => 'like', 
-                    "mat__contrat_id" => 'like',
-                    "mat__kw_tg" => 'in'
+                    "mat__contrat_id" => 'like'
+                   
                 ]
             ]
         ];
@@ -382,7 +384,7 @@ Class MaterielRepository  extends BaseRepository {
                             foreach ($value['field'] as $field => $input) {
                                 if($input == 'like'){
                                     if ($i == 0 ){
-                                        if ($field == 'mat__model') {
+                                        if ($field == 'mat__marque') {
                                             $where_clause .=  '  ( ' .  $value['alias'].'.'.$field  . ' LIKE "%' .$mots_filtre[$i] .'%" )';
                                         }else {
                                             $where_clause .=  ' OR  ( ' .  $value['alias'].'.'.$field  . ' LIKE "%' .$mots_filtre[$i] .'%" ) ';
