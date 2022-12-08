@@ -249,7 +249,8 @@ Class TicketRepository  extends BaseRepository {
     public function search2(array $in ,  $clause,  int $limit , array $order  , array $parameters ){
 
         //////////////////////////////////////////////////////////////////////// CONFIG ///////////////////////////////////////////////////////////////////
-
+        var_dump('hey');
+        die();
         $params = [
             'start' => 'tk__titre',
             'end' => 'cli__ville',
