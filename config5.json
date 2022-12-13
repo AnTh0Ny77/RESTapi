@@ -1,0 +1,25 @@
+{
+    "urls": {
+        "base": "/api"
+    }, 
+    "database": {
+        "host":  "localhost", 
+        "user": "api",
+        "name" : "myrecode",
+        "pass" : "anthony1234"
+    },
+    "sossuke": {
+        "host":  "192.168.1.124", 
+        "user": "remoteroot",
+        "name" : "devis",
+        "pass" : "remotepassword1234!"
+    },
+    "security": {
+        "app_secret" : "sec!ReT423*&"
+    },
+    "mailer": {
+        "host" : "ssl0.ovh.net",
+        "username" : "info@myrecode.fr", 
+        "password" : "K@GFxBrM@g##5og6"
+    }
+}

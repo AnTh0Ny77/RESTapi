@@ -115,7 +115,7 @@ Class MaterielController extends BaseController {
         if ($auth != null) 
             return $auth;
 
-        
+       
         $id_user = UserController::returnId__user($security)['uid'];
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
        
@@ -129,7 +129,7 @@ Class MaterielController extends BaseController {
             'mat__type' => [], 
             'mat__id' => []
         ];
-       
+        
         $limit = 30 ;
         
                 $string = '';
@@ -140,6 +140,14 @@ Class MaterielController extends BaseController {
                     array_push($inclause['mat__cli__id'] , $client->getCli__id());
                 }
                 
+                if (!empty($_GET['mat__cli__id'])) {
+                    $inclause['mat__cli__id']  = [];
+                    foreach ($_GET['mat__cli__id'] as $value) {
+                        array_push($inclause['mat__cli__id'] , $value);   
+                    }
+                    $_GET['mat__cli__id'] = "";
+                }
+
                 if (empty($inclause['mat__cli__id'])) {
                     return $responseHandler->handleJsonResponse([
                         'msg' => 'Vous n avez aucun sites en gestion'
@@ -177,8 +185,9 @@ Class MaterielController extends BaseController {
                 if (!empty($_GET['limit'])) {
                     $limit = intval($_GET['limit']);
                 }
-                 $list = $materielRepository->search($inclause ,$string , $limit ,  [], []);
-               
+
+                $list = $materielRepository->search2($inclause ,$string , $limit ,  [], []);
+                
                 if (empty($list)) {
                     return $responseHandler->handleJsonResponse([
                         'msg' => 'Aucun materiel n a été trouvé'

@@ -6,6 +6,7 @@ use Src\Sossuke;
 use Src\Entities\User;
 use Src\Entities\Client;
 use Src\Entities\Materiel;
+use Src\Services\MailerServices;
 use Src\Services\Security;
 use Src\Services\ResponseHandler;
 use Src\Repository\UserRepository;
@@ -72,6 +73,7 @@ Class TicketLigneController extends BaseController {
         $sossuke->DbConnect();
         $responseHandler = new ResponseHandler();
         $tick = new TicketRepository('ticket' , $database , Tickets::class);
+        $mailer = new MailerServices();
         $tickSossuke = new TicketRepository('ticket' , $sossuke , Tickets::class);
         $TicketLigneRepository = new TicketLigneRepository('ticket_ligne' , $database , TicketsLigne::class );
         $TicketLigneSossukeRepository = new TicketLigneRepository('ticket_ligne' , $sossuke , TicketsLigne::class );
