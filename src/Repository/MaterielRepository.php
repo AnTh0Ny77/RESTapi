@@ -292,7 +292,8 @@ Class MaterielRepository  extends BaseRepository {
         }
 
         $clause = 'SELECT DISTINCT  *  FROM ' . $params['self']['name'] . ' as ' . $params['self']['alias'].' '. $left_clause . ' WHERE 1 = 1 ' . $in_clause . ' ' . $where_clause . ' ' .  $orderclause  .'  ' . $limit_clause . '';
-     
+        var_dump($clause);
+        die();
         $request = $this->Db->Pdo->query($clause);
         return  $request->fetchAll(PDO::FETCH_ASSOC);
     }
