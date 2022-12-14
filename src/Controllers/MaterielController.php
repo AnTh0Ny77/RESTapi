@@ -262,7 +262,7 @@ Class MaterielController extends BaseController {
             ] , 401 , 'bad request');
         } 
 
-        $materiel = $materielRepository->postMateriel($body , $user);
+        $materiel = $materielRepository->UpdateOne($body , $user);
         if (!$materiel instanceof Materiel) {
             return $responseHandler->handleJsonResponse([
                 'msg' => $materiel
