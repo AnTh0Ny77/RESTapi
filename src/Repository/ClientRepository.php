@@ -123,6 +123,12 @@ Class ClientRepository  extends BaseRepository {
             return $client;
     }
 
+    public function returnIdList(){
+        $request = "SELECT cli__id  FROM ".$this->Table." WHERE 1 = 1";
+        $request = $this->Db->Pdo->query($request);
+        return  $request->fetchAll(PDO::FETCH_ASSOC);    
+    }
+
 
    
 

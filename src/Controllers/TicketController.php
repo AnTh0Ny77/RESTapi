@@ -15,6 +15,7 @@ use Src\Repository\TicketRepository;
 Use Src\Entities\TicketsLigne;
 Use Src\Repository\TicketLigneRepository;
 use Src\Entities\TicketsLigneChamp;
+use Src\Repository\ClientRepository;
 use Src\Repository\TicketLigneChampRepository;
 use Src\Repository\LienUserClientRepository;
 
@@ -76,6 +77,7 @@ Class TicketController extends BaseController {
     public static function get(){
         $database = new Database();
         $database->DbConnect();
+        $clientRep = new ClientRepository('client' , $database , Client::class);
         $responseHandler = new ResponseHandler();
         $TicketRepository = new TicketRepository('ticket' , $database , Tickets::class );
         $TicketLigneRepository = new TicketLigneRepository('ticket_ligne' , $database , TicketsLigne::class );
@@ -90,6 +92,7 @@ Class TicketController extends BaseController {
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
         $user->setClients($clients);
+        $list_client = [];
         
         ////////////////////////////// traitrement des variable de recherche à inserer dans la fonction : 
         //textuelle: 
@@ -114,7 +117,10 @@ Class TicketController extends BaseController {
         
         if (!empty($_GET['RECODE__PASS'])) {
                 if ($_GET['RECODE__PASS'] == 'secret') {
-                    $in_clause['mat__cli__id'] = [];
+                    $list_client = $clientRep->returnIdList();
+                    foreach ( $list_client as $value) {
+                        array_push($in_clause['mat__cli__id'] , $value['cli__id']);
+                    }
                 }
         }
 
@@ -163,8 +169,9 @@ Class TicketController extends BaseController {
             }
         }
         
+        $param = self::renderParam();
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        $request = $TicketRepository->search2($in_clause, $search , 100 ,[ "tk__lu" => "ASC","tk__id" =>"DESC"],[]);
+        $request = $TicketRepository->search2($in_clause, $search , 100 ,[ "tk__lu" => "ASC","tk__id" =>"DESC"],$param);
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         
         ///////////////////////////////// format de la réponse avec toutes les infos utiles: /////////////////////
@@ -249,6 +256,75 @@ Class TicketController extends BaseController {
             'data' => [ 'tk__id' => $id_new_ticket]
         ] , 201 , 'ressource created');
 
+    }
+
+
+    public static function renderParam(){
+            return  [
+                'start' => 'tk__titre',
+                'end' => 'cli__ville',
+                'self' => [
+                    'name' => 'ticket' , 
+                    'alias' => 't',
+                    'field' => [
+                        'tk__id' => 'in' ,
+                        'tk__lu' => 'in',
+                        'tk__motif' => 'in',
+                        'tk__titre' => 'like' , 
+                        'tk__groupe' => 'in', 
+                    ] 
+                ],
+                'materiel' => [
+                    'alias' => 'm',
+                    'type' => 'LEFT',
+                    'on' => [
+                        'mat__id' => 't.tk__motif_id'
+                    ],
+                    'field' => [
+                        'mat__id' => 'in' ,
+                        'mat__cli__id' => 'in' ,
+                        'mat__type' => 'like' , 
+                        'mat__marque' => 'like', 
+                        'mat__model' => 'like', 
+                        'mat__pn' => 'like',
+                        'mat__sn' => 'like', 
+                        'mat__idnec' => 'like'
+                    ]
+                ], 
+                'lien_user_client' => [
+                    'alias' => 'l',
+                    'type' => 'LEFT',
+                    'on' => [
+                        'luc__cli__id' => 'm.mat__cli__id'
+                    ],
+                    'field' => [
+                       
+                    ]
+                ], 
+                'client' => [
+                    'alias' => 'c',
+                    'type' => 'LEFT',
+                    'on' => [
+                        'cli__id' => 'l.luc__cli__id'
+                    ],
+                    'field' => [
+                        'cli__id' => 'like' ,
+                        'cli__nom' => 'like' , 
+                        'cli__ville' => 'like'
+                    ]
+                ], 'ticket_ligne' => [
+                    'alias' => 'y',
+                    'type' => 'LEFT',
+                    'on' => [
+                        'tkl__tk_id' => 't.tk__id'
+                    ],
+                    'field' => [
+                        'tkl__user_id_dest' => 'in',
+                        'tkl__user_id' => 'in'
+                    ]
+                ], 
+            ];
+       
     }
 
 

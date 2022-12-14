@@ -249,71 +249,71 @@ Class TicketRepository  extends BaseRepository {
     public function search2(array $in ,  $clause,  int $limit , array $order  , array $parameters ){
 
         //////////////////////////////////////////////////////////////////////// CONFIG ///////////////////////////////////////////////////////////////////
-        
-        $params = [
-            'start' => 'tk__titre',
-            'end' => 'cli__ville',
-            'self' => [
-                'name' => 'ticket' , 
-                'alias' => 't',
-                'field' => [
-                    'tk__id' => 'in' ,
-                    'tk__lu' => 'in',
-                    'tk__motif' => 'in',
-                    'tk__titre' => 'like' , 
-                    'tk__groupe' => 'in', 
-                ] 
-            ],
-            'materiel' => [
-                'alias' => 'm',
-                'type' => 'LEFT',
-                'on' => [
-                    'mat__id' => 't.tk__motif_id'
-                ],
-                'field' => [
-                    'mat__id' => 'in' ,
-                    'mat__cli__id' => 'in' ,
-                    'mat__type' => 'like' , 
-                    'mat__marque' => 'like', 
-                    'mat__model' => 'like', 
-                    'mat__pn' => 'like',
-                    'mat__sn' => 'like', 
-                    'mat__idnec' => 'like'
-                ]
-            ], 
-            'lien_user_client' => [
-                'alias' => 'l',
-                'type' => 'LEFT',
-                'on' => [
-                    'luc__cli__id' => 'm.mat__cli__id'
-                ],
-                'field' => [
+        $params = $parameters;
+        // $params = [
+        //     'start' => 'tk__titre',
+        //     'end' => 'cli__ville',
+        //     'self' => [
+        //         'name' => 'ticket' , 
+        //         'alias' => 't',
+        //         'field' => [
+        //             'tk__id' => 'in' ,
+        //             'tk__lu' => 'in',
+        //             'tk__motif' => 'in',
+        //             'tk__titre' => 'like' , 
+        //             'tk__groupe' => 'in', 
+        //         ] 
+        //     ],
+        //     'materiel' => [
+        //         'alias' => 'm',
+        //         'type' => 'LEFT',
+        //         'on' => [
+        //             'mat__id' => 't.tk__motif_id'
+        //         ],
+        //         'field' => [
+        //             'mat__id' => 'in' ,
+        //             'mat__cli__id' => 'in' ,
+        //             'mat__type' => 'like' , 
+        //             'mat__marque' => 'like', 
+        //             'mat__model' => 'like', 
+        //             'mat__pn' => 'like',
+        //             'mat__sn' => 'like', 
+        //             'mat__idnec' => 'like'
+        //         ]
+        //     ], 
+        //     'lien_user_client' => [
+        //         'alias' => 'l',
+        //         'type' => 'LEFT',
+        //         'on' => [
+        //             'luc__cli__id' => 'm.mat__cli__id'
+        //         ],
+        //         'field' => [
                    
-                ]
-            ], 
-            'client' => [
-                'alias' => 'c',
-                'type' => 'LEFT',
-                'on' => [
-                    'cli__id' => 'l.luc__cli__id'
-                ],
-                'field' => [
-                    'cli__id' => 'like' ,
-                    'cli__nom' => 'like' , 
-                    'cli__ville' => 'like'
-                ]
-            ], 'ticket_ligne' => [
-                'alias' => 'y',
-                'type' => 'LEFT',
-                'on' => [
-                    'tkl__tk_id' => 't.tk__id'
-                ],
-                'field' => [
-                    'tkl__user_id_dest' => 'in',
-                    'tkl__user_id' => 'in'
-                ]
-            ], 
-        ];
+        //         ]
+        //     ], 
+        //     'client' => [
+        //         'alias' => 'c',
+        //         'type' => 'LEFT',
+        //         'on' => [
+        //             'cli__id' => 'l.luc__cli__id'
+        //         ],
+        //         'field' => [
+        //             'cli__id' => 'like' ,
+        //             'cli__nom' => 'like' , 
+        //             'cli__ville' => 'like'
+        //         ]
+        //     ], 'ticket_ligne' => [
+        //         'alias' => 'y',
+        //         'type' => 'LEFT',
+        //         'on' => [
+        //             'tkl__tk_id' => 't.tk__id'
+        //         ],
+        //         'field' => [
+        //             'tkl__user_id_dest' => 'in',
+        //             'tkl__user_id' => 'in'
+        //         ]
+        //     ], 
+        // ];
        
         ////////////////////////////////////////////////////////////////////////////////////// LIMIT //////////////////////////////////////////////////////
         $limit_clause = '';
@@ -415,7 +415,6 @@ Class TicketRepository  extends BaseRepository {
     ///////////////////////////////////////////////////////////////////////////////// FINAL ////////////////////////////////////////////////////////////////////////
         $clause = 'SELECT DISTINCT  t.tk__id ,   max(y.tkl__dt) AS MTIME   FROM ' . $params['self']['name'] . ' as ' . $params['self']['alias'].' '. $left_clause . ' WHERE 1 = 1 ' . $in_clause . ' ' .   $where_clause . '  GROUP BY t.tk__id
         ORDER BY t.tk__lu ASC , MTIME DESC LIMIT 50 ';
-       
         $request = $this->Db->Pdo->query($clause);
         return  $request->fetchAll(PDO::FETCH_ASSOC);
     }
