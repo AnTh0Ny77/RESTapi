@@ -30,7 +30,7 @@ Class Materiel {
 
     public $mat__date_offg;
 
-    public $date__date_maj;
+    public $mat__date_maj;
 
     public $mat__user_id;
 
@@ -305,7 +305,7 @@ Class Materiel {
      */ 
     public function getDate__date_maj()
     {
-        return $this->date__date_maj;
+        return $this->mat__date_maj;
     }
 
     /**
@@ -315,7 +315,7 @@ Class Materiel {
      */ 
     public function setDate__date_maj($date__date_maj)
     {
-        $this->date__date_maj = $date__date_maj;
+        $this->mat__date_maj = $date__date_maj;
 
         return $this;
     }

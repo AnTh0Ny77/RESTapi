@@ -88,7 +88,7 @@ Class MaterielController extends BaseController {
                 break;
 
             case 'PUT':
-                return $notFound::index();
+                return self::put();
                 break;
 
             case 'DELETE':
@@ -224,10 +224,11 @@ Class MaterielController extends BaseController {
             ] , 401 , 'bad request');
         } 
 
+        
         $materiel = $materielRepository->postMateriel($body , $user);
-        if (!$materiel instanceof Materiel) {
+        if (empty($materiel)) {
             return $responseHandler->handleJsonResponse([
-                'msg' => $materiel
+                'msg' => 'un probleme est survenu durant la mise a jour '
             ] , 401 , 'bad request');
         }
 
@@ -263,9 +264,9 @@ Class MaterielController extends BaseController {
         } 
 
         $materiel = $materielRepository->UpdateOne($body , $user);
-        if (!$materiel instanceof Materiel) {
+        if (empty($materiel)) {
             return $responseHandler->handleJsonResponse([
-                'msg' => $materiel
+                'msg' => 'un probleme est survenu durant la mise a jour '
             ] , 401 , 'bad request');
         }
 

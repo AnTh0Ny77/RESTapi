@@ -101,7 +101,7 @@ Class MaterielRepository  extends BaseRepository {
 
     public  function postMateriel($materiel_data , $user){
         $materiel = new Materiel();
-
+       
         $materiel->setMat__cli__id($materiel_data['mat__cli__id']);
         if (!$materiel instanceof Materiel)
             return $materiel;
@@ -118,12 +118,16 @@ Class MaterielRepository  extends BaseRepository {
         if(!$materiel instanceof Materiel)
             return $materiel;
 
-        $materiel->setMat__actif(1);
-        $materiel->setMat__user_id($user->getUser__id());
-        $materiel->setDate__date_maj(date('Y-m-d H:i:s'));
-
+        
+        $materiel_data['mat__actif'] = 1 ;
+        $materiel_data['mat__date_in'] = date('Y-m-d H:i:s');
+        $materiel_data['mat__date_maj'] = date('Y-m-d H:i:s');
+        $materiel_data['mat__user_id'] = $user->getUser__id();
+       
         $id_materiel = $this->insert($materiel_data);
-        $materiel = $this->findOneBy(['mat__id' =>  $id_materiel] , true );
+        
+        $materiel = $this->findOneBy(['mat__id' =>  intval($id_materiel)] , false );
+        
         return $materiel;
     }
 
@@ -132,38 +136,22 @@ Class MaterielRepository  extends BaseRepository {
         if (empty($materiel_data['mat__id'])) 
             return 'Le champs mat__id doit etre rendeigné';
 
-        $verifyIfExist = $this->findOneBy(['mat__id' => $this->clean($materiel_data['mat__id'])],true);
-            if(!$verifyIfExist instanceof Materiel) 
-                return 'Le matériel n existe pas';
-
+           
+        $verifyIfExist = $this->findOneBy(['mat__id' => $this->clean($materiel_data['mat__id'])],false);
+        
+        if(empty($verifyIfExist)) 
+            return 'Le matériel n existe pas';
+                
         $materiel = new Materiel();
-
+       
         $materiel->setMat__id($materiel_data['mat__id']);
         if (!$materiel instanceof Materiel)
             return $materiel;
-        
-        $materiel->setMat__cli__id($materiel_data['mat__cli__id']);
-        if (!$materiel instanceof Materiel)
-            return $materiel;
-        
-        $materiel->setMat__type($materiel_data['mat__type']);
-        if(!$materiel instanceof Materiel)
-            return $materiel;
-        
-        $materiel->setMat__marque($materiel_data['mat__marque']);
-        if(!$materiel instanceof Materiel)
-            return $materiel;
-        
-        $materiel->setMat__model($materiel_data['mat__model']);
-        if(!$materiel instanceof Materiel)
-            return $materiel;
-
+             
         $materiel->setDate__date_maj(date('Y-m-d H:i:s'));
-
-        $materiel->setMat__user_id($user->getUser__id());
-
         $id_materiel = $this->update($materiel_data);
-        $materiel = $this->findOneBy(['mat__id' =>  $id_materiel] , true );
+        $materiel = $this->findOneBy(['mat__id' =>  $materiel_data['mat__id']] , false );
+        
         return $materiel;
         
     }
