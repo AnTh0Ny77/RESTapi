@@ -121,8 +121,7 @@ Class TicketController extends BaseController {
                     foreach ( $list_client as $value) {
                         array_push($in_clause['mat__cli__id'] , $value['cli__id']);
                     }
-                    var_dump($in_clause['mat__cli__id']);
-                    die();
+                  
                 }
         }
 
