@@ -193,7 +193,7 @@ Class TicketController extends BaseController {
               
                 if (is_dir('public/img/tickets/'. $result['tkl__id'])){
                   
-                    $scanned_directory = array_diff(scandir('public/img/tickets/'. $result['tkl__id']), array('..', '.'));
+                    $scanned_directory = scandir('public/img/tickets/'. $result['tkl__id']);
                     var_dump( $scanned_directory);
                     die();
                     $result['files'] = $scanned_directory;
