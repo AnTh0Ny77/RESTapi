@@ -183,6 +183,11 @@ Class TicketController extends BaseController {
             $lignes = $TicketLigneRepository->findBy(['tkl__tk_id' => $results['tk__id']] , 100 , ['tkl__dt' => 'ASC']);
             $array_lines = [];
             foreach ($lignes as $result) {
+                $results['files'] = []; 
+                if ( ! is_dir('public/img/tickets/'. $result->getTkl__id())) {
+                    $scanned_directory = array_diff(scandir('public/img/tickets/'. $result->getTkl__id()), array('..', '.'));
+                    $results['files'] = $scanned_directory;
+                }
                 $result['tkl__user_id'] = $userRepository->findOneBy(['user__id' => $result['tkl__user_id'] ],false);
                 $result['tkl__user_id_dest'] = $userRepository->findOneBy(['user__id' => $result['tkl__user_id_dest'] ],false);
                 $result['tkl__user_id_dest']['user__password'] = null;
@@ -234,7 +239,7 @@ Class TicketController extends BaseController {
                 'msg' => $new_ticket
             ] , 401 , 'bad request');
         }
-    
+        
         $id_new_ticket = $TicketRepositorySossuke->insert($body);
         $verify = $TicketRepositorySossuke->findOneBy(array('tk__id' => $id_new_ticket ) , true);
        
@@ -246,7 +251,6 @@ Class TicketController extends BaseController {
         $new_ticket->setTk__id($id_new_ticket);
         $body['tk__id'] = $id_new_ticket;
         $myRecode_ticket_id = $TicketRepository->insert($body);
-        
         $new_ticket = $TicketRepository->findOneBy(array('tk__id' => $id_new_ticket) , true);
         if (!$new_ticket instanceof Tickets) {
             return $responseHandler->handleJsonResponse([

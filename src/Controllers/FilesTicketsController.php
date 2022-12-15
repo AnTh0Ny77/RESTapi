@@ -177,7 +177,7 @@ Class FilesTicketsController  extends  BaseController{
         }
         
         $pathToFile = 'public/img/tickets/'. $ligne->getTkl__id();
-        $uniquename = time().uniqid(rand()) . '.' . $fileExtension;
+        $uniquename =  $fileName . '.' . $fileExtension;
         // if (is_dir($pathToFile)) 
         //     self::deleteDirectory($pathToFile);
         if ( ! is_dir($pathToFile)) {
