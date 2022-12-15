@@ -117,6 +117,38 @@ Class FilesTicketsController  extends  BaseController{
         $zip->close();
     }
 
+    public static function getFil(){
+        $database = new Database();
+        $database->DbConnect();
+        $responseHandler = new ResponseHandler();
+        $security = new Security();
+        $tiketLigne = new TicketLigneRepository('ticket_ligne' , $database , TicketsLigne::class);
+        $security = new Security();
+        $auth = self::Auth($responseHandler,$security);
+        if ($auth != null) 
+            return $auth;
+        
+        if (empty($_GET['tkl__id'])) { 
+            return $responseHandler->handleJsonResponse([
+                'msg' =>  ' La ligne de ticket n est pas précisée'
+            ] , 404 , 'bad request');
+        }
+
+        if (empty($_GET['file'])) { 
+            return $responseHandler->handleJsonResponse([
+                'msg' =>  ' Le nom de fichier n est pas spécifié'
+            ] , 404 , 'bad request');
+        }
+        
+        $pathToFile = 'public/img/tickets/'. $_GET['tkl__id'];
+        if ( ! is_dir($pathToFile)) {
+            return $responseHandler->handleJsonResponse([
+                'msg' =>  ' Aucun fichier pour cette ligne '
+            ] , 404 , 'bad request');
+        }
+
+    }
+
     public static function post(){
         $database = new Database();
         $database->DbConnect();
@@ -182,6 +214,7 @@ Class FilesTicketsController  extends  BaseController{
         if ( ! is_dir($pathToFile)) {
             mkdir($pathToFile, 7777);
         }
+
         // if (!mkdir($pathToFile, 7777)){
         //     return $responseHandler->handleJsonResponse([
         //         'msg' =>  'Un problème est survenu dans la creation du dossier'

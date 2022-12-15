@@ -184,7 +184,7 @@ Class TicketController extends BaseController {
             $array_lines = [];
             foreach ($lignes as $result) {
                 $results['files'] = []; 
-                if ( is_dir('public/img/tickets/'. $result['tkl__id'])) {
+                if ( is_dir('public/img/tickets/'. $result['tkl__id'])){
                     $scanned_directory = array_diff(scandir('public/img/tickets/'. $result['tkl__id']), array('..', '.'));
                     $results['files'] = $scanned_directory;
                 }
@@ -196,7 +196,6 @@ Class TicketController extends BaseController {
                 array_push($array_lines ,  $result);
             }
             $ticket['lignes'] = $array_lines;
-
             array_push($array_format_for_response , $ticket); 
         }
 
