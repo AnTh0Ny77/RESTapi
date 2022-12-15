@@ -184,17 +184,16 @@ Class TicketController extends BaseController {
             $array_lines = [];
             foreach ($lignes as $result) {
               
-                $results['files'] = []; 
-                if (is_dir('public/img/tickets/'. $result['tkl__id'])){
-                    $scanned_directory = array_diff(scandir('public/img/tickets/'. $result['tkl__id']), array('..', '.'));
-                    $results['files'] = $scanned_directory;
-                }
-
                 $result['tkl__user_id'] = $userRepository->findOneBy(['user__id' => $result['tkl__user_id'] ],false);
                 $result['tkl__user_id_dest'] = $userRepository->findOneBy(['user__id' => $result['tkl__user_id_dest'] ],false);
                 $result['tkl__user_id_dest']['user__password'] = null;
                 $result['tkl__user_id']['user__password'] = null;
                 $result['champs'] = $TicketLigneChampRepository->findBy(['tklc__id' => $result['tkl__id']] , 100 , [ 'tklc__ordre' => 'ASC']);
+                $results['files'] = []; 
+                if (is_dir('public/img/tickets/'. $result['tkl__id'])){
+                    $scanned_directory = array_diff(scandir('public/img/tickets/'. $result['tkl__id']), array('..', '.'));
+                    $results['files'] = $scanned_directory;
+                }
                 array_push($array_lines ,  $result);
             }
             $ticket['lignes'] = $array_lines;
