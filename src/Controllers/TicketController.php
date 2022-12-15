@@ -183,7 +183,7 @@ Class TicketController extends BaseController {
             $lignes = $TicketLigneRepository->findBy(['tkl__tk_id' => $results['tk__id']] , 100 , ['tkl__dt' => 'ASC']);
             $array_lines = [];
             foreach ($lignes as $result) {
-                var_dump(is_dir('public/img/tickets/'. $result['tkl__id']));
+                // var_dump(is_dir('public/img/tickets/'. $result['tkl__id']));
                 var_dump(array_diff(scandir('public/img/tickets/'. $result['tkl__id']), array('..', '.')));
              
                 $results['files'] = []; 
