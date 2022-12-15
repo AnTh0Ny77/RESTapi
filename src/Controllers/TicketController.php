@@ -185,7 +185,7 @@ Class TicketController extends BaseController {
             foreach ($lignes as $result) {
                 var_dump(is_dir('public/img/tickets/'. $result['tkl__id']));
                 var_dump(array_diff(scandir('public/img/tickets/'. $result['tkl__id']), array('..', '.')));
-                die();
+             
                 $results['files'] = []; 
                 if (is_dir('public/img/tickets/'. $result['tkl__id'])){
                     $scanned_directory = array_diff(scandir('public/img/tickets/'. $result['tkl__id']), array('..', '.'));
