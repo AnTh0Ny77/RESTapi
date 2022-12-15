@@ -130,8 +130,6 @@ Class FilesTicketsController  extends  BaseController{
             ] , 404 , 'bad request');
         }
 
-        var_dump('debug prod ');
-        die();
 
         $ligne = $tiketLigne->findOneBy(['tkl__id' => intval($_POST['tkl__id'])] , true);
         if (!$ligne instanceof TicketsLigne){
