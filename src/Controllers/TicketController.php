@@ -183,11 +183,11 @@ Class TicketController extends BaseController {
             $lignes = $TicketLigneRepository->findBy(['tkl__tk_id' => $results['tk__id']] , 100 , ['tkl__dt' => 'ASC']);
             $array_lines = [];
             foreach ($lignes as $result) {
-                $results['files'] = []; 
-                if ( is_dir('public/img/tickets/'. $result['tkl__id'])){
-                    $scanned_directory = array_diff(scandir('public/img/tickets/'. $result['tkl__id']), array('..', '.'));
-                    $results['files'] = $scanned_directory;
-                }
+                // $results['files'] = []; 
+                // if ( is_dir('public/img/tickets/'. $result['tkl__id'])){
+                //     $scanned_directory = array_diff(scandir('public/img/tickets/'. $result['tkl__id']), array('..', '.'));
+                //     $results['files'] = $scanned_directory;
+                // }
                 $result['tkl__user_id'] = $userRepository->findOneBy(['user__id' => $result['tkl__user_id'] ],false);
                 $result['tkl__user_id_dest'] = $userRepository->findOneBy(['user__id' => $result['tkl__user_id_dest'] ],false);
                 $result['tkl__user_id_dest']['user__password'] = null;
