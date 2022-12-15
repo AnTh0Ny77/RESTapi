@@ -184,8 +184,8 @@ Class TicketController extends BaseController {
             $array_lines = [];
             foreach ($lignes as $result) {
                 $results['files'] = []; 
-                if ( is_dir('public/img/tickets/'. $result->getTkl__id())) {
-                    $scanned_directory = array_diff(scandir('public/img/tickets/'. $result->getTkl__id()), array('..', '.'));
+                if ( is_dir('public/img/tickets/'. $result['tkl__id'])) {
+                    $scanned_directory = array_diff(scandir('public/img/tickets/'. $result['tkl__id']), array('..', '.'));
                     $results['files'] = $scanned_directory;
                 }
                 $result['tkl__user_id'] = $userRepository->findOneBy(['user__id' => $result['tkl__user_id'] ],false);
