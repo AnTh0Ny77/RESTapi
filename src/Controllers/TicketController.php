@@ -121,11 +121,12 @@ Class TicketController extends BaseController {
                     foreach ( $list_client as $value) {
                         array_push($in_clause['mat__cli__id'] , $value['cli__id']);
                     }
+                    var_dump($in_clause['mat__cli__id']);
+                    die();
                 }
         }
 
-        var_dump($in_clause['mat__cli__id']);
-        die();
+      
 
         if (!empty($_GET['tkl__user_id'])) {
             $in_clause['tkl__user_id'] = [];
