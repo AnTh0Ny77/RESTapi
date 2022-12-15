@@ -105,10 +105,12 @@ Class TicketController extends BaseController {
         
         //////////////recupère les clients liés au users: 
         $in_clause['mat__cli__id'] = [];
-        if (empty($user->getClients())) {
-            return $responseHandler->handleJsonResponse([
-                'msg' =>  ' L utilisateur na pas de sociétés attribuées'
-            ] , 404 , 'bad request');
+        if (empty($_GET['RECODE__PASS'])) {
+            if (empty($user->getClients())) {
+                return $responseHandler->handleJsonResponse([
+                    'msg' =>  ' L utilisateur na pas de sociétés attribuées'
+                ] , 404 , 'bad request');
+            }
         }
         
         foreach ($user->getClients() as  $clients) {
@@ -121,11 +123,8 @@ Class TicketController extends BaseController {
                     foreach ( $list_client as $value) {
                         array_push($in_clause['mat__cli__id'] , $value['cli__id']);
                     }
-                  
                 }
         }
-
-      
 
         if (!empty($_GET['tkl__user_id'])) {
             $in_clause['tkl__user_id'] = [];
