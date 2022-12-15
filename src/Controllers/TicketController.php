@@ -189,7 +189,7 @@ Class TicketController extends BaseController {
                 $result['tkl__user_id_dest']['user__password'] = null;
                 $result['tkl__user_id']['user__password'] = null;
                 $result['champs'] = $TicketLigneChampRepository->findBy(['tklc__id' => $result['tkl__id']] , 100 , [ 'tklc__ordre' => 'ASC']);
-                $results['files'] = []; 
+                $results['files'] = ['hey']; 
                 if (is_dir('public/img/tickets/'. $result['tkl__id'])){
                     $scanned_directory = array_diff(scandir('public/img/tickets/'. $result['tkl__id']), array('..', '.'));
                     $results['files'] = $scanned_directory;
