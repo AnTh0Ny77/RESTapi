@@ -18,8 +18,8 @@
         "app_secret" : "sec!ReT423*&"
     },
     "mailer": {
-        "host" : "ssl0.ovh.net",
-        "username" : "info@myrecode.fr", 
-        "password" : "K@GFxBrM@g##5og6"
+        "host" : "mail01.one2net.net",
+        "username" : "myrecode@recode.fr", 
+        "password" : "48zAjdXdt$256"
     }
 }

@@ -26,7 +26,7 @@ Class MailerServices {
             $mail->Password   =  $this->config->mailer->password;                              
             $mail->SMTPSecure =  PHPMailer::ENCRYPTION_SMTPS;            
             $mail->Port       =  465;                                    
-            $mail->setFrom('info@myrecode.fr', 'MyRecode');
+            $mail->setFrom('myrecode@recode.fr', 'MyRecode');
             $mail->addAddress($adresse);    
             $mail->isHTML(true);                                  
             $mail->Subject =  $subject;
