@@ -130,8 +130,6 @@ Class FilesTicketsController  extends  BaseController{
             ] , 404 , 'bad request');
         }
 
-      
-
         $ligne = $tiketLigne->findOneBy(['tkl__id' => intval($_POST['tkl__id'])] , true);
         if (!$ligne instanceof TicketsLigne){
             return $responseHandler->handleJsonResponse([
@@ -178,7 +176,7 @@ Class FilesTicketsController  extends  BaseController{
         }
         
         $pathToFile = 'public/img/tickets/'. $ligne->getTkl__id();
-        $uniquename = time().uniqid(rand()) . '.' . $fileExtension;
+        $uniquename = $fileName . '.' . $fileExtension;
         // if (is_dir($pathToFile)) 
         //     self::deleteDirectory($pathToFile);
         if ( ! is_dir($pathToFile)) {
