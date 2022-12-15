@@ -70,6 +70,7 @@ Class TicketLigneController extends BaseController {
         $database = new Database();
         $database->DbConnect();
         $sossuke = new Sossuke();
+        $mailer = new MailerServices();
         $sossuke->DbConnect();
         $responseHandler = new ResponseHandler();
         $tick = new TicketRepository('ticket' , $database , Tickets::class);
@@ -123,6 +124,17 @@ Class TicketLigneController extends BaseController {
                 'msg' => 'Un probleme est survenu durant la creation dans la base de donnée sossuke'
             ] , 500 , 'bad request');
         }
+
+        $dest = $userRepository->findOneBy(['user__id' => $body['tkl__user_id_dest']] , false); 
+        if (!empty($dest['user__mail'])) {
+            $dest = $dest['user__nom'] . ' ' . $dest['user__prenom'];
+            $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyTicketEnvoi($body['tkl__tk_id'] , $dest ), $mailer->signature());
+            $mailer->sendMail($user->getUser__mail() , 'Notification MyRecode' ,  $body_mail );
+            $sender = $user->getUser__nom() . ' ' . $user->getUser__prenom();
+            $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyTicketDest($body['tkl__tk_id'] , $sender ), $mailer->signature());
+            $mailer->sendMail($dest['user__mail'] , 'Notification MyRecode' ,  $body_mail );
+        }
+       
 
         return $responseHandler->handleJsonResponse([
             'data' => [ 'tkl__id' => $id_new_ticket_ligne]

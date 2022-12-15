@@ -120,5 +120,93 @@ Class MailerServices {
     public function renderBody($header , $body , $signature){
             return $header . $body . $signature ; 
     }
+
+    public function renderBodyTicketEnvoi($id, $user){
+        return '<style>
+                .success-link{
+                    padding-left: 24px;
+                    padding-right: 24px;
+                    padding-top: 12px;
+                    padding-bottom: 12px;
+                    background: #1FB447;
+                    color: white;
+                    border-radius: 16px;
+                }
+                .wrapper{
+                    margin-top: 50px;
+                    margin-bottom: 50px;
+                }
+                a:link { text-decoration: none; }
+            
+                a:visited { text-decoration: none; }
+            
+                a:hover { text-decoration: none; }
+            
+                a:active { text-decoration: none; }
+            </style>
+            <div class="wrapper">
+                <p style="text-align: center;"><!--StartFragment--><span style="font-size:14px"><span style="font-weight:bold">Votre Ticket '.$id.'<br />
+                   MY RECODE </span></span>
+                    <br/>
+                    &nbsp;
+                </p>
+                    <p style="text-align: center;">Votre Ticket à bien été transmis à '. $user .'. <br /> Vous serez informé par e-mail en cas de réponse
+                    <br />
+                    <br />
+                   
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <span style="font-size:16px" style="font-weight:bold">A tout de suite sur votre espace client.</span><br />
+                    <span style="font-size:16px" style="font-weight:bold">L équipe RECODE !</span>
+                </p>
+            </div>';
+    } 
+
+    public function renderBodyTicketDest($id , $user){
+        return '<style>
+                .success-link{
+                    padding-left: 24px;
+                    padding-right: 24px;
+                    padding-top: 12px;
+                    padding-bottom: 12px;
+                    background: #1FB447;
+                    color: white;
+                    border-radius: 16px;
+                }
+                .wrapper{
+                    margin-top: 50px;
+                    margin-bottom: 50px;
+                }
+                a:link { text-decoration: none; }
+            
+                a:visited { text-decoration: none; }
+            
+                a:hover { text-decoration: none; }
+            
+                a:active { text-decoration: none; }
+            </style>
+            <div class="wrapper">
+                <p style="text-align: center;"><!--StartFragment--><span style="font-size:14px"><span style="font-weight:bold">Votre Ticket '.$id.'<br />
+                MY RECODE </span></span>
+                    <br/>
+                    &nbsp;
+                </p>
+                    <p style="text-align: center;"> '. $user .'. <br /> vous à répondu !
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <span style="font-size:16px" style="font-weight:bold">A tout de suite sur votre espace client.</span><br />
+                    <span style="font-size:16px" style="font-weight:bold">L équipe RECODE !</span>
+                </p>
+            </div>';
+
+    }
 	
 }
