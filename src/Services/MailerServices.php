@@ -32,6 +32,7 @@ Class MailerServices {
             $mail->Subject =  $subject;
             $mail->Body    = $template;
             $mail->send();
+            return true ;
         } catch (Exception $e) {
             return "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
