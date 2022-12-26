@@ -1,0 +1,6 @@
+<POST http://localhost/SoftRecode/apiTickets> [CONNECT] 
+<POST http://localhost/SoftRecode/apiTickets> [FAILURE] severity: "2" message: "HTTP/1.0 404 bad request
+" message_code: "404" 
+<POST http://localhost/SoftRecode/apiTickets> [FILE_SIZE_IS] message: "Content-Length: 30" bytes_max: "30" 
+<POST http://localhost/SoftRecode/apiTickets> [MIME_TYPE_IS] message: "application/json; charset=utf-8" 
+<POST http://localhost/SoftRecode/apiTickets> [PROGRESS] bytes_max: "30" 

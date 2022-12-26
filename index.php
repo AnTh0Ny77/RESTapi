@@ -1,25 +1,26 @@
 <?php
 
 require "vendor/autoload.php";
+use Src\Controllers\MaxController;
 use Src\Controllers\UserController;
 use Src\Controllers\LoginController;
 use Src\Controllers\ClientController;
+use Src\Controllers\TicketController;
+use Src\Controllers\KeywordController;
 use Src\Controllers\RefreshController;
 use Src\Controllers\BasePathController;
 use Src\Controllers\MaterielController;
 use Src\Controllers\NotFoundController;
+use Src\Controllers\DocumentsController;
+use Src\Controllers\UserSitesController;
 use Src\Controllers\CommercialController;
 use Src\Controllers\ConfirmUserController;
 use Src\Controllers\ImageClientController;
-use Src\Controllers\ForgotPasswordController;
-use Src\Controllers\TicketController;
 use Src\Controllers\TicketLigneController;
-use Src\Controllers\TicketChampsController;
-use Src\Controllers\MaxController;
-use Src\Controllers\KeywordController;
-use Src\Controllers\UserSitesController;
-use Src\Controllers\NotificationsController;
 use Src\Controllers\FilesTicketsController;
+use Src\Controllers\TicketChampsController;
+use Src\Controllers\NotificationsController;
+use Src\Controllers\ForgotPasswordController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -113,6 +114,10 @@ switch($request){
 
     case $config->urls->base.FilesTicketsController::path().$data:
         echo FilesTicketsController::index($_SERVER['REQUEST_METHOD'],$data);
+        break;
+
+    case $config->urls->base . DocumentsController::path() . $data:
+        echo DocumentsController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
 	default:

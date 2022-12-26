@@ -12,6 +12,9 @@ use Src\Entities\Client;
 use Src\Entities\TicketsLigne;
 use Src\Repository\TicketLigneRepository;
 use Src\Services\Security;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\ClientHtpp;
+use GuzzleHttp\Promise;
 use ZipArchive;
 
 Class FilesTicketsController  extends  BaseController{
@@ -56,7 +59,7 @@ Class FilesTicketsController  extends  BaseController{
                 break;
 
             case 'GET':
-                return self::get();
+                return self::getFil();
                 break;
 
             case 'PUT':
@@ -134,19 +137,32 @@ Class FilesTicketsController  extends  BaseController{
             ] , 404 , 'bad request');
         }
 
-        if (empty($_GET['file'])) { 
+        if (empty($_GET['name'])) { 
             return $responseHandler->handleJsonResponse([
                 'msg' =>  ' Le nom de fichier n est pas spécifié'
             ] , 404 , 'bad request');
         }
-        
-        $pathToFile = 'public/img/tickets/'. $_GET['tkl__id'];
-        if ( ! is_dir($pathToFile)) {
-            return $responseHandler->handleJsonResponse([
-                'msg' =>  ' Aucun fichier pour cette ligne '
-            ] , 404 , 'bad request');
-        }
 
+        $config = json_decode(file_get_contents('config.json'));
+        $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
+        try {
+            $response = $guzzle->get('/SoftRecode/apiTickets', ['stream' => true, 'query' => ['tkl__id' =>  $_GET['tkl__id'] , 'name' => $_GET['name'] ]]);
+        } catch (ClientException $exeption) {
+            $response = $exeption->getResponse();
+        }
+        if ( $response->getStatusCode() > 300) {
+            return $responseHandler->handleJsonResponse([
+                'msg' =>  $response->getBody()->read(10245588)
+            ],
+                404,
+                'bad request'
+            );
+        }
+        $ContentType = $response->getHeaders();
+        $ContentType = $ContentType['Content-Type'][0];
+        $data = $response->getBody()->getContents();
+        header('Content-Type: ' . $ContentType . '');
+        echo $data;
     }
 
     public static function post(){
@@ -162,12 +178,12 @@ Class FilesTicketsController  extends  BaseController{
             ] , 404 , 'bad request');
         }
 
-        $ligne = $tiketLigne->findOneBy(['tkl__id' => intval($_POST['tkl__id'])] , true);
-        if (!$ligne instanceof TicketsLigne){
-            return $responseHandler->handleJsonResponse([
-                'msg' =>  ' Ligne inconnue'
-            ] , 404 , 'bad request');
-        }
+        // $ligne = $tiketLigne->findOneBy(['tkl__id' => intval($_POST['tkl__id'])] , true);
+        // if (!$ligne instanceof TicketsLigne){
+        //     return $responseHandler->handleJsonResponse([
+        //         'msg' =>  ' Ligne inconnue'
+        //     ] , 404 , 'bad request');
+        // }
         
         // authentification du user 
         $auth = self::Auth($responseHandler,$security);
@@ -206,29 +222,35 @@ Class FilesTicketsController  extends  BaseController{
                 'msg' =>  ' fichier trop volumineux'
             ] , 401 , 'bad request');
         }
-        
-        $pathToFile = 'public/img/tickets/'. $ligne->getTkl__id();
-        $uniquename = $fileName . '.' . $fileExtension;
-        // if (is_dir($pathToFile)) 
-        //     self::deleteDirectory($pathToFile);
-        if ( ! is_dir($pathToFile)) {
-            mkdir($pathToFile, 7777);
-        }
 
-        // if (!mkdir($pathToFile, 7777)){
-        //     return $responseHandler->handleJsonResponse([
-        //         'msg' =>  'Un problème est survenu dans la creation du dossier'
-        //     ] , 500 , 'Internal server error');
-        // }
+       
+        $config = json_decode(file_get_contents('config.json'));
+       
+        $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
+        $debug = fopen("path_and_filename.txt", "a+");
         
-        if (!move_uploaded_file($tempPath , $pathToFile. '/'.$uniquename)) {
-            return $responseHandler->handleJsonResponse([
-                'msg' =>  'Un problème est survenu dans la sauvergarde du fichier'
-            ] , 500 , 'Internal server error');
+        try {
+            $response = $guzzle->post('/SoftRecode/apiTickets', [ 'stream' => true , 'debug' => $debug , 'multipart' => [[
+                    'name'  =>  'file',
+                    'FileContents'  => fopen($tempPath, 'r'),
+                    'contents'      => fopen($tempPath, 'r'),
+                    'headers'       =>  [
+                        'Content-Type' => 'text/plain',
+                        'Content-Disposition'   => 'form-data; name="FileContents"; filename="' . $fileName . '.' . $fileExtension . '"',
+                    ],
+                ], [
+                    'name'  =>  'tkl__id',
+                    'content' => $_POST['tkl__id']
+                ]
+            ]]);
+           
+        } catch (ClientException $exeption) {
+            
+            $response = $exeption->getResponse();
         }
-         
+       
         return $responseHandler->handleJsonResponse([
-            'data' =>  'Le fichier à été correctement sauvegardé'
+            'data' =>  $response->getBody()->read(112259) , 
         ] , 201 , 'ressource created');
         
     }
