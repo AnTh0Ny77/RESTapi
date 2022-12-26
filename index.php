@@ -12,6 +12,7 @@ use Src\Controllers\BasePathController;
 use Src\Controllers\MaterielController;
 use Src\Controllers\NotFoundController;
 use Src\Controllers\DocumentsController;
+use Src\Controllers\ListFilesController;
 use Src\Controllers\UserSitesController;
 use Src\Controllers\CommercialController;
 use Src\Controllers\ConfirmUserController;
@@ -118,6 +119,10 @@ switch($request){
 
     case $config->urls->base . DocumentsController::path() . $data:
         echo DocumentsController::index($_SERVER['REQUEST_METHOD'], $data);
+        break;
+
+    case $config->urls->base . ListFilesController::path() . $data:
+        echo ListFilesController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
 	default:
