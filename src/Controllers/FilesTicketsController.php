@@ -166,6 +166,7 @@ Class FilesTicketsController  extends  BaseController{
     }
 
     public static function post(){
+        
         $database = new Database();
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
@@ -177,7 +178,7 @@ Class FilesTicketsController  extends  BaseController{
                 'msg' =>  ' La ligne de ticket n est pas précisée'
             ] , 404 , 'bad request');
         }
-
+        
         // $ligne = $tiketLigne->findOneBy(['tkl__id' => intval($_POST['tkl__id'])] , true);
         // if (!$ligne instanceof TicketsLigne){
         //     return $responseHandler->handleJsonResponse([
@@ -189,14 +190,15 @@ Class FilesTicketsController  extends  BaseController{
         $auth = self::Auth($responseHandler,$security);
         if ($auth != null) 
            return $auth;
-
+        
+          
         //controle du champ de couverture 
         if (empty($_FILES['file'])){
             return $responseHandler->handleJsonResponse([
                 'msg' =>  ' Le champs file est obligatoire'
             ] , 404 , 'bad request');
         }
-
+        
         $fileName = $_FILES['file']['name'];
         $tempPath = $_FILES['file']['tmp_name'];
         $fileSize = $_FILES['file']['size'];
@@ -206,7 +208,7 @@ Class FilesTicketsController  extends  BaseController{
                 'msg' =>  ' Merci de télécharger un fichier'
             ] , 404 , 'bad request');
         }
-
+        
         //controle de l extension et de la taille de l image :
         $fileExtension = strtolower(pathinfo($fileName,PATHINFO_EXTENSION));
         $validExtension = array('jpeg' , 'jpg' , 'png' , 'gif' , 'pdf' , 'txt' );
@@ -216,7 +218,7 @@ Class FilesTicketsController  extends  BaseController{
                 'msg' =>  ' Merci de télécharger un fichier au format : jpeg , jpg , png , gif , pdf ou txt'
             ] , 401 , 'bad request');
         }
-        
+       
         if ($fileSize > 10000000) {
             return $responseHandler->handleJsonResponse([
                 'msg' =>  ' fichier trop volumineux'
@@ -228,26 +230,26 @@ Class FilesTicketsController  extends  BaseController{
        
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
         $debug = fopen("path_and_filename.txt", "a+");
-        
+       
         try {
-            $response = $guzzle->post('/SoftRecode/apiTickets', [ 'stream' => true , 'debug' => $debug , 'multipart' => [[
-                    'name'  =>  'file',
-                    'FileContents'  => fopen($tempPath, 'r'),
-                    'contents'      => fopen($tempPath, 'r'),
-                    'headers'       =>  [
-                        'Content-Type' => 'text/plain',
-                        'Content-Disposition'   => 'form-data; name="FileContents"; filename="' . $fileName . '.' . $fileExtension . '"',
-                    ],
-                ], [
-                    'name'  =>  'tkl__id',
-                    'content' => $_POST['tkl__id']
-                ]
-            ]]);
+            
+            $response = $guzzle->post('/SoftRecode/apiTickets', [ 'stream' => true , 'debug' => $debug , 'multipart' => [
+                    [
+                        'name'  =>  'file',
+                        'contents'      => fopen($tempPath, 'r'),
+                    ]],
+                    'query' => [
+                        'tkl__id' => $_POST['tkl__id'],
+                    ]
+
+            ]);
            
         } catch (ClientException $exeption) {
             
             $response = $exeption->getResponse();
         }
+
+       
        
         return $responseHandler->handleJsonResponse([
             'data' =>  $response->getBody()->read(112259) , 
