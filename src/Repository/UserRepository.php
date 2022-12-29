@@ -64,14 +64,14 @@ Class UserRepository  extends BaseRepository{
 
         $user = new User();
 
-        $mail =  $user->setUser__mail($user_data['user__mail']);
-        if (!$mail instanceof User)
-            return $mail;
+        // $mail =  $user->setUser__mail($user_data['user__mail']);
+        // if (!$mail instanceof User)
+        //     return $mail;
 
-        $mail = $this->findOneBy(['user__mail' =>  $user_data['user__mail']], true);
+        // $mail = $this->findOneBy(['user__mail' =>  $user_data['user__mail']], true);
 
-        if ($mail instanceof User and $mail->getUser__id() !=  $user_data['user__id'])
-            return 'cet email est déja utilisé.';
+        // if ($mail instanceof User and $mail->getUser__id() !=  $user_data['user__id'])
+        //     return 'cet email est déja utilisé.';
 
         $this->update($user_data);
         $user = $this->findOneBy(['user__id' =>  $user_data['user__id']], true);

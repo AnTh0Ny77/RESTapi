@@ -181,7 +181,7 @@ Class UserController  extends BaseController{
             return $responseHandler->handleJsonResponse([ "msg" => $user],400,'Bad Request');
         }else {
             return $responseHandler->handleJsonResponse([
-                "data" => "utilisateur cmis a jour avec succès"
+                "data" => "utilisateur mis a jour avec succès"
             ], 201, 'ok');
         }
         
