@@ -82,6 +82,10 @@ Class UserController  extends BaseController{
                 return self::get($data);
                 break;
 
+            case 'PUT':
+                return self::put($data);
+                break;
+
             default:
                 return $notFound::index();
                 break;
