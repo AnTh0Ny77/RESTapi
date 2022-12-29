@@ -152,6 +152,44 @@ Class BaseRepository {
         return $id;
     }
 
+
+    public function insertNoPrimary(array $array)
+    {
+        $error = null;
+        $column = '( ';
+        $value = '( ';
+        foreach ($array as $key => $val) {
+            if ($key === array_key_last($array)) {
+                $column .= $key . ' ';
+                $value .=  ':' . $key . '';
+            } else {
+                $column .= $key . ', ';
+                $value .=  ':' . $key . ', ';
+            }
+        }
+        $column .= ') ';
+        $value .=  ') ';
+        $request = "INSERT INTO " . $this->Table . " ";
+        $request .= $column . ' VALUES ' . $value;
+
+        try {
+            $request = $this->Db->Pdo->prepare($request);
+            foreach ($array as $key => $val) {
+                $value =  ':' . $key . '';
+                $request->bindValue($value, $val);
+            }
+            $request->execute();
+        } catch (PDOException $e) {
+            $error = $e->getMessage();
+        }
+        if ($error != null) {
+
+            return $error;
+        }
+        
+        return true;
+    }
+
     
 
     public function delete(array $array){

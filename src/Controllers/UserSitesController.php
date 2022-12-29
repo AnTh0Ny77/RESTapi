@@ -11,6 +11,7 @@ use Src\Repository\UserRepository;
 use Src\Controllers\BaseController;
 use Src\Repository\RefreshRepository;
 use Src\Controllers\NotFoundController;
+use Src\Repository\ClientRepository;
 use Src\Repository\LienUserClientRepository;
 
 
@@ -39,7 +40,7 @@ Class UserSitesController extends BaseController {
         $notFound = new NotFoundController();
         switch ($method) {
             case 'POST':
-                return $notFound::index();
+                return self::post($data);
                 break;
 
             case 'GET':
@@ -112,6 +113,75 @@ Class UserSitesController extends BaseController {
         return $responseHandler->handleJsonResponse( [ 
             "data" => $definitve_array ]  , 200 , 'ok');
 
+    }
+
+
+    public static function post()
+    {
+        $database = new Database();
+        $database->DbConnect();
+        $responseHandler = new ResponseHandler();
+        $lienUserClientRepository = new LienUserClientRepository('lien_user_client', $database, User::class);
+        $userRepository = new UserRepository('user', $database, User::class);
+        $clientRepository = new ClientRepository('client' , $database , Client::class);
+
+        $security = new Security();
+        $auth = self::Auth($responseHandler, $security);
+        if ($auth != null)
+            return $auth;
+
+        $body = json_decode(file_get_contents('php://input'), true);
+        if (empty($body['luc__user__id'])) {
+            return $responseHandler->handleJsonResponse([
+                "msg" => 'user__id n est pas renseigné', 
+            ], 401, 'bad request');
+        }
+
+        $user = $userRepository->findOneBy(['user__id' =>  $body['luc__user__id']], false);
+
+        if (empty($user)) {
+            if (empty($body['luc__user__id'])) {
+                return $responseHandler->handleJsonResponse([
+                    "msg" => 'le user nexiste pas !',
+                ], 401, 'bad request');
+            }
+        }
+
+
+        if (empty($body['luc__cli__id'])) {
+            return $responseHandler->handleJsonResponse([
+                "msg" => 'cli__id n est pas renseigné',
+            ], 401, 'bad request');
+        }
+
+        $client = $clientRepository->findOneBy(['cli__id' =>  $body['luc__cli__id']], false);
+
+       
+        if (empty($client)) {
+            return $responseHandler->handleJsonResponse([
+                "msg" => 'La société n existe pas',
+            ], 401, 'bad request');
+        }
+
+        if (empty($body['luc__order'])) {
+            return $responseHandler->handleJsonResponse([
+                "msg" => 'order n est pas renseigné',
+            ], 401, 'bad request');
+        }
+
+        $data = [
+            'luc__user__id' => $body['luc__user__id'] , 
+            'luc__cli__id' => $body['luc__cli__id'] , 
+            'luc__order' => $body['luc__order']
+        ];
+
+        $lienUserClientRepository->insertNoPrimary($data);
+
+        $data = 'opération effectué avec succès';
+
+        return $responseHandler->handleJsonResponse([
+            "data" => $data
+        ], 200, 'ok');
     }
 
 }

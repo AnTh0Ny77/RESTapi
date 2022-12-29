@@ -80,7 +80,7 @@ class DocumentsController  extends  BaseController
 
         if ($auth != null)
             return $auth;
-
+        
         if (empty($_GET['cmd__id'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' =>  ' la cmd nest pas précisée'
@@ -94,18 +94,29 @@ class DocumentsController  extends  BaseController
 
         $config = json_decode(file_get_contents('config.json'));
        
-        $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
+        $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host , 'curl' => array(CURLOPT_SSL_VERIFYPEER => false)]);
         switch ($_GET['cmd__etat']) {
             case 'LST':
                 if (!empty($_GET['cli__id'])) {
                     try {
-                        $response = $guzzle->get('/SoftRecode/apiList', ['query' => ['cli__id' =>  $_GET['cli__id']]]);
+                        $response = $guzzle->get('/SoftRecode/apiList',
+                         ['query' =>  [ 
+                            'cli__id' =>  $_GET['cli__id']
+                            ]
+                        ]);
                     } catch (ClientException $exeption) {
                         $response = $exeption->getResponse();
                     }
-                    return $responseHandler->handleJsonResponse([
-                        'data' =>  json_decode($response->getBody()->read(163840), true),
-                    ], 200, 'ok');
+
+                    if ($response->getStatusCode() < 300) {
+                        return $responseHandler->handleJsonResponse([
+                            'data' =>  json_decode($response->getBody()->read(1638408), true)['data'],
+                        ], 200, 'ok');
+                    }else{
+                        return $responseHandler->handleJsonResponse([
+                            'msg' =>  json_decode($response->getBody()->read(163840), true),
+                        ], 200, 'ok');
+                    }
                 }else{
                     return $responseHandler->handleJsonResponse([
                         'msg' =>  'le parametre cli__id doit etre indiqué ',

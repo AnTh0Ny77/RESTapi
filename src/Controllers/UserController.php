@@ -103,25 +103,21 @@ Class UserController  extends BaseController{
         $userRepository = new UserRepository('user' , $database , User::class );
         $refreshRepository = new RefreshRepository($database);
         $body = json_decode(file_get_contents('php://input'), true);
-
-        
         $user = $userRepository->postUser($body);
 
         if (!$user instanceof User) {
-            $body = [
-                $data = $body ,
-                $message = $user
-            ];
-            return $responseHandler->handleJsonResponse($body , 400 , 'Bad Request');
+            return $responseHandler->handleJsonResponse([
+                "msg" =>
+                    $user
+            ]
+                , 400 , 'Bad Request');
         }
         $refresh_token = $refreshRepository->insertOne($user->getUser__id());
         $user->setRefresh_token($refresh_token);
-        $body = [
-            $data = $user ,
-            $message = 'utilisateur créé avec succès'
-        ];
-        
-        return $responseHandler->handleJsonResponse($body , 201 , 'ok');
+       
+        return $responseHandler->handleJsonResponse([
+            "data" => "utilisateur créé avec succès"
+        ] , 201 , 'ok');
     }
 
     public static function get($data){
@@ -151,6 +147,41 @@ Class UserController  extends BaseController{
             return $responseHandler->handleJsonResponse( [ 
                 "data" => $user ]  , 200 , 'ok');
         }
+    }
+
+    public static function put(){
+        $database = new Database();
+        $database->DbConnect();
+        $responseHandler = new ResponseHandler();
+        $userRepository = new UserRepository('user', $database, User::class);
+        $refreshRepository = new RefreshRepository($database);
+        $body = json_decode(file_get_contents('php://input'), true);
+
+        if (empty($body['user__id'])) {
+            return $responseHandler->handleJsonResponse([
+                "msg" => 'l id de l utilisateur nest pas renseigné'
+            ], 401, 'bad request');
+        }
+
+        $user = $userRepository->findOneBy(['user__id' => $body['user__id']], false);
+
+        if (empty($user)) {
+            return $responseHandler->handleJsonResponse([
+                "msg" => 'l utilisateur nexiste pas'
+            ], 401, 'bad request');
+        }
+
+        $user = $userRepository->UpdateUser($body);
+
+        if (!$user instanceof User) {
+            return $responseHandler->handleJsonResponse([ "msg" => $user],400,'Bad Request');
+        }else {
+            return $responseHandler->handleJsonResponse([
+                "data" => "utilisateur cmis a jour avec succès"
+            ], 201, 'ok');
+        }
+        
+      
     }
 
    
