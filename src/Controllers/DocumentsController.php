@@ -95,7 +95,7 @@ class DocumentsController  extends  BaseController
         $config = json_decode(file_get_contents('config.json'));
        
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host , 'curl' => array(CURLOPT_SSL_VERIFYPEER => false)]);
-        var_dump('ras le cul ' );
+        var_dump($config->guzzle->host);
         die();
         switch ($_GET['cmd__etat']) {
             case 'LST':
