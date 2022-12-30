@@ -78,8 +78,8 @@ class DocumentsController  extends  BaseController
         $security = new Security();
         $auth = self::Auth($responseHandler, $security);
 
-        if ($auth != null)
-            return $auth;
+        // if ($auth != null)
+        //     return $auth;
         
         if (empty($_GET['cmd__id'])) {
             return $responseHandler->handleJsonResponse([
@@ -99,6 +99,7 @@ class DocumentsController  extends  BaseController
             case 'LST':
                 if (!empty($_GET['cli__id'])) {
                     try {
+                      
                         $response = $guzzle->get('/SoftRecode/apiList',
                          ['query' =>  [ 
                             'cli__id' =>  $_GET['cli__id']

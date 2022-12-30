@@ -23,6 +23,6 @@
         "password" : "48zAjdXdt$256"
     }, 
     "guzzle": {
-        "host": "http://localhost:80"
+        "host": "http://localhost:8080"
     }
 }
