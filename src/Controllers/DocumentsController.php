@@ -118,7 +118,7 @@ class DocumentsController  extends  BaseController
                     }else{
                         return $responseHandler->handleJsonResponse([
                             'msg' =>  json_decode($response->getBody()->read(163840), true),
-                        ], 200, 'ok');
+                        ], 401, 'ok');
                     }
                 }else{
                     return $responseHandler->handleJsonResponse([
