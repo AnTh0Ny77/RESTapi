@@ -76,10 +76,10 @@ class DocumentsController  extends  BaseController
         $responseHandler = new ResponseHandler();
         $security = new Security();
         $security = new Security();
-        // $auth = self::Auth($responseHandler, $security);
+        $auth = self::Auth($responseHandler, $security);
 
-        // if ($auth != null)
-        //     return $auth;
+        if ($auth != null)
+            return $auth;
         
         if (empty($_GET['cmd__id'])) {
             return $responseHandler->handleJsonResponse([
@@ -93,8 +93,7 @@ class DocumentsController  extends  BaseController
         }
         
         $config = json_decode(file_get_contents('config.json'));
-        // var_dump(new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host , 'curl' => array(CURLOPT_SSL_VERIFYPEER => false)]));
-        // die();
+    
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host ]);
        
         switch ($_GET['cmd__etat']) {
