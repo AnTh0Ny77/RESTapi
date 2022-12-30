@@ -95,6 +95,8 @@ class DocumentsController  extends  BaseController
         $config = json_decode(file_get_contents('config.json'));
        
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host , 'curl' => array(CURLOPT_SSL_VERIFYPEER => false)]);
+        var_dump($guzzle );
+                        die();
         switch ($_GET['cmd__etat']) {
             case 'LST':
                 if (!empty($_GET['cli__id'])) {
@@ -110,8 +112,7 @@ class DocumentsController  extends  BaseController
                     }
 
                     if ($response->getStatusCode() < 300) {
-                        var_dump($response->getBody()->read(1638408));
-                        die();
+                        
                         return $responseHandler->handleJsonResponse([
                             'data' =>  json_decode($response->getBody()->read(1638408), true),
                         ], 200, 'ok');
