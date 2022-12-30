@@ -93,7 +93,7 @@ class DocumentsController  extends  BaseController
         }
         
         $config = json_decode(file_get_contents('config.json'));
-        var_dump($config->guzzle->host);
+        var_dump(new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host , 'curl' => array(CURLOPT_SSL_VERIFYPEER => false)]));
         die();
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host , 'curl' => array(CURLOPT_SSL_VERIFYPEER => false)]);
        
