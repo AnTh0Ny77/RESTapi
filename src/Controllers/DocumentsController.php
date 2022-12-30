@@ -91,10 +91,10 @@ class DocumentsController  extends  BaseController
                 'msg' =>  'le type de document n est pas précisé'
             ], 401, 'bad request');
         }
+        
+        $config = json_decode(file_get_contents('config.json'));
         var_dump('ras le cul ' );
         die();
-        $config = json_decode(file_get_contents('config.json'));
-       
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host , 'curl' => array(CURLOPT_SSL_VERIFYPEER => false)]);
        
         switch ($_GET['cmd__etat']) {
