@@ -110,8 +110,10 @@ class DocumentsController  extends  BaseController
                     }
 
                     if ($response->getStatusCode() < 300) {
+                        var_dump($response->getBody()->read(1638408));
+                        die();
                         return $responseHandler->handleJsonResponse([
-                            'data' =>  json_decode($response->getBody()->read(1638408), true)['data'],
+                            'data' =>  json_decode($response->getBody()->read(1638408), true),
                         ], 200, 'ok');
                     }else{
                         return $responseHandler->handleJsonResponse([
