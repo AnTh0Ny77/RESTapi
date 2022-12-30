@@ -93,9 +93,9 @@ class DocumentsController  extends  BaseController
         }
         
         $config = json_decode(file_get_contents('config.json'));
-        var_dump(new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host , 'curl' => array(CURLOPT_SSL_VERIFYPEER => false)]));
-        die();
-        $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host , 'curl' => array(CURLOPT_SSL_VERIFYPEER => false)]);
+        // var_dump(new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host , 'curl' => array(CURLOPT_SSL_VERIFYPEER => false)]));
+        // die();
+        $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host ]);
        
         switch ($_GET['cmd__etat']) {
             case 'LST':
