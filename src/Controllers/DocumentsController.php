@@ -76,10 +76,10 @@ class DocumentsController  extends  BaseController
         $responseHandler = new ResponseHandler();
         $security = new Security();
         $security = new Security();
-        $auth = self::Auth($responseHandler, $security);
+        // $auth = self::Auth($responseHandler, $security);
 
-        if ($auth != null)
-            return $auth;
+        // if ($auth != null)
+        //     return $auth;
         
         if (empty($_GET['cmd__id'])) {
             return $responseHandler->handleJsonResponse([
