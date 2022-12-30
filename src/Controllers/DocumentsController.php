@@ -113,11 +113,11 @@ class DocumentsController  extends  BaseController
                     if ($response->getStatusCode() < 300) {
                         
                         return $responseHandler->handleJsonResponse([
-                            'data' =>  json_decode($response->getBody()->read(1638408), true),
+                            'data' =>  json_decode($response->getBody()->read(1638408), true)['data'],
                         ], 200, 'ok');
                     }else{
                         return $responseHandler->handleJsonResponse([
-                            'msg' =>  json_decode($response->getBody()->read(163840), true),
+                            'msg' =>  json_decode($response->getBody()->read(163840), true)['msg'],
                         ], 401, 'ok');
                     }
                 }else{
