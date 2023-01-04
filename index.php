@@ -13,6 +13,7 @@ use Src\Controllers\MaterielController;
 use Src\Controllers\NotFoundController;
 use Src\Controllers\DocumentsController;
 use Src\Controllers\ListFilesController;
+use Src\Controllers\TransfertController;
 use Src\Controllers\UserSitesController;
 use Src\Controllers\CommercialController;
 use Src\Controllers\ConfirmUserController;
@@ -123,6 +124,10 @@ switch($request){
 
     case $config->urls->base . ListFilesController::path() . $data:
         echo ListFilesController::index($_SERVER['REQUEST_METHOD'], $data);
+        break;
+
+    case $config->urls->base . TransfertController::path() . $data:
+        echo TransfertController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
 	default:
