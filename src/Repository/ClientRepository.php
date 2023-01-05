@@ -93,10 +93,7 @@ Class ClientRepository  extends BaseRepository {
             if (!$tel instanceof Client)
                 return $tel;
 
-            $mail = $client->setCli__email($client_data['cli__email']);
-            if (!$mail instanceof Client)
-                return $mail;
-
+          
             $client_data['cli__nom'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__nom']));
             $client_data['cli__ville'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__ville']));
 
