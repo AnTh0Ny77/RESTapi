@@ -121,6 +121,8 @@ class DocumentsController  extends  BaseController
             case 'LST':
                 if (!empty($_GET['cli__id'])) {
                     try {
+                        var_dump('hey');
+                        die();
                         $response = $guzzle->get('/SoftRecode/apiList',
                          ['query' =>  [ 
                             'cli__id' =>  $_GET['cli__id']

@@ -92,7 +92,6 @@ Class ForgotPasswordController  extends  BaseController {
            
         $user = $userRepository->findOneBy(['user__mail' => $_GET['user__mail'] ] , false);
 
-       
         if(empty($user)) 
             return $responseHandler->handleJsonResponse('Utilisateur inconnu' , 404 , 'Bad Request');
 
@@ -120,7 +119,7 @@ Class ForgotPasswordController  extends  BaseController {
             }
 
             
-            $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyResetPassword('https://myrecode.fr/reset?confirm__key='.$confirm->getConfirm__key().'&confirm__user='.$confirm->getConfirm__user().''), $mailer->signature());
+            $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyResetPassword('http://myrecode.fr/pw_modif.php?getpw&confirm__key='.$confirm->getConfirm__key().'&confirm__user='.$confirm->getConfirm__user().''), $mailer->signature());
             $mailer->sendMail($_GET['user__mail'] , 'Définition de votre nouveau mot de passe ' ,  $body_mail );
             return $responseHandler->handleJsonResponse('Un lien de résiliation votre mot de passe à été envoyé à  '.$_GET['user__mail'].'  ', 200 , 'Success');
     }
@@ -133,7 +132,6 @@ Class ForgotPasswordController  extends  BaseController {
         $responseHandler = new ResponseHandler();
         $userRepository = new UserRepository('User' , $database , User::class);
         $confirmRepository = new ConfirmRepository('confirm' , $database , Confirm::class);
-
         $body = json_decode(file_get_contents('php://input'), true);
 
         if(empty($body['confirm__key']))
