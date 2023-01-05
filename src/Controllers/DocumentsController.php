@@ -83,11 +83,12 @@ class DocumentsController  extends  BaseController
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
         $userRepository = new UserRepository('user' , $database , User::class );
         $auth = self::Auth($responseHandler, $security);
-        var_dump('hey');
-        die();
+      
         if ($auth != null)
             return $auth;
 
+            var_dump('hey');
+            die();
         if (empty($_GET['cli__id'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' =>  ' ID Société non précisé !'
