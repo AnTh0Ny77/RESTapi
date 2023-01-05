@@ -162,7 +162,7 @@ Class ForgotPasswordController  extends  BaseController {
 
         $password = $userRepository->encrypt_password($body['user__password']);
         $user->setUser__password($password);
-        $userRepository->update((array) $user);
+        $userRepository->updatePassword($user->getUser__id(), $password  );
 
         return $responseHandler->handleJsonResponse('Le mot de passe à bien été mis à jour' , 200 , 'Bad Request');
         
