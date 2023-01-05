@@ -87,14 +87,14 @@ class DocumentsController  extends  BaseController
         if ($auth != null)
             return $auth;
 
-        var_dump('hey');
-        die();
+      
         if (empty($_GET['cli__id'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' =>  ' ID Société non précisé !'
             ], 401, 'bad request');
         }
-
+        var_dump('hey');
+        die();
         if (empty($_GET['cmd__id'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' =>  ' la cmd nest pas précisée'
