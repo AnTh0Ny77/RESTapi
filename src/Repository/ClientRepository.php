@@ -85,9 +85,6 @@ Class ClientRepository  extends BaseRepository {
             if (!$ville instanceof Client)
                 return $ville;
 
-            $pays = $client->setCli__pays($client_data['cli__pays']);
-            if (!$pays instanceof Client)
-                return $pays;
 
             $tel = $client->setCli__tel($client_data['cli__tel']);
             if (!$tel instanceof Client)
@@ -123,10 +120,7 @@ Class ClientRepository  extends BaseRepository {
             if (!$ville instanceof Client)
                 return $ville;
 
-            $pays = $client->setCli__pays($client_data['cli__pays']);
-            if (!$pays instanceof Client)
-                return $pays;
-
+           
             $tel = $client->setCli__tel($client_data['cli__tel']);
             if (!$tel instanceof Client)
                 return $tel;
