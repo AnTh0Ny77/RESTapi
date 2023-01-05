@@ -85,21 +85,18 @@ Class ClientRepository  extends BaseRepository {
             if (!$ville instanceof Client)
                 return $ville;
 
-
             $tel = $client->setCli__tel($client_data['cli__tel']);
             if (!$tel instanceof Client)
                 return $tel;
 
-          
             $client_data['cli__nom'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__nom']));
             $client_data['cli__ville'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__ville']));
-
             $id_client = $this->update($client_data);
-           
             return $client;
-        } else {
-            $client = new Client();
 
+        } else {
+
+            $client = new Client();
             $nom = $client->setCli__nom($this->cleanKeepSpace($client_data['cli__nom']));
             if (!$nom instanceof Client)
                 return $nom;
@@ -120,15 +117,12 @@ Class ClientRepository  extends BaseRepository {
             if (!$ville instanceof Client)
                 return $ville;
 
-           
             $tel = $client->setCli__tel($client_data['cli__tel']);
             if (!$tel instanceof Client)
                 return $tel;
 
-
             $client_data['cli__nom'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__nom']));
             $client_data['cli__ville'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__ville']));
-
             $id_client = $this->insert($client_data);
             $client = $this->findOneBy(['cli__id' =>  $id_client], true);
             return $client;

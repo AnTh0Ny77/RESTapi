@@ -168,7 +168,6 @@ Class UserController  extends BaseController{
         }
 
         $user = $userRepository->findOneBy(['user__id' => $body['user__id']], false);
-
         if (empty($user)) {
             return $responseHandler->handleJsonResponse([
                 "msg" => 'l utilisateur nexiste pas'
@@ -176,7 +175,6 @@ Class UserController  extends BaseController{
         }
 
         $user = $userRepository->UpdateUser($body);
-
         if (!$user instanceof User) {
             return $responseHandler->handleJsonResponse([ "msg" => $user],400,'Bad Request');
         }else {

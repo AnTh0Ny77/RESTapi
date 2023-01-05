@@ -81,9 +81,11 @@ Class TicketLigneController extends BaseController {
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
         $userRepository = new UserRepository('user' , $database , User::class );
         $security = new Security();
+
         $auth = self::Auth($responseHandler,$security);
         if ($auth != null) 
             return $auth;
+        
         $id_user = UserController::returnId__user($security)['uid'];
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
@@ -134,7 +136,7 @@ Class TicketLigneController extends BaseController {
             $sender = $user->getUser__nom() . ' ' . $user->getUser__prenom();
             $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyTicketDest($body['tkl__tk_id'] , $sender ), $mailer->signature());
             $mailer->sendMail($user->getUser__mail(), 'Notification MyRecode' ,  $body_mail );
-        }
+        } 
 
         return $responseHandler->handleJsonResponse([
             'data' => [ 'tkl__id' => $body['tkl__id']]

@@ -75,8 +75,7 @@ Class FilesTicketsController  extends  BaseController{
                 break;
         }
     }
-
-
+    
     public static function get(){
         $database = new Database();
         $database->DbConnect();
@@ -115,12 +114,12 @@ Class FilesTicketsController  extends  BaseController{
         header("Content-Transfer-Encoding: Binary");
         header("Content-Length:".filesize('ligne'. $_GET["tkl__id"] .'.zip'));
         header("Content-Disposition: attachment; filename=file.zip");
-        
         readfile('ligne'. $_GET["tkl__id"] .'.zip');
         $zip->close();
     }
 
     public static function getFil(){
+        
         $database = new Database();
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
