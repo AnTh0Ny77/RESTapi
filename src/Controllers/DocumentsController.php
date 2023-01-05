@@ -104,10 +104,10 @@ class DocumentsController  extends  BaseController
                 'msg' =>  'le type de document n est pas précisé'
             ], 401, 'bad request');
         }
-
-        $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
         var_dump('hey');
         die();
+        $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
+       
         $clients = $lienUserClientRepository->findOneBy(['luc__cli__id' => $_GET['cli__id'] , 'luc__user__id' => $user->getId()] , false);
 
         if (empty($clients)) {
