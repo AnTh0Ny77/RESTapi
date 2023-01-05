@@ -81,7 +81,7 @@ Class ForgotPasswordController  extends  BaseController {
         $database->DbConnect();
         $mailer = new MailerServices();
         $responseHandler = new ResponseHandler();
-        $userRepository = new UserRepository('User' , $database , User::class);
+        $userRepository = new UserRepository('user' , $database , User::class);
         $confirmRepository = new ConfirmRepository('confirm' , $database , Confirm::class);
         
         if (empty($_GET))

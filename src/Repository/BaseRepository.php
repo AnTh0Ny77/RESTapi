@@ -74,9 +74,7 @@ Class BaseRepository {
             array_push($data ,  $value);
         }
         $request = "SELECT * FROM ".$this->Table." WHERE 1 = 1 ".$clause ."";
-        
-        var_dump($request);
-        die();
+    
         $request = $this->Db->Pdo->query($request);
         $request = $request->fetch(PDO::FETCH_ASSOC);
        
