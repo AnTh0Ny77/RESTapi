@@ -139,12 +139,15 @@ Class ForgotPasswordController  extends  BaseController {
 
         $confirm =  $confirmRepository->findOneBy(['confirm__key' => $body['confirm__key']] ,true);
 
+     
         if (!$confirm instanceof Confirm) 
             return $responseHandler->handleJsonResponse('La confirm__key est incorrecte' , 400 , 'Bad Request');
 
         if(empty($body['user__password']))
             return $responseHandler->handleJsonResponse('Le champ user__password est obligatoire' , 400 , 'Bad Request');
 
+            var_dump('hey');
+            die();
         $user = $userRepository->findOneBy(['user__mail' => $confirm->getConfirm__user() ] , true);
 
         if (!$user instanceof User) 
