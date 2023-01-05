@@ -130,7 +130,7 @@ Class ForgotPasswordController  extends  BaseController {
         $database->DbConnect();
         $mailer = new MailerServices();
         $responseHandler = new ResponseHandler();
-        $userRepository = new UserRepository('User' , $database , User::class);
+        $userRepository = new UserRepository('user' , $database , User::class);
         $confirmRepository = new ConfirmRepository('confirm' , $database , Confirm::class);
         $body = json_decode(file_get_contents('php://input'), true);
 
@@ -146,8 +146,7 @@ Class ForgotPasswordController  extends  BaseController {
         if(empty($body['user__password']))
             return $responseHandler->handleJsonResponse('Le champ user__password est obligatoire' , 400 , 'Bad Request');
 
-            var_dump($confirm->getConfirm__user());
-            die();
+            
         $user = $userRepository->findOneBy(['user__mail' => $confirm->getConfirm__user() ] , true);
        
         if ($user instanceof User) 
