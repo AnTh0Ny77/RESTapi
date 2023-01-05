@@ -17,6 +17,7 @@ use Src\Repository\UserRepository;
 use Src\Controllers\BaseController;
 use Src\Repository\ClientRepository;
 use GuzzleHttp\Exception\ClientException;
+use Src\Repository\LienUserClientRepository;
 use Src\Repository\TicketLigneRepository;
 
 class DocumentsController  extends  BaseController
@@ -69,38 +70,57 @@ class DocumentsController  extends  BaseController
         }
     }
 
+    public static function returnId__user(Security $security){
+        $token = $security->getBearerToken();
+        return $security->readToken($token);
+    }
 
     public static function get(){
         $database = new Database();
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
         $security = new Security();
-        $security = new Security();
-        // $auth = self::Auth($responseHandler, $security);
+        $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
+        $userRepository = new UserRepository('user' , $database , User::class );
+        $auth = self::Auth($responseHandler, $security);
 
-        // if ($auth != null)
-        //     return $auth;
-        
+        if ($auth != null)
+            return $auth;
+
+        if (empty($_GET['cli__id'])) {
+            return $responseHandler->handleJsonResponse([
+                'msg' =>  ' ID Société non précisé !'
+            ], 401, 'bad request');
+        }
+
         if (empty($_GET['cmd__id'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' =>  ' la cmd nest pas précisée'
             ], 401, 'bad request');
         }
+
         if (empty($_GET['cmd__etat'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' =>  'le type de document n est pas précisé'
             ], 401, 'bad request');
         }
+
+        $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
+        $clients = $lienUserClientRepository->findOneBy(['luc__cli__id' => $_GET['cli__id'] , 'luc__user__id' => $user->getId()] , false);
+
+        if (empty($clients)) {
+            return $responseHandler->handleJsonResponse([
+                'msg' =>  'la société ne correspond pas !'
+            ], 401, 'bad request');
+        }
         
         $config = json_decode(file_get_contents('config.json'));
-    
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host ]);
        
         switch ($_GET['cmd__etat']) {
             case 'LST':
                 if (!empty($_GET['cli__id'])) {
                     try {
-                      
                         $response = $guzzle->get('/SoftRecode/apiList',
                          ['query' =>  [ 
                             'cli__id' =>  $_GET['cli__id']

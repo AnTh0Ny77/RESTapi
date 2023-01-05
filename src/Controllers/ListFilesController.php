@@ -69,11 +69,7 @@ class ListFilesController  extends  BaseController
         }
     }
 
-
-    
-
-    public static function get()
-    {
+    public static function get(){
         $database = new Database();
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
@@ -106,10 +102,5 @@ class ListFilesController  extends  BaseController
         return $responseHandler->handleJsonResponse([
             'data' =>  'Une erreur est survenue dans l api listFilesController condition n 103  ',
         ], 200, json_decode($response->getBody()->read(125922)));
-        
     }
-
-   
-
-   
 }
