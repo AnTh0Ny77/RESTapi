@@ -99,14 +99,16 @@ class DocumentsController  extends  BaseController
                 'msg' =>  ' la cmd nest pas précisée'
             ], 401, 'bad request');
         }
-        var_dump('hey');
-        die();
-
+       
         if (empty($_GET['cmd__etat'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' =>  'le type de document n est pas précisé'
             ], 401, 'bad request');
         }
+
+        var_dump('hey');
+        die();
+
        
         $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
        
