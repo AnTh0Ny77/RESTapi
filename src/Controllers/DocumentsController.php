@@ -106,6 +106,8 @@ class DocumentsController  extends  BaseController
         }
 
         $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
+        var_dump('hey');
+        die();
         $clients = $lienUserClientRepository->findOneBy(['luc__cli__id' => $_GET['cli__id'] , 'luc__user__id' => $user->getId()] , false);
 
         if (empty($clients)) {
@@ -121,8 +123,7 @@ class DocumentsController  extends  BaseController
             case 'LST':
                 if (!empty($_GET['cli__id'])) {
                     try {
-                        var_dump('hey');
-                        die();
+                       
                         $response = $guzzle->get('/SoftRecode/apiList',
                          ['query' =>  [ 
                             'cli__id' =>  $_GET['cli__id']
