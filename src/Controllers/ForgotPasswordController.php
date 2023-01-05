@@ -92,6 +92,7 @@ Class ForgotPasswordController  extends  BaseController {
            
         $user = $userRepository->findOneBy(['user__mail' => $_GET['user__mail'] ] , false);
 
+        var_dump('hey');
       
         if(empty($user)) 
             return $responseHandler->handleJsonResponse('Utilisateur inconnu' , 404 , 'Bad Request');
