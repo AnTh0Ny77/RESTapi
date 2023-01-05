@@ -55,7 +55,7 @@ Class ForgotPasswordController  extends  BaseController {
         $notFound = new NotFoundController();
         switch ($method) {
             case 'POST':
-                return $notFound::index();
+                return self::post();
                 break;
 
             case 'GET':
