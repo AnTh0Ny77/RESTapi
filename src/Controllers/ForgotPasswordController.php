@@ -90,12 +90,10 @@ Class ForgotPasswordController  extends  BaseController {
         if (empty($_GET['user__mail'])) 
             return $responseHandler->handleJsonResponse('Le parametre user__email est obligatoire' , 400 , 'Bad Request');
            
-        $user = $userRepository->findOneBy(['user__mail' => $_GET['user__mail'] ] , true);
+        $user = $userRepository->findOneBy(['user__mail' => $_GET['user__mail'] ] , false);
 
-        var_dump('hey' );
-        die();
-
-        if(!$user instanceof User) 
+      
+        if(empty($user)) 
             return $responseHandler->handleJsonResponse('Utilisateur inconnu' , 404 , 'Bad Request');
 
             $confirm = $confirmRepository->findOneBy(['confirm__user' => $_GET['user__mail']] , true);
