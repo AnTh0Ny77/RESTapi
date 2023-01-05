@@ -83,7 +83,8 @@ class DocumentsController  extends  BaseController
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
         $userRepository = new UserRepository('user' , $database , User::class );
         $auth = self::Auth($responseHandler, $security);
-
+        var_dump('hey');
+        die();
         if ($auth != null)
             return $auth;
 
@@ -104,8 +105,7 @@ class DocumentsController  extends  BaseController
                 'msg' =>  'le type de document n est pas précisé'
             ], 401, 'bad request');
         }
-        var_dump('hey');
-        die();
+       
         $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
        
         $clients = $lienUserClientRepository->findOneBy(['luc__cli__id' => $_GET['cli__id'] , 'luc__user__id' => $user->getId()] , false);
