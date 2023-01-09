@@ -82,10 +82,10 @@ class DocumentsController  extends  BaseController
         $security = new Security();
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
         $userRepository = new UserRepository('user' , $database , User::class );
-        $auth = self::Auth($responseHandler, $security);
+        // $auth = self::Auth($responseHandler, $security);
       
-        if ($auth != null)
-            return $auth;
+        // if ($auth != null)
+        //     return $auth;
 
       
         if (empty($_GET['cli__id'])) {
@@ -169,7 +169,7 @@ class DocumentsController  extends  BaseController
                     $response = $exeption->getResponse();
                 }
                 $data = $response->getBody()->getContents();
-                
+           
                 header('Content-Type: application/pdf');
                 echo $data;
                 break;
