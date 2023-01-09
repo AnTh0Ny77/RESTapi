@@ -93,7 +93,6 @@ Class UserSitesController extends BaseController {
         }
         
         $array_user = array_unique($array_user);
-        
         $definitve_array = [];
         
         foreach ($array_user as $users) {
@@ -104,8 +103,6 @@ Class UserSitesController extends BaseController {
             $subject = $userRepository->getRole($subject);
             array_push($definitve_array , (array ) $subject );
         }
-
-
         
         $prenom  = array_column($definitve_array, strtolower('user__prenom'));
         $nom = array_column($definitve_array, strtolower('user__nom'));

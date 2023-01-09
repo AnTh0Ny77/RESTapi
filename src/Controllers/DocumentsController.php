@@ -169,7 +169,6 @@ class DocumentsController  extends  BaseController
                     $response = $exeption->getResponse();
                 }
                 $data = $response->getBody()->getContents();
-           
                 header('Content-Type: application/pdf');
                 echo $data;
                 break;

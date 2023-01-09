@@ -90,15 +90,12 @@ Class UserController  extends BaseController{
                 return $notFound::index();
                 break;
         }
-
     }
-
 
     public static function returnId__user(Security $security){
         $token = $security->getBearerToken();
         return $security->readToken($token);
     }
-
 
 	public static function post(){
         $database = new Database();
@@ -118,9 +115,8 @@ Class UserController  extends BaseController{
         }
         $refresh_token = $refreshRepository->insertOne($user->getUser__id());
         $user->setRefresh_token($refresh_token);
-       
         return $responseHandler->handleJsonResponse([
-            "data" => "utilisateur créé avec succès"
+            "data" => $user->getUser__id()
         ] , 201 , 'ok');
     }
 
@@ -138,7 +134,7 @@ Class UserController  extends BaseController{
             $auth = self::Auth($responseHandler,$security);
             if ($auth != null) 
                 return $auth;
-              
+            
             $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
             
             $user = $userRepository->getRole($user);
