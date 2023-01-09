@@ -57,7 +57,6 @@ Class UserRepository  extends BaseRepository{
         return $user;
     }
 
-
     public function updatePassword($user__id , $password){
         $request = $this->Db->Pdo->prepare('UPDATE user set user__password = ? where user__id = '. $user__id .' ');
         $request->execute([$password]);
@@ -86,9 +85,6 @@ Class UserRepository  extends BaseRepository{
             $user_data['user__nom'] = strtoupper($user_data['user__nom']);
         }
        
-
-        
-
         $this->update($user_data);
         $user = $this->findOneBy(['user__id' =>  $user_data['user__id']], true);
         return $user;
@@ -99,12 +95,10 @@ Class UserRepository  extends BaseRepository{
         $roleRepository = new  RoleRepository($this->Db);
         $roles = [];
         $arrayRoles = $roleRepository->findBy(['ur__user_id' =>  $user->getUser__id()] , 50 , ['ur__role' => 'ASC' ]);
-        
         foreach ($arrayRoles as $key => $value) {
             array_push($roles ,  $value['ur__role']);
         }
         $user->setRoles($roles);
-      
         return $user;
     } 
 
@@ -130,9 +124,5 @@ Class UserRepository  extends BaseRepository{
         $user = $this->getRole($user);
         
         return $user;
-        
     }
-
-   
-
 }
