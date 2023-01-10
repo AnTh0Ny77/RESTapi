@@ -72,18 +72,25 @@ Class RoleController extends BaseController {
         $database->DbConnect();
         $rolesQuerys = new BaseRepository('user__role' , $database , User::class);
         $responseHandler = new ResponseHandler();
-        $userRepository = new UserRepository('user', $database, User::class);
-        if (empty($_GET['user__id'])) {
+        $security = new Security();
+        $auth = self::Auth($responseHandler, $security);
+        
+        if ($auth != null)
+            return $auth;
+
+        $body = json_decode(file_get_contents('php://input'), true);
+       
+        if (empty($body['user__id'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'user__id doit etre renseigné'
             ], 401, 'bad request');
         }
-        if (empty($_GET['role'])) {
+        if (empty($body['role'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'role doit etre renseigné'
             ], 401, 'bad request');
         }
-        $insertData = $rolesQuerys->insertNoPrimary(['ur__user_id' => $_GET['user__id'] , 'ur__role' => $_GET['role']]);
+        $insertData = $rolesQuerys->insertNoPrimary(['ur__user_id' => $body['user__id'] , 'ur__role' => $body['role']]);
         if ($insertData != true ) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'Un problème est survenu durant l insertion en base de données'
