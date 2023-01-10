@@ -23,6 +23,7 @@ use Src\Controllers\FilesTicketsController;
 use Src\Controllers\TicketChampsController;
 use Src\Controllers\NotificationsController;
 use Src\Controllers\ForgotPasswordController;
+use Src\Controllers\RoleController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -128,6 +129,10 @@ switch($request){
 
     case $config->urls->base . TransfertController::path() . $data:
         echo TransfertController::index($_SERVER['REQUEST_METHOD'], $data);
+        break;
+
+    case $config->urls->base . RoleController::path() . $data:
+        echo RoleController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
 	default:
