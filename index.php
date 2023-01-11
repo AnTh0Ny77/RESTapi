@@ -2,6 +2,8 @@
 
 require "vendor/autoload.php";
 use Src\Controllers\MaxController;
+use Src\Controllers\MailController;
+use Src\Controllers\RoleController;
 use Src\Controllers\UserController;
 use Src\Controllers\LoginController;
 use Src\Controllers\ClientController;
@@ -23,7 +25,6 @@ use Src\Controllers\FilesTicketsController;
 use Src\Controllers\TicketChampsController;
 use Src\Controllers\NotificationsController;
 use Src\Controllers\ForgotPasswordController;
-use Src\Controllers\RoleController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -131,8 +132,12 @@ switch($request){
         echo TransfertController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
-    case $config->urls->base . RoleController::path() . $data:
+    case $config->urls->base .RoleController::path() . $data:
         echo RoleController::index($_SERVER['REQUEST_METHOD'], $data);
+        break;
+
+    case $config->urls->base .MailController::path() . $data:
+        echo MailController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
 	default:

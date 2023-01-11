@@ -17,7 +17,7 @@ use Src\Repository\RefreshRepository;
 use Src\Controllers\NotFoundController;
 
 
-class LoginController extends BaseController
+class MailController extends BaseController
 {
 
     public static function path()
@@ -43,7 +43,6 @@ class LoginController extends BaseController
                 ],
                 'reponse' => 'renvoi ue reponse de succes ou dechec ',
                 "Auth" => 'JWT'
-
             ]
         ];
         return $doc;
@@ -76,7 +75,6 @@ class LoginController extends BaseController
         $security = new Security();
         $responseHandler = new ResponseHandler();
         $mailer = new MailerServices();
-        $userRepository = new UserRepository('user', $database, User::class);
         $security = new Security();
         $auth = self::Auth($responseHandler, $security);
         if ($auth != null)
@@ -85,7 +83,7 @@ class LoginController extends BaseController
 
         if (filter_var($body['mail'], FILTER_VALIDATE_EMAIL)) {
             return $responseHandler->handleJsonResponse([
-                "msg" => 'le mail n est pas valide ',
+                "msg" => 'le mail n est pas valide',
             ], 401, 'bad request');
         }
 
