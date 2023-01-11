@@ -81,11 +81,11 @@ class MailController extends BaseController
             return $auth;
         $body = json_decode(file_get_contents('php://input'), true);
 
-        if (filter_var($body['mail'], FILTER_VALIDATE_EMAIL)) {
-            return $responseHandler->handleJsonResponse([
-                "msg" => 'le mail n est pas valide',
-            ], 401, 'bad request');
-        }
+        // if (filter_var($body['mail'], FILTER_VALIDATE_EMAIL)) {
+        //     return $responseHandler->handleJsonResponse([
+        //         "msg" => 'le mail n est pas valide',
+        //     ], 401, 'bad request');
+        // }
 
         if (empty($body['text'])) {
             return $responseHandler->handleJsonResponse([
