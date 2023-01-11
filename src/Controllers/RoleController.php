@@ -28,8 +28,8 @@ Class RoleController extends BaseController {
     }
 
     public static function renderDoc(){
-        $doc = [
-            [
+       $doc = [
+             [
                 'name' => 'postTickets',
                 'tittle' => 'Roles' ,
                 'method' => 'POST',
@@ -74,7 +74,7 @@ Class RoleController extends BaseController {
         $responseHandler = new ResponseHandler();
         $security = new Security();
         $auth = self::Auth($responseHandler, $security);
-        
+
         if ($auth != null)
             return $auth;
 
@@ -99,8 +99,7 @@ Class RoleController extends BaseController {
 
         return $responseHandler->handleJsonResponse([
             'msg' => 'Role inséré avec succès '
-        ], 401, 'bad request');
-        
-
+        ], 401, 'bad request');    
     }
+
 }

@@ -152,6 +152,8 @@ Class BaseRepository {
         return $id;
     }
 
+   
+
 
     public function insertNoPrimary(array $array)
     {

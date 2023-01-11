@@ -52,7 +52,7 @@ Class UserSitesController extends BaseController {
                 break;
 
             case 'DELETE':
-                return $notFound::index();
+                return self::delete();
                 break;
 
             default:
@@ -110,6 +110,43 @@ Class UserSitesController extends BaseController {
         return $responseHandler->handleJsonResponse( [ 
             "data" => $definitve_array ]  , 200 , 'ok');
 
+    }
+
+
+    public static function delete(){
+        $database = new Database();
+        $database->DbConnect();
+        $responseHandler = new ResponseHandler();
+        $lienUserClientRepository = new LienUserClientRepository('lien_user_client', $database, User::class);
+        $userRepository = new UserRepository('user', $database, User::class);
+        $clientRepository = new ClientRepository('client', $database, Client::class);
+
+        $security = new Security();
+        $auth = self::Auth($responseHandler, $security);
+        if ($auth != null)
+            return $auth;
+
+        $body = json_decode(file_get_contents('php://input'), true);
+        if (empty($body['luc__user__id'])) {
+            return $responseHandler->handleJsonResponse([
+                "msg" => 'user__id n est pas renseigné',
+            ], 401, 'bad request');
+        }
+
+        $user = $userRepository->findOneBy(['user__id' =>  $body['luc__user__id']], false);
+
+        if (empty($user)) {
+            if (empty($body['luc__user__id'])) {
+                return $responseHandler->handleJsonResponse([
+                    "msg" => 'le user nexiste pas !',
+                ], 401, 'bad request');
+            }
+        }
+
+        $lienUserClientRepository->delete(['luc__user__id' =>  $body['luc__user__id'] ]);
+        return $responseHandler->handleJsonResponse([
+            "data" => 'les liens ont été supprimés !',
+        ], 200, 'bad request');
     }
 
 
