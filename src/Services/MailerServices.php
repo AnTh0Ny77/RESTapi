@@ -73,6 +73,29 @@ Class MailerServices {
             </div>';
     }
 
+    public function bodyMail($text)
+    {
+        return '
+            <div class="wrapper">
+                <p style="text-align: center;"><!--StartFragment--><span style="font-size:14px"><span style="font-weight:bold">Validation de votre <br />
+                    EMAIL - MY RECODE</span></span>
+                    <br/>
+                    &nbsp;
+                </p>
+                    <p style="text-align: center;">'. $text.'<br/>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <span style="font-size:14px" style="font-weight:bold">A tout de suite sur votre espace client.</span><br />
+                    <span style="font-size:14px" style="font-weight:bold">L equipe RECODE !</span>
+                </p>
+            </div>';
+    }
+
     public function bodyResetPassword($link){
         return '<style>
                 .success-link{

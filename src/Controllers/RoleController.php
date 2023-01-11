@@ -74,12 +74,9 @@ Class RoleController extends BaseController {
         $responseHandler = new ResponseHandler();
         $security = new Security();
         $auth = self::Auth($responseHandler, $security);
-
         if ($auth != null)
             return $auth;
-
         $body = json_decode(file_get_contents('php://input'), true);
-       
         if (empty($body['user__id'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'user__id doit etre renseigné'
@@ -96,7 +93,6 @@ Class RoleController extends BaseController {
                 'msg' => 'Un problème est survenu durant l insertion en base de données'
             ], 401, 'bad request');
         }
-
         return $responseHandler->handleJsonResponse([
             'msg' => 'Role inséré avec succès '
         ], 401, 'bad request');    
