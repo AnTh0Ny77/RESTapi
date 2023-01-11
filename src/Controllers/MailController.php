@@ -94,7 +94,7 @@ class MailController extends BaseController
         }
 
         $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyMail($body['text']), $mailer->signature());
-        $mailer->sendMail($body['mail'], 'Vous avez reçu un message de Myrecode',  $body_mail);
+        $mailer->sendMail($body['mail'], 'Vous avez recu un message de Myrecode',  $body_mail);
         return $responseHandler->handleJsonResponse([
             "data" => 'l email à été transmis ',
         ], 200, 'Ok !');

@@ -77,8 +77,8 @@ Class MailerServices {
     {
         return '
             <div class="wrapper">
-                <p style="text-align: center;"><!--StartFragment--><span style="font-size:14px"><span style="font-weight:bold">Validation de votre <br />
-                    EMAIL - MY RECODE</span></span>
+                <p style="text-align: center;"><!--StartFragment--><span style="font-size:14px"><span style="font-weight:bold">
+                    </span></span>
                     <br/>
                     &nbsp;
                 </p>
