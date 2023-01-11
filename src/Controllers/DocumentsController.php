@@ -83,8 +83,8 @@ class DocumentsController  extends  BaseController
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
         $userRepository = new UserRepository('user' , $database , User::class );
         $auth = self::Auth($responseHandler, $security);
-        if ($auth != null)
-            return $auth;
+        // if ($auth != null)
+        //     return $auth;
 
       
         if (empty($_GET['cli__id'])) {
@@ -105,18 +105,15 @@ class DocumentsController  extends  BaseController
             ], 401, 'bad request');
         }
 
-        
-
-       
+    
         $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , false);
-       
-        $clients = $lienUserClientRepository->findOneBy(['luc__cli__id' => $_GET['cli__id'] , 'luc__user__id' => $user['user__id']] , false);
+        // $clients = $lienUserClientRepository->findOneBy(['luc__cli__id' => $_GET['cli__id'] , 'luc__user__id' => $user['user__id']] , false);
 
-        if (empty($clients)) {
-            return $responseHandler->handleJsonResponse([
-                'msg' =>  'la société ne correspond pas !'
-            ], 401, 'bad request');
-        }
+        // if (empty($clients)) {
+        //     return $responseHandler->handleJsonResponse([
+        //         'msg' =>  'la société ne correspond pas !'
+        //     ], 401, 'bad request');
+        // }
         
         $config = json_decode(file_get_contents('config.json'));
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host ]);
