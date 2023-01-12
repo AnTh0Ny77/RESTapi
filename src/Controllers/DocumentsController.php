@@ -99,6 +99,8 @@ class DocumentsController  extends BaseController {
         }
 
         $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , false);
+        var_dump($user);
+        die();
         $clients = $lienUserClientRepository->findOneBy(['luc__cli__id' => $_GET['cli__id'] , 'luc__user__id' => $user['user__id']] , false);
         if (empty($clients)) {
             return $responseHandler->handleJsonResponse([
