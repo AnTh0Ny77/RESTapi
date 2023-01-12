@@ -83,8 +83,8 @@ class DocumentsController  extends  BaseController
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
         $userRepository = new UserRepository('user' , $database , User::class );
         $auth = self::Auth($responseHandler, $security);
-        // if ($auth != null)
-        //     return $auth;
+        if ($auth != null)
+            return $auth;
 
       
         if (empty($_GET['cli__id'])) {
