@@ -75,12 +75,13 @@ class AdController  extends  BaseController
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
         $security = new Security();
-        $addrepository = new BaseRepository('promo' , $database ,  std::class);
+        $addrepository = new BaseRepository('promo' , $database ,  Client::class);
         $security = new Security();
         $auth = self::Auth($responseHandler, $security);
         if ($auth != null)
             return $auth;
 
+            var_dump('hey');
         $list = $addrepository->findBy([1 => 1 ] , 600 , []);
         return $responseHandler->handleJsonResponse([
             'data' =>  $list,
