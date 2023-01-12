@@ -100,14 +100,7 @@ class DocumentsController  extends BaseController {
 
         
         $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , false);
-        
-        var_dump($user);
-        die();
-
-        $user = $userRepository->getRole($user);
-        $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
-
-
+        $clients = $lienUserClientRepository->getUserClients($user['user__id']);
         if (empty($clients)) {
             return $responseHandler->handleJsonResponse([
                 'msg' =>  'la société ne correspond pas !'
