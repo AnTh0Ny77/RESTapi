@@ -74,8 +74,7 @@ class AdController  extends  BaseController
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
         $security = new Security();
-        var_dump('hey');
-        die();
+       
         $addrepository = new BaseRepository('promo' , $database ,  Client::class);
         $security = new Security();
         $auth = self::Auth($responseHandler, $security);
