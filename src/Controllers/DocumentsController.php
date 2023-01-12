@@ -98,9 +98,11 @@ class DocumentsController  extends BaseController {
             ], 401, 'bad request');
         }
 
-        $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , false);
+        $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
+        $user = $userRepository->getRole($user);
+        $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
+
         
-        $clients = $lienUserClientRepository->findOneBy(['luc__cli__id' => $_GET['cli__id'] , 'luc__user__id' => $user['user__id']] , false);
         if (empty($clients)) {
             return $responseHandler->handleJsonResponse([
                 'msg' =>  'la société ne correspond pas !'
