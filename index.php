@@ -25,6 +25,7 @@ use Src\Controllers\FilesTicketsController;
 use Src\Controllers\TicketChampsController;
 use Src\Controllers\NotificationsController;
 use Src\Controllers\ForgotPasswordController;
+use Src\Controllers\AdController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);

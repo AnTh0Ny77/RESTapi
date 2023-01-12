@@ -18,7 +18,6 @@ use Src\Services\Security;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\ClientHtpp;
 use GuzzleHttp\Promise;
-use ZipArchive;
 
 class AdController  extends  BaseController
 {
