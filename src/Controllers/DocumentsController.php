@@ -100,11 +100,12 @@ class DocumentsController  extends BaseController {
 
         
         $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
+        
+        var_dump($user);
+        die();
         $user = $userRepository->getRole($user);
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
 
-        var_dump('hey');
-        die();
 
         if (empty($clients)) {
             return $responseHandler->handleJsonResponse([
