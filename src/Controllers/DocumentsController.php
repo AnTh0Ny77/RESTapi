@@ -98,6 +98,9 @@ class DocumentsController  extends BaseController {
             ], 401, 'bad request');
         }
 
+        var_dump('hey');
+        die();
+
         $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
         $user = $userRepository->getRole($user);
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
