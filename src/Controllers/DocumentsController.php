@@ -99,10 +99,11 @@ class DocumentsController  extends BaseController {
         }
 
         
-        $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
+        $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , false);
         
         var_dump($user);
         die();
+
         $user = $userRepository->getRole($user);
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
 
