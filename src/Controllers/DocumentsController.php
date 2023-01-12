@@ -1,9 +1,6 @@
 <?php
-
 namespace Src\Controllers;
-
 require  '././vendor/autoload.php';
-
 use ZipArchive;
 use Src\Database;
 use GuzzleHttp\Promise;
@@ -20,16 +17,13 @@ use GuzzleHttp\Exception\ClientException;
 use Src\Repository\LienUserClientRepository;
 use Src\Repository\TicketLigneRepository;
 
-class DocumentsController  extends  BaseController
-{
+class DocumentsController  extends BaseController {
 
-    public static function path()
-    {
+    public static function path(){
         return '/documents';
     }
 
-    public static function renderDoc()
-    {
+    public static function renderDoc(){
         $doc = [
             [
                 'name' => 'getDocuments',
@@ -38,14 +32,13 @@ class DocumentsController  extends  BaseController
                 'path' => self::path(),
                 'description' => 'Permet de visualiser les documents ',
                 'reponse' => 'renvoi la variable data ou msg en cas d echec',
-                "Auth" => 'JWT '
+                "Auth" => 'JWT'
             ]
         ];
         return $doc;
     }
 
-    public static function index($method, $data)
-    {
+    public static function index($method, $data){
         $notFound = new NotFoundController();
         switch ($method) {
             case 'POST':
@@ -79,14 +72,14 @@ class DocumentsController  extends  BaseController
         $database = new Database();
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
-        $security = new Security();
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
         $userRepository = new UserRepository('user' , $database , User::class );
-        $auth = self::Auth($responseHandler, $security);
-        if ($auth != null)
+     
+        $security = new Security();
+        $auth = self::Auth($responseHandler,$security);
+        if ($auth != null) 
             return $auth;
 
-      
         if (empty($_GET['cli__id'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' =>  ' ID Société non précisé !'
@@ -105,16 +98,13 @@ class DocumentsController  extends  BaseController
             ], 401, 'bad request');
         }
 
-    
         $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , false);
-        // $clients = $lienUserClientRepository->findOneBy(['luc__cli__id' => $_GET['cli__id'] , 'luc__user__id' => $user['user__id']] , false);
-
-        // if (empty($clients)) {
-        //     return $responseHandler->handleJsonResponse([
-        //         'msg' =>  'la société ne correspond pas !'
-        //     ], 401, 'bad request');
-        // }
-        
+        $clients = $lienUserClientRepository->findOneBy(['luc__cli__id' => $_GET['cli__id'] , 'luc__user__id' => $user['user__id']] , false);
+        if (empty($clients)) {
+            return $responseHandler->handleJsonResponse([
+                'msg' =>  'la société ne correspond pas !'
+            ], 401, 'bad request');
+        }
         $config = json_decode(file_get_contents('config.json'));
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host ]);
        
@@ -179,7 +169,5 @@ class DocumentsController  extends  BaseController
                 echo $data;
                 break;
         }
-    }
-
-   
+    } 
 }
