@@ -66,6 +66,9 @@ Class BaseRepository {
         return  $request->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+    
+
     public function findOneBy(array $array , bool $auto ){
         $clause = '';
         $data = [];

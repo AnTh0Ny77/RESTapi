@@ -140,6 +140,10 @@ switch($request){
         echo MailController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
+    case $config->urls->base .AdController::path() . $data:
+        echo AdController::index($_SERVER['REQUEST_METHOD'], $data);
+        break;
+
 	default:
 		header('HTTP/1.0 404 not found');
         echo NotFoundController::index();
