@@ -70,7 +70,7 @@ Class BaseRepository {
     public function findRandom(){
         $request = 'SELECT *
             FROM promo
-            WHERE RAND() > 0.9
+            
             ORDER BY RAND( )
             LIMIT 3';
 
