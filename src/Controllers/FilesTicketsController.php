@@ -232,15 +232,16 @@ Class FilesTicketsController  extends  BaseController{
        
         try {
             
-            $response = $guzzle->post('/SoftRecode/apiTickets', [ 'stream' => true , 'debug' => $debug , 'multipart' => [
-                    [
+            $response = $guzzle->post('/SoftRecode/apiTickets', [ 'stream' => true , 'debug' => $debug , 
+            'multipart' => [
+                       [
                         'name'  =>  'file',
-                        'contents'      => fopen($tempPath, 'r'),
-                    ]],
-                    'query' => [
-                        'tkl__id' => $_POST['tkl__id'],
-                    ]
-
+                        'contents'      => fopen($tempPath, 'r')
+                    ],[
+                        'name'  =>  'tkl__id',
+                        'contents'      => $_FILES['tkl__id']
+                    ]   
+                ],
             ]);
            
         } catch (ClientException $exeption) {
