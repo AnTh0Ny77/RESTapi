@@ -109,7 +109,7 @@ Class UserController  extends BaseController{
             $already_exist = $userRepository->findOneBy([ 'user__mail' => $body['user__mail'] ], false);
             if (!empty($already_exist)) {
                 return $responseHandler->handleJsonResponse([
-                    "data" => $already_exist['user__mail']
+                    "data" => $already_exist['user__id']
                 ] , 201 , 'ok');
             }
         }
