@@ -239,7 +239,7 @@ Class FilesTicketsController  extends  BaseController{
                         'contents'      => fopen($tempPath, 'r')
                     ],[
                         'name'  =>  'tkl__id',
-                        'contents'      => $_FILES['tkl__id']
+                        'contents'      => $_POST['tkl__id']
                     ]   
                 ],
             ]);
