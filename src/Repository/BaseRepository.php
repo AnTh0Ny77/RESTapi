@@ -67,6 +67,18 @@ Class BaseRepository {
     }
 
 
+    public function findRandom(){
+        $request = 'SELECT *
+            FROM promo
+            
+            ORDER BY RAND( )
+            LIMIT 3';
+
+        $request = $this->Db->Pdo->query($request);
+        return  $request->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
     
 
     public function findOneBy(array $array , bool $auto ){

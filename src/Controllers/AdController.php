@@ -82,7 +82,7 @@ class AdController  extends  BaseController
             return $auth;
 
             
-        $list = $addrepository->findBy([1 => 1 ] , 600 , []);
+        $list = $addrepository->findRandom();
         return $responseHandler->handleJsonResponse([
             'data' =>  $list,
         ], 200, "ok");
