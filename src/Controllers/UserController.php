@@ -106,7 +106,7 @@ Class UserController  extends BaseController{
         $body = json_decode(file_get_contents('php://input'), true);
 
         if (!empty($body['user__mail'])) {
-            $already_exist = $userRepository->findOneBy($body['user__mail'] , false);
+            $already_exist = $userRepository->findOneBy([ 'user__mail' => $body['user__mail'] ], false);
             if (!empty($already_exist)) {
                 return $responseHandler->handleJsonResponse([
                     "data" => $already_exist['user__mail']
@@ -115,7 +115,7 @@ Class UserController  extends BaseController{
         }
        
         $user = $userRepository->postUser($body);
-        
+
         if (!$user instanceof User) {
             return $responseHandler->handleJsonResponse([
                 "msg" => $user
