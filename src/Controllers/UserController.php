@@ -104,15 +104,24 @@ Class UserController  extends BaseController{
         $userRepository = new UserRepository('user' , $database , User::class );
         $refreshRepository = new RefreshRepository($database);
         $body = json_decode(file_get_contents('php://input'), true);
-        $user = $userRepository->postUser($body);
 
+        if (!empty($body['user__mail'])) {
+            $already_exist = $userRepository->findOneBy($body['user__mail'] , false);
+            if (!empty($already_exist)) {
+                return $responseHandler->handleJsonResponse([
+                    "data" => $already_exist['user__mail']
+                ] , 201 , 'ok');
+            }
+        }
+       
+        $user = $userRepository->postUser($body);
+        
         if (!$user instanceof User) {
             return $responseHandler->handleJsonResponse([
-                "msg" =>
-                    $user
-            ]
-                , 400 , 'Bad Request');
+                "msg" => $user
+            ], 400 , 'Bad Request');
         }
+
         $refresh_token = $refreshRepository->insertOne($user->getUser__id());
         $user->setRefresh_token($refresh_token);
         return $responseHandler->handleJsonResponse([
