@@ -190,7 +190,6 @@ Class UserSitesController extends BaseController {
 
         $client = $clientRepository->findOneBy(['cli__id' =>  $body['luc__cli__id']], false);
 
-       
         if (empty($client)) {
             return $responseHandler->handleJsonResponse([
                 "msg" => 'La société n existe pas',

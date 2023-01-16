@@ -248,7 +248,8 @@ Class FilesTicketsController  extends  BaseController{
             $response = $exeption->getResponse();
         }
 
-       
+       var_dump(json_decode($response->getBody()->read(112259)));
+       die();
        
         return $responseHandler->handleJsonResponse([
             'data' =>  $response->getBody()->read(112259) , 

@@ -115,7 +115,6 @@ Class UserController  extends BaseController{
         }
        
         $user = $userRepository->postUser($body);
-
         if (!$user instanceof User) {
             return $responseHandler->handleJsonResponse([
                 "msg" => $user
