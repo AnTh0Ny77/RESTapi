@@ -171,13 +171,14 @@ Class FilesTicketsController  extends  BaseController{
         $responseHandler = new ResponseHandler();
         $security = new Security();
         $tiketLigne = new TicketLigneRepository('ticket_ligne' , $database , TicketsLigne::class);
+        
         //controle du client 
         if (empty($_POST['tkl__id'])){
             return $responseHandler->handleJsonResponse([
                 'msg' =>  ' La ligne de ticket n est pas précisée'
             ] , 404 , 'bad request');
         }
-        
+     
         // $ligne = $tiketLigne->findOneBy(['tkl__id' => intval($_POST['tkl__id'])] , true);
         // if (!$ligne instanceof TicketsLigne){
         //     return $responseHandler->handleJsonResponse([
@@ -224,36 +225,36 @@ Class FilesTicketsController  extends  BaseController{
             ] , 401 , 'bad request');
         }
 
-       
+    
         $config = json_decode(file_get_contents('config.json'));
        
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
         $debug = fopen("path_and_filename.txt", "a+");
        
         try {
-            
             $response = $guzzle->post('/SoftRecode/apiTickets', [ 'stream' => true , 'debug' => $debug , 
             'multipart' => [
                        [
                         'name'  =>  'file',
-                        'contents'      => fopen($tempPath, 'r')
+                        'contents'      => fopen($tempPath  ,'r')
                     ],[
                         'name'  =>  'tkl__id',
                         'contents'      => $_POST['tkl__id']
-                    ]   
+                    ], [
+                        'name' => 'nom' , 
+                        'contents' => $fileName
+                    ]
                 ],
             ]);
-           
         } catch (ClientException $exeption) {
-            
             $response = $exeption->getResponse();
         }
 
-       var_dump(json_decode($response->getBody()->read(112259)));
-       die();
-       
+        
+        $data = json_decode($response->getBody()->read(112259));
+    
         return $responseHandler->handleJsonResponse([
-            'data' =>  $response->getBody()->read(112259) , 
+            'data' =>  $data->data, 
         ] , 201 , 'ressource created');
         
     }

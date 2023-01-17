@@ -43,6 +43,8 @@ if (isset($request[1]))
 $request = $request[0] . $data ; 
 $config =  json_decode(file_get_contents('config.json'));
 
+
+
 switch($request){
 	
 	case $config->urls->base.BasePathController::path():
