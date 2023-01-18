@@ -75,11 +75,8 @@ Class LoginController {
         $login = $userRepository->loginUser($body);
        
         if (!$login instanceof User){
-            $response = [
-                 'msg' => $login, 
-                 'data' =>  (array) $body 
-            ];
-            return $responseHandler->handleJsonResponse($response , 401 , 'Unauthorized');
+          
+            return $responseHandler->handleJsonResponse(['msg' =>(array) $body ] , 401 , 'Unauthorized');
         }
 
         if (intval($login->getUser__confirm()) == 0) {

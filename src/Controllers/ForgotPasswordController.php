@@ -118,7 +118,6 @@ Class ForgotPasswordController  extends  BaseController {
                 $confirmRepository->update((array)$confirm);
             }
 
-            
             $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyResetPassword('http://myrecode.fr/pw_modif.php?getpw&confirm__key='.$confirm->getConfirm__key().'&confirm__user='.$confirm->getConfirm__user().''), $mailer->signature());
             $mailer->sendMail($_GET['user__mail'] , 'Définition de votre nouveau mot de passe ' ,  $body_mail );
             return $responseHandler->handleJsonResponse('Un lien de résiliation votre mot de passe à été envoyé à  '.$_GET['user__mail'].'  ', 200 , 'Success');
@@ -139,17 +138,14 @@ Class ForgotPasswordController  extends  BaseController {
 
         $confirm =  $confirmRepository->findOneBy(['confirm__key' => $body['confirm__key']] ,true);
 
-     
         if (!$confirm instanceof Confirm) 
             return $responseHandler->handleJsonResponse('La confirm__key est incorrecte' , 400 , 'Bad Request');
 
         if(empty($body['user__password']))
             return $responseHandler->handleJsonResponse('Le champ user__password est obligatoire' , 400 , 'Bad Request');
-
-            
+    
         $user = $userRepository->findOneBy(['user__mail' => $confirm->getConfirm__user() ] , true);
        
-      
         if (!$user instanceof User) 
             return $responseHandler->handleJsonResponse('Utilisateur introuvable' , 400 , 'Bad Request');
 
@@ -162,7 +158,8 @@ Class ForgotPasswordController  extends  BaseController {
 
         $password = $userRepository->encrypt_password($body['user__password']);
         $user->setUser__password($password);
-        $userRepository->updatePassword($user->getUser__id(), $password  );
+        $userRepository->updatePassword($user->getUser__id(), $password );
+        
 
         return $responseHandler->handleJsonResponse('Le mot de passe à bien été mis à jour' , 200 , 'Bad Request');
         
