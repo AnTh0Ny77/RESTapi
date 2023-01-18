@@ -46,3 +46,15 @@
 <POST http://localhost/SoftRecode/apiTickets> [FILE_SIZE_IS] message: "Content-Length: 15" bytes_max: "15" 
 <POST http://localhost/SoftRecode/apiTickets> [MIME_TYPE_IS] message: "application/json; charset=utf-8" 
 <POST http://localhost/SoftRecode/apiTickets> [PROGRESS] bytes_max: "15" 
+<POST http://localhost/SoftRecode/apiTickets> [CONNECT] 
+<POST http://localhost/SoftRecode/apiTickets> [FILE_SIZE_IS] message: "Content-Length: 15" bytes_max: "15" 
+<POST http://localhost/SoftRecode/apiTickets> [MIME_TYPE_IS] message: "application/json; charset=utf-8" 
+<POST http://localhost/SoftRecode/apiTickets> [PROGRESS] bytes_max: "15" 
+<POST http://localhost/SoftRecode/apiTickets> [CONNECT] 
+<POST http://localhost/SoftRecode/apiTickets> [FILE_SIZE_IS] message: "Content-Length: 15" bytes_max: "15" 
+<POST http://localhost/SoftRecode/apiTickets> [MIME_TYPE_IS] message: "application/json; charset=utf-8" 
+<POST http://localhost/SoftRecode/apiTickets> [PROGRESS] bytes_max: "15" 
+<POST http://localhost/SoftRecode/apiTickets> [CONNECT] 
+<POST http://localhost/SoftRecode/apiTickets> [FILE_SIZE_IS] message: "Content-Length: 15" bytes_max: "15" 
+<POST http://localhost/SoftRecode/apiTickets> [MIME_TYPE_IS] message: "application/json; charset=utf-8" 
+<POST http://localhost/SoftRecode/apiTickets> [PROGRESS] bytes_max: "15" 

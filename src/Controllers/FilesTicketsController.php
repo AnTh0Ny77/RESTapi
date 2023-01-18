@@ -136,16 +136,21 @@ Class FilesTicketsController  extends  BaseController{
             ] , 404 , 'bad request');
         }
 
-        if (empty($_GET['name'])) { 
+        if (empty($_GET['name']) && empty($_GET['list'])) { 
             return $responseHandler->handleJsonResponse([
-                'msg' =>  ' Le nom de fichier n est pas spécifié'
+                'msg' =>  ' Le nom de fichier ou le parametre list n est pas spécifié '
             ] , 404 , 'bad request');
         }
 
         $config = json_decode(file_get_contents('config.json'));
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
         try {
-            $response = $guzzle->get('/SoftRecode/apiTickets', ['stream' => true, 'query' => ['tkl__id' =>  $_GET['tkl__id'] , 'name' => $_GET['name'] ]]);
+            if (!empty($_GET['list'])) {
+                $response = $guzzle->get('/SoftRecode/apiTickets', ['stream' => true, 'query' => ['tkl__id' =>  $_GET['tkl__id'], 'list' =>  true]]);
+            }else {
+                $response = $guzzle->get('/SoftRecode/apiTickets', ['stream' => true, 'query' => ['tkl__id' =>  $_GET['tkl__id'], 'name' => $_GET['name']]]);
+            }
+           
         } catch (ClientException $exeption) {
             $response = $exeption->getResponse();
         }
