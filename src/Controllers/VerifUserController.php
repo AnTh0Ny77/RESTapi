@@ -19,7 +19,7 @@ use Src\Repository\LienUserClientRepository;
 
 
 
-class UserSitesController extends BaseController
+class VerifUserController extends BaseController
 {
 
     public static function path(){
@@ -57,7 +57,7 @@ class UserSitesController extends BaseController
                 break;
 
             case 'DELETE':
-                return self::delete();
+                return $notFound::index();
                 break;
 
             default:

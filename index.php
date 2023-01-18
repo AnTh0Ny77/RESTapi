@@ -1,6 +1,7 @@
 <?php
 
 require "vendor/autoload.php";
+use Src\Controllers\AdController;
 use Src\Controllers\MaxController;
 use Src\Controllers\MailController;
 use Src\Controllers\RoleController;
@@ -17,6 +18,7 @@ use Src\Controllers\DocumentsController;
 use Src\Controllers\ListFilesController;
 use Src\Controllers\TransfertController;
 use Src\Controllers\UserSitesController;
+use Src\Controllers\VerifUserController;
 use Src\Controllers\CommercialController;
 use Src\Controllers\ConfirmUserController;
 use Src\Controllers\ImageClientController;
@@ -25,7 +27,6 @@ use Src\Controllers\FilesTicketsController;
 use Src\Controllers\TicketChampsController;
 use Src\Controllers\NotificationsController;
 use Src\Controllers\ForgotPasswordController;
-use Src\Controllers\AdController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -145,6 +146,10 @@ switch($request){
 
     case $config->urls->base .AdController::path() . $data:
         echo AdController::index($_SERVER['REQUEST_METHOD'], $data);
+        break;
+
+    case $config->urls->base . VerifUserController::path() . $data:
+        echo VerifUserController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
 	default:
