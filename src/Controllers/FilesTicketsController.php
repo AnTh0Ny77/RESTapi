@@ -238,15 +238,14 @@ Class FilesTicketsController  extends  BaseController{
        
         try {
             $response = $guzzle->post('/SoftRecode/apiTickets', [ 'stream' => true , 'debug' => $debug , 
-            'multipart' => [
-                       [
+            'multipart' => [[
                         'name'  =>  'file',
                         'contents'      => fopen($tempPath  ,'r')
                     ],[
                         'name'  =>  'tkl__id',
                         'contents'      => $_POST['tkl__id']
-                    ], [
-                        'name' => 'nom' , 
+                    ],[
+                        'name' => 'nom', 
                         'contents' => $fileName
                     ]
                 ],
