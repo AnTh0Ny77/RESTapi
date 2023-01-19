@@ -27,6 +27,7 @@ use Src\Controllers\FilesTicketsController;
 use Src\Controllers\TicketChampsController;
 use Src\Controllers\NotificationsController;
 use Src\Controllers\ForgotPasswordController;
+use Src\Controllers\ListSocieteController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -152,6 +153,10 @@ switch($request){
         echo VerifUserController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
+    case $config->urls->base.ListSocieteController::path().$data:
+        echo ListSocieteController::index($_SERVER['REQUEST_METHOD'], $data);
+        break;
+    
 	default:
 		header('HTTP/1.0 404 not found');
         echo NotFoundController::index();
