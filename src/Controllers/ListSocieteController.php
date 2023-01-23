@@ -70,6 +70,7 @@ class ListSocieteController  extends  BaseController
         $Client = new ClientRepository('client' , $database , Client::class );
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client', $database, User::class);
         $userRepository = new UserRepository('user', $database, User::class);
+        $materielRepository = new MaterielRepository('materiel' , $database , Materiel::class );
         $TicketRepository = new TicketRepository('ticket' , $database , Tickets::class );
         
         $security = new Security();
@@ -97,6 +98,7 @@ class ListSocieteController  extends  BaseController
                 $client['users'] = $user_final;
                 $param = self::renderParam();
                 $client['tickets'] = $TicketRepository->search2(['mat__cli__id' =>  [ $client['cli__id'] ] ],'', 100 ,["tk__lu"=>"ASC","tk__id"=>"DESC"],$param);
+                $client['materiels'] = $materielRepository->search2(['mat__cli__id' => [ $client['cli__id'] ]] ,'' , 2500 ,  [], []);
                 array_push($final__array , $client);
             }
             return $responseHandler->handleJsonResponse([
