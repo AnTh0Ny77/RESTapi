@@ -96,8 +96,8 @@ class ListSocieteController  extends  BaseController
                 }
                 $client['users'] = $user_final;
                 $param = self::renderParam();
-                $client['tickets'] = $TicketRepository->search2(['cli__id' => $client['cli__id']],'', 100 ,["tk__lu"=>"ASC","tk__id"=>"DESC"],$param);
-                array_push($final__array , $client);;
+                $client['tickets'] = $TicketRepository->search2(['mat__cli__id' => $client['cli__id']],'', 100 ,["tk__lu"=>"ASC","tk__id"=>"DESC"],$param);
+                array_push($final__array , $client);
             }
             return $responseHandler->handleJsonResponse([
                 'data' => $final__array,
