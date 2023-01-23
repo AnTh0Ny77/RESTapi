@@ -14,6 +14,7 @@ use Src\Entities\Client;
 use Src\Entities\TicketsLigne;
 use Src\Repository\TicketLigneRepository;
 use Src\Repository\LienUserClientRepository;
+use Src\Repository\MaterielRepository;
 use Src\Repository\TicketRepository;
 use Src\Services\Security;
 use GuzzleHttp\Exception\ClientException;
@@ -98,7 +99,7 @@ class ListSocieteController  extends  BaseController
                 $client['users'] = $user_final;
                 $param = self::renderParam();
                 $client['tickets'] = $TicketRepository->search2(['mat__cli__id' =>  [ $client['cli__id'] ] ],'', 100 ,["tk__lu"=>"ASC","tk__id"=>"DESC"],$param);
-                $client['materiels'] = $materielRepository->search2(['mat__cli__id' => [ $client['cli__id'] ]] ,'' , 2500 ,  [], []);
+                $client['materiels'] = $materielRepository->search2([ 'mat__cli__id'  => [$client['cli__id']]  ],'' , 2500 ,  [], []);
                 array_push($final__array , $client);
             }
             return $responseHandler->handleJsonResponse([
