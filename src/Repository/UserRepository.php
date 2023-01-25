@@ -100,6 +100,16 @@ Class UserRepository  extends BaseRepository{
         }
         $user->setRoles($roles);
         return $user;
+    }
+
+    public function getRoleArray($user){
+        $roleRepository = new  RoleRepository($this->Db);
+        $roles = [];
+        $arrayRoles = $roleRepository->findBy(['ur__user_id' =>  $user['user__id']], 50, ['ur__role' => 'ASC']);
+        foreach ($arrayRoles as $key => $value) {
+            array_push($roles,  $value['ur__role']);
+        }
+        return $roles;
     } 
 
     public function loginUser($user_data){

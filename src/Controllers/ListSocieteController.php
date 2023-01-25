@@ -22,11 +22,8 @@ use GuzzleHttp\ClientHtpp;
 use GuzzleHttp\Promise;
 use ZipArchive;
 
-class ListSocieteController  extends  BaseController
-{
-
-    public static function path()
-    {
+class ListSocieteController  extends  BaseController{
+    public static function path(){
         return '/sossuke';
     }
 
@@ -40,7 +37,6 @@ class ListSocieteController  extends  BaseController
         $notFound = new NotFoundController();
         switch ($method) {
             case 'POST':
-             
                 return self::post();
                 break;
 
@@ -106,9 +102,30 @@ class ListSocieteController  extends  BaseController
                 'data' => $final__array,
             ], 200,'ok');
         }else {
-            $list = $Client->findBy([1 => 1 ], 1500 , []);
+            $list = $Client->findBy(['cli__id' => $body['one'] ], 1500 , []);
+            if (!empty($list)) {
+                $final__array = [];
+                foreach ($list as $client) {
+                    $userList = $lienUserClientRepository->findBy(['luc__cli__id' =>  $client['cli__id']], 1500, []);
+                    $user_final = [];
+                    foreach ($userList as $key => $value) {
+                        $use = $userRepository->findOneBy(['user__id' => $value['luc__user__id']], false);
+                        $role = $userRepository->getRoleArray($use);
+                        $use['roles'] = $role;
+                        array_push($user_final, $use);
+                    }
+                    $client['users'] = $user_final;
+                    $param = self::renderParam();
+                    $client['tickets'] = $TicketRepository->search2(['mat__cli__id' =>  [$client['cli__id']]], '', 100, ["tk__lu" => "ASC", "tk__id" => "DESC"], $param);
+                    $client['materiels'] = $materielRepository->search2(['mat__cli__id'  => [$client['cli__id']]], '', 2500,  [], []);
+                    array_push($final__array, $client);
+                }
+                return $responseHandler->handleJsonResponse([
+                    'data' => $final__array[0],
+                ], 200, 'ok');
+            }
             return $responseHandler->handleJsonResponse([
-                'data' => $list[0],
+                'data' => [],
             ], 200,'ok');
         }
     }
