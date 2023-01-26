@@ -73,7 +73,7 @@ class VerifyMailController  extends  BaseController{
                 'msg' =>  ' Opération impossible'
             ], 404, 'bad request');
         }
-        if (empty($body['user__mail'])) {
+        if (!empty($body['user__mail'])) {
             $response = $userRepository->findOneBy(['user__mail' =>  $body['user__mail'] ] , false);
             if (!empty($response)) {
                 return $responseHandler->handleJsonResponse([
