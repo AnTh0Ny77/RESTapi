@@ -28,6 +28,7 @@ use Src\Controllers\TicketChampsController;
 use Src\Controllers\NotificationsController;
 use Src\Controllers\ForgotPasswordController;
 use Src\Controllers\ListSocieteController;
+use Src\Controllers\VerifyMailController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -155,6 +156,10 @@ switch($request){
 
     case $config->urls->base.ListSocieteController::path().$data:
         echo ListSocieteController::index($_SERVER['REQUEST_METHOD'], $data);
+        break;
+
+    case $config->urls->base.VerifyMailController::path().$data:
+        echo VerifyMailController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
     
 	default:
