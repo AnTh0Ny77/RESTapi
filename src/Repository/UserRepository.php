@@ -51,7 +51,7 @@ Class UserRepository  extends BaseRepository{
         $user_data['user__d_creat'] = date('Y-m-d H:i:s');
         
         $id_user = $this->insert($user_data);
-        $roleRepository->insert(['ur__user_id' => $id_user , 'ur__role' => 'USER' ]);
+        // $roleRepository->insert(['ur__user_id' => $id_user , 'ur__role' => 'USER' ]);
         $user = $this->findOneBy(['user__id' =>  $id_user] , true );
         $user = $this->getRole($user);
         return $user;
