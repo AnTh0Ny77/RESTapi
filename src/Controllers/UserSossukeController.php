@@ -72,6 +72,14 @@ Class UserSossukeController extends BaseController{
             }
         }
 
+        $body = [
+            'user__mail' => $body['user__mail'] , 
+            "user__password" => $body['user__password'], 
+            "user__nom" => $body['user__nom'], 
+            "user__prenom" => $body['user__prenom'],
+            "user__fonction" => $body['user__fonction']
+        ];
+
         $user = $userRepository->postUser($body);
         if (!$user instanceof User) {
             return $responseHandler->handleJsonResponse([
