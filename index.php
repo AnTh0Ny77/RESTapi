@@ -30,6 +30,8 @@ use Src\Controllers\ForgotPasswordController;
 use Src\Controllers\ListSocieteController;
 use Src\Controllers\VerifyMailController;
 use Src\Controllers\UserSossukeController;
+use Src\Controllers\RoleSossukeController;
+use Src\Controllers\UserSitesSossukeController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -166,7 +168,15 @@ switch($request){
     case $config->urls->base.UserSossukeController::path().$data:
         echo UserSossukeController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
-    
+
+    case $config->urls->base.RoleSossukeController::path().$data:
+        echo RoleSossukeController::index($_SERVER['REQUEST_METHOD'], $data);
+        break;
+
+    case $config->urls->base.UserSitesSossukeController::path().$data:
+        echo UserSitesSossukeController::index($_SERVER['REQUEST_METHOD'], $data);
+        break;
+
 	default:
 		header('HTTP/1.0 404 not found');
         echo NotFoundController::index();
