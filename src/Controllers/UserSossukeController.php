@@ -35,7 +35,7 @@ Class UserSossukeController extends BaseController{
                 break;
 
             case 'PUT':
-                return self::put($data);
+                return self::put();
                 break;
 
             default:
