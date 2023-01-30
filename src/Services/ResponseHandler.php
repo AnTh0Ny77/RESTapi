@@ -8,6 +8,7 @@ Class ResponseHandler {
         $data = json_encode($data);
         header('HTTP/1.0 '.$ResponseCode.' '.$message.'');
         header('Content-Type: application/json; charset=utf-8');
+        header("Access-Control-Allow-Origin: *");
         return $data;
     }
 

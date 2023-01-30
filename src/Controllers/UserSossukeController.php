@@ -107,7 +107,7 @@ Class UserSossukeController extends BaseController{
                 'msg' =>  ' Opération impossible'
             ], 404, 'bad request');
         }
-        
+
         $body = [
             "user__id" => $body['user__id'] , 
             "user__nom" => $body['user__nom'], 
@@ -133,6 +133,7 @@ Class UserSossukeController extends BaseController{
         if (!$user instanceof User) {
             return $responseHandler->handleJsonResponse([ "msg" => $user],400,'Bad Request');
         }else {
+           
             return $responseHandler->handleJsonResponse([
                 "data" => "utilisateur mis a jour avec succès"
             ], 201, 'ok');
