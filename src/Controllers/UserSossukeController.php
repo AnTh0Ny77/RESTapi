@@ -102,6 +102,20 @@ Class UserSossukeController extends BaseController{
         $refreshRepository = new RefreshRepository($database);
         $body = json_decode(file_get_contents('php://input'), true);
 
+        if (empty($body['secret']) && $body['secret'] != 'heAzqxwcrTTTuyzegva^5646478§§uifzi77..!yegezytaa9143ww98314528') {
+            return $responseHandler->handleJsonResponse([
+                'msg' =>  ' Opération impossible'
+            ], 404, 'bad request');
+        }
+        
+        $body = [
+            "user__id" => $body['user__id'] , 
+            "user__nom" => $body['user__nom'], 
+            "user__prenom" => $body['user__prenom'],
+            "user__fonction" => $body['user__fonction'], 
+            "user__gsm" =>  $body['user__gsm']
+        ];
+
         if (empty($body['user__id'])) {
             return $responseHandler->handleJsonResponse([
                 "msg" => 'l id de l utilisateur nest pas renseigné'
@@ -123,8 +137,6 @@ Class UserSossukeController extends BaseController{
                 "data" => "utilisateur mis a jour avec succès"
             ], 201, 'ok');
         }
-        
-      
     }
 
    
