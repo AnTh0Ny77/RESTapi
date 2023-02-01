@@ -24,4 +24,6 @@ Class LienUserClientRepository  extends BaseRepository {
         }
         return $responses;
     }
+
+   
 }

@@ -40,7 +40,7 @@ Class RoleSossukeController extends BaseController {
         $notFound = new NotFoundController();
         switch ($method) {
             case 'POST':
-                return self::post();;
+                return self::post();
                 break;
 
             case 'GET':
@@ -52,13 +52,42 @@ Class RoleSossukeController extends BaseController {
                 break;
 
             case 'DELETE':
-                return $notFound::index();
+                return self::delete();
                 break;
 
             default:
                 return $notFound::index();
                 break;
         }
+    }
+
+
+    public static function delete(){
+        $database = new Database();
+        $database->DbConnect();
+        $rolesQuerys = new BaseRepository('user__role', $database, User::class);
+        $responseHandler = new ResponseHandler();
+        $security = new Security();
+
+        $body = json_decode(file_get_contents('php://input'), true);
+
+        if (empty($body['secret']) && $body['secret'] != 'heAzqxwcrTTTuyzegva^5646478§§uifzi77..!yegezytaa9143ww98314528') {
+            return $responseHandler->handleJsonResponse([
+                'msg' =>  ' Opération impossible'
+            ], 404, 'bad request');
+        }
+
+        if (empty($body['user__id'])) {
+            return $responseHandler->handleJsonResponse([
+                'msg' => 'user__id doit etre renseigné'
+            ], 401, 'bad request');
+        }
+        $delete = $rolesQuerys->deleteRole($body['user__id']);
+
+        return $responseHandler->handleJsonResponse([
+            'data' => 'Role supprimé'
+        ], 200, 'ok');   
+
     }
 
     public static function post(){
@@ -86,15 +115,17 @@ Class RoleSossukeController extends BaseController {
                 'msg' => 'role doit etre renseigné'
             ], 401, 'bad request');
         }
-        $insertData = $rolesQuerys->insertNoPrimary(['ur__user_id' => $body['user__id'] , 'ur__role' => $body['role']]);
+    
+        $insertData = $rolesQuerys->insertRole($body['user__id'] ,  $body['role']);
+
         if ($insertData != true ) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'Un problème est survenu durant l insertion en base de données'
             ], 401, 'bad request');
         }
         return $responseHandler->handleJsonResponse([
-            'msg' => 'Role inséré avec succès '
-        ], 401, 'bad request');    
+            'data' => 'Role inséré avec succès '
+        ], 200, 'ok');    
     }
 
 }

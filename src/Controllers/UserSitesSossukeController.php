@@ -45,7 +45,7 @@ Class UserSitesSossukeController extends BaseController {
                 break;
 
             case 'DELETE':
-                return self::delete();
+                return $notFound::index();
                 break;
 
             default:

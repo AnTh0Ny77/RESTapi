@@ -188,7 +188,7 @@ Class BaseRepository {
         $value .=  ') ';
         $request = "INSERT INTO " . $this->Table . " ";
         $request .= $column . ' VALUES ' . $value;
-
+        
         try {
             $request = $this->Db->Pdo->prepare($request);
             foreach ($array as $key => $val) {
@@ -200,14 +200,39 @@ Class BaseRepository {
             $error = $e->getMessage();
         }
         if ($error != null) {
-
             return $error;
         }
         
         return true;
     }
 
-    
+    public function insertRole($user , $role){
+        try {
+            $request = $this->Db->Pdo->prepare('INSERT INTO user_role ( ur__user_id , ur__role) VALUES (  :ur__user_id, :ur__role ) ;');
+            $request->bindValue(':ur__user_id', $user);
+            $request->bindValue(':ur__role', $role);
+            $request->execute();
+        } catch (PDOException $e){
+            $error = $e->getMessage();
+        }
+        if ($error != null) {
+            return $error;
+        }
+        return true;
+    }
+
+    public function deleteRole($user){
+        try {
+            $request = $this->Db->Pdo->prepare('DELETE FROM  user_role WHERE ur__user_id  = '. $user .'');
+            $request->execute();
+        } catch (PDOException $e) {
+            $error = $e->getMessage();
+        }
+        if ($error != null) {
+            return $error;
+        }
+        return true;
+    }
 
     public function delete(array $array){
         $clause = '';
