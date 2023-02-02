@@ -1,18 +1,18 @@
 {
     "urls": {
-        "base": "/api"
+        "base": "/RESTapi/"
     }, 
     "database": {
         "host":  "localhost", 
-        "user": "api",
+        "user": "root",
         "name" : "myrecode",
-        "pass" : "anthony1234"
+        "pass" : ""
     },
     "sossuke": {
-        "host":  "192.168.1.124", 
-        "user": "remoteroot",
+        "host":  "localhost", 
+        "user": "root",
         "name" : "devis",
-        "pass" : "remotepassword1234!"
+        "pass" : ""
     },
     "security": {
         "app_secret" : "sec!ReT423*&"
@@ -23,6 +23,6 @@
         "password" : "48zAjdXdt$256"
     }, 
     "guzzle": {
-        "host" : "http://192.168.1.124:80"
+        "host": "http://localhost:80"
     }
 }
