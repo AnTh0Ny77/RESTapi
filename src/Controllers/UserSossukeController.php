@@ -55,7 +55,14 @@ Class UserSossukeController extends BaseController{
         $responseHandler = new ResponseHandler();
         $userRepository = new UserRepository('user' , $database , User::class );
         $refreshRepository = new RefreshRepository($database);
+
+        
         $body = json_decode(file_get_contents('php://input'), true);
+
+        if(!empty($body['_METHOD']) and $body['_METHOD'] == 'PUT' ) {
+            return self::put();
+            die();
+        }
 
         if (empty($body['secret']) && $body['secret'] != 'heAzqxwcrTTTuyzegva^5646478§§uifzi77..!yegezytaa9143ww98314528') {
             return $responseHandler->handleJsonResponse([
