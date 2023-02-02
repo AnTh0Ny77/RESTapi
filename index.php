@@ -166,14 +166,17 @@ switch($request){
         break;
 
     case $config->urls->base.UserSossukeController::path().$data:
+        header('Access-Control-Allow-Origin: *'); 
         echo UserSossukeController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
     case $config->urls->base.RoleSossukeController::path().$data:
+        header('Access-Control-Allow-Origin: *'); 
         echo RoleSossukeController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
     case $config->urls->base.UserSitesSossukeController::path().$data:
+        header('Access-Control-Allow-Origin: *'); 
         echo UserSitesSossukeController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
