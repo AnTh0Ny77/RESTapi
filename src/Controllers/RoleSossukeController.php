@@ -99,6 +99,11 @@ Class RoleSossukeController extends BaseController {
        
         $body = json_decode(file_get_contents('php://input'), true);
 
+        if(!empty($body['_METHOD']) and $body['_METHOD'] == 'DELETE' ) {
+            return self::delete();
+            die();
+        }
+
         if (empty($body['secret']) && $body['secret'] != 'heAzqxwcrTTTuyzegva^5646478§§uifzi77..!yegezytaa9143ww98314528') {
             return $responseHandler->handleJsonResponse([
                 'msg' =>  ' Opération impossible'
