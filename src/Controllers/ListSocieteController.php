@@ -71,9 +71,9 @@ class ListSocieteController  extends  BaseController{
         $TicketRepository = new TicketRepository('ticket' , $database , Tickets::class );
         
         $security = new Security();
-        $auth = self::Auth($responseHandler, $security);
-        if ($auth != null)
-            return $auth;
+        // $auth = self::Auth($responseHandler, $security);
+        // if ($auth != null)
+        //     return $auth;
 
         $body = json_decode(file_get_contents('php://input'), true);
       
