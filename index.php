@@ -32,6 +32,7 @@ use Src\Controllers\VerifyMailController;
 use Src\Controllers\UserSossukeController;
 use Src\Controllers\RoleSossukeController;
 use Src\Controllers\UserSitesSossukeController;
+use Src\Controllers\ShopAVendreController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -178,6 +179,11 @@ switch($request){
     case $config->urls->base.UserSitesSossukeController::path().$data:
         header('Access-Control-Allow-Origin: *'); 
         echo UserSitesSossukeController::index($_SERVER['REQUEST_METHOD'], $data);
+        break;
+
+    case $config->urls->base . ShopAVendreController::path() . $data:
+        header('Access-Control-Allow-Origin: *');
+        echo ShopAVendreController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
 	default:

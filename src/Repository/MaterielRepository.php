@@ -306,7 +306,6 @@ Class MaterielRepository  extends BaseRepository {
                     'mat__idnec' => 'like',
                     'mat__ident' => 'like', 
                     "mat__contrat_id" => 'like'
-                   
                 ],
                 'start' => 'mat__marque',
                 'end' => 'mat__contrat_id'
