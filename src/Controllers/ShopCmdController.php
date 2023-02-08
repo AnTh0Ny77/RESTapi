@@ -98,7 +98,7 @@ Class ShopCmdController extends BaseController {
         $body['scm__dt_cmd'] = date('Y-m-d H:i:s');
 
         $id = $shopCmdRepository->insert($body);
-        
+
         return $responseHandler->handleJsonResponse([
             'data' => $id
         ], 200, 'ok');
@@ -113,10 +113,8 @@ Class ShopCmdController extends BaseController {
         
         if (empty($body['scm__client_id_fact '])) return 'client facturé non spécifié ';
 
-        if (empty($body['scm__prix_port  '])) return 'prix du port non spécifié ';
+        if (empty($body['scm__prix_port'])) return 'prix du port non spécifié ';
 
-        if (empty($body['scm__prix_port  '])) return 'prix du port non spécifié ';
-        
         return false ;
     }
 

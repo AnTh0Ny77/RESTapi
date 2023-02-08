@@ -131,8 +131,6 @@ class ShopCmdLigneController extends BaseController
 
         if (empty($body['scl__qte'])) return 'La quantité n est pas spécifié ';
 
-        if (empty($body['scm__prix_port  '])) return 'prix du port non spécifié ';
-
         return false;
     }
 }
