@@ -73,7 +73,7 @@ Class ShopAVendreController extends BaseController {
         $auth = self::Auth($responseHandler, $security);
         if ($auth != null)
             return $auth;
-
+        
         //user
         $id_user = UserController::returnId__user($security)['uid'];
         $user = $userRepository->findOneBy(['user__id' => $id_user], true);
