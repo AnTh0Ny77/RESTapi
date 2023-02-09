@@ -143,8 +143,7 @@ Class MaterielRepository  extends BaseRepository {
         $materiel_data['mat__date_maj'] = date('Y-m-d H:i:s');
         $materiel_data['mat__user_id'] = 2;
 
-        var_dump($this->insert($materiel_data));
-        die();
+       
         $id_materiel = $this->insert($materiel_data);
         $materiel = $this->findOneBy(['mat__id' =>  intval($id_materiel)] , false );
         return $materiel;
