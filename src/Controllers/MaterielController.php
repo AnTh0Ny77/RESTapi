@@ -112,17 +112,22 @@ Class MaterielController extends BaseController {
         $userRepository = new UserRepository('user' , $database , User::class );
         $security = new Security();
       
-        $auth = self::Auth($responseHandler,$security);
-        if ($auth != null) 
-            return $auth;
-
        
-        $id_user = UserController::returnId__user($security)['uid'];
-        $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
-       
-        $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
-        
-        $user->setClients($clients);
+        if (!empty($_GET['RECODE__PASS']) and $_GET['RECODE__PASS'] != "testtfvgz4564564**zatyf§§/tettavapouuzvcaQQZAcvrtestdetestrapondre") {
+            $auth = self::Auth($responseHandler,$security);
+            if ($auth != null ) return $auth;
+            $id_user = UserController::returnId__user($security)['uid'];
+            $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
+            $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
+            $user->setClients($clients);
+        } else {
+            $auth = self::Auth($responseHandler,$security);
+            if ($auth != null ) return $auth;
+            $id_user = UserController::returnId__user($security)['uid'];
+            $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
+            $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
+            $user->setClients($clients);
+        }
         $inclause = [
             'mat__cli__id'  => [] ,
             'mat__marque' => [], 
@@ -138,11 +143,13 @@ Class MaterielController extends BaseController {
                     $string = $_GET['search'];
                 }
                 if (!empty($_GET['RECODE__PASS'])) {
-                    if ($_GET['RECODE__PASS'] == "secret") {
+                    if ($_GET['RECODE__PASS'] == "secret" and empty($_GET['cli__id'])) {
                         $list_client = $clientRep->returnIdList();
                         foreach ( $list_client as $value) {
                             array_push($inclause['mat__cli__id'] , $value['cli__id']);
                         }
+                    }elseif($_GET['RECODE__PASS'] == "testtfvgz4564564**zatyf§§/tettavapouuzvcaQQZAcvrtestdetestrapondre" and empty($_GET['cli__id'])){
+                        array_push($inclause['mat__cli__id'] , $_GET['cli__id']);
                     }
                 }else{
                     foreach($user->getClients() as $client){
