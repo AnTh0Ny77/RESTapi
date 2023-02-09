@@ -219,8 +219,7 @@ Class MaterielController extends BaseController {
         $userRepository = new UserRepository('user' , $database , User::class );
         $security = new Security();
         $body = json_decode(file_get_contents('php://input'), true);
-        var_dump('hey');
-        die();
+        
         $auth = self::Auth($responseHandler,$security);
         if ($auth != null ){
             if (empty($body['secret']) ) {
@@ -231,7 +230,8 @@ Class MaterielController extends BaseController {
                 }
             }
         }
-   
+        var_dump('hey');
+        die();
         $id_user = UserController::returnId__user($security)['uid'];
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
