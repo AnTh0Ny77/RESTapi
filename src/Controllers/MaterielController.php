@@ -249,7 +249,20 @@ Class MaterielController extends BaseController {
         if (!empty($user)) {
             $materiel = $materielRepository->postMateriel($body , $user);
         }else{
-            unset($body['secret']);
+            $data = [
+                'mat__cli__id' => $body['mat__cli__id'] ,
+                'mat__type' => $body['mat__type'] ,
+                'mat__marque' => $body['mat__marque'] ,
+                'mat__model' => $body['mat__model'] , 
+                'mat__pn' => $body['mat__pn'] , 
+                'mat__sn' => $body['mat__sn'] , 
+                'mat__idnec' => $body['mat__idnec'] , 
+                'mat__ident' => $body['mat__ident'] , 
+                'mat__memo' => $body['mat__memo'] , 
+                'mat__kw_tg' => $body['mat__kw_tg'] , 
+                'mat__date_offg' => $body['mat__date_offg']  , 
+                'mat__contrat_id' => $body['mat__contrat_id'] 
+            ];
             $materiel = $materielRepository->postMaterielSossuke($body);
         }
        
