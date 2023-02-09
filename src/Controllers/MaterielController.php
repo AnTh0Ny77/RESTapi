@@ -113,13 +113,16 @@ Class MaterielController extends BaseController {
         $security = new Security();
       
        
-        if (!empty($_GET['RECODE__PASS']) and $_GET['RECODE__PASS'] != "testtfvgz4564564**zatyf§§/tettavapouuzvcaQQZAcvrtestdetestrapondre") {
-            $auth = self::Auth($responseHandler,$security);
-            if ($auth != null ) return $auth;
-            $id_user = UserController::returnId__user($security)['uid'];
-            $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
-            $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
-            $user->setClients($clients);
+        if (!empty($_GET['RECODE__PASS'])) {
+            if ($_GET['RECODE__PASS'] != "testtfvgz4564564**zatyf§§/tettavapouuzvcaQQZAcvrtestdetestrapondre") {
+                $auth = self::Auth($responseHandler,$security);
+                if ($auth != null ) return $auth;
+                $id_user = UserController::returnId__user($security)['uid'];
+                $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
+                $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
+                $user->setClients($clients);
+            }
+           
         } else {
             $auth = self::Auth($responseHandler,$security);
             if ($auth != null ) return $auth;
@@ -148,7 +151,7 @@ Class MaterielController extends BaseController {
                         foreach ( $list_client as $value) {
                             array_push($inclause['mat__cli__id'] , $value['cli__id']);
                         }
-                    }elseif($_GET['RECODE__PASS'] == "testtfvgz4564564**zatyf§§/tettavapouuzvcaQQZAcvrtestdetestrapondre" and empty($_GET['cli__id'])){
+                    }elseif($_GET['RECODE__PASS'] == "testtfvgz4564564**zatyf§§/tettavapouuzvcaQQZAcvrtestdetestrapondre" and  !empty($_GET['cli__id'])){
                         array_push($inclause['mat__cli__id'] , $_GET['cli__id']);
                     }
                 }else{
