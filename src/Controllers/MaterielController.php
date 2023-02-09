@@ -249,6 +249,7 @@ Class MaterielController extends BaseController {
         if (!empty($user)) {
             $materiel = $materielRepository->postMateriel($body , $user);
         }else{
+            unset($body['secret']);
             $materiel = $materielRepository->postMaterielSossuke($body);
         }
        
