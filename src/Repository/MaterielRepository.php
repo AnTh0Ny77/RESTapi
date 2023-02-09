@@ -131,6 +131,25 @@ Class MaterielRepository  extends BaseRepository {
         return $materiel;
     }
 
+
+    public  function postMaterielSossuke($materiel_data ){
+        $materiel = new Materiel();
+       
+        $materiel->setMat__cli__id($materiel_data['mat__cli__id']);
+        if (!$materiel instanceof Materiel)
+            return $materiel;
+
+    
+        $materiel_data['mat__actif'] = 1 ;
+        $materiel_data['mat__date_in'] = date('Y-m-d H:i:s');
+        $materiel_data['mat__date_maj'] = date('Y-m-d H:i:s');
+        $materiel_data['mat__user_id'] = 2;
+
+        $id_materiel = $this->insert($materiel_data);
+        $materiel = $this->findOneBy(['mat__id' =>  intval($id_materiel)] , false );
+        return $materiel;
+    }
+
     public function UpdateOne($materiel_data , $user){
 
         if (empty($materiel_data['mat__id'])) 

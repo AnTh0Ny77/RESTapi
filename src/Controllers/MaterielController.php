@@ -223,26 +223,35 @@ Class MaterielController extends BaseController {
         if (empty($body['secret'])) {
             $auth = self::Auth($responseHandler,$security);
             if ($auth != null ) return $auth;
+
+            $id_user = UserController::returnId__user($security)['uid'];
+            $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
+            $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
+            $user->setClients($clients);
         }
-        if (!empty($body['secret']) and $body['secret'] != 'heAzqxwcrTTTuyzegva^5646478§§uifzi77..!yegezytaa9143ww98314528') {
+        elseif (!empty($body['secret']) and $body['secret'] != 'heAzqxwcrTTTuyzegva^5646478§§uifzi77..!yegezytaa9143ww98314528') {
             $auth = self::Auth($responseHandler,$security);
             if ($auth != null ) return $auth;
-        }
-        
-        $id_user = UserController::returnId__user($security)['uid'];
-        $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
-        $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
-        $user->setClients($clients);
-       
 
+            $id_user = UserController::returnId__user($security)['uid'];
+            $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
+            $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
+            $user->setClients($clients);
+        } 
+        
+       
         if (empty($body)) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'le body ne peut pas etre vide'
             ] , 401 , 'bad request');
         } 
 
-        
-        $materiel = $materielRepository->postMateriel($body , $user);
+        if (!empty($user)) {
+            $materiel = $materielRepository->postMateriel($body , $user);
+        }else{
+            $materiel = $materielRepository->postMaterielSossuke($body);
+        }
+       
         if (empty($materiel)) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'un probleme est survenu durant la mise a jour '
