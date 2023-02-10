@@ -35,7 +35,7 @@ use Src\Controllers\UserSitesSossukeController;
 use Src\Controllers\ShopAVendreController;
 use Src\Controllers\ShopCmdController;
 use Src\Controllers\ShopCmdLigneController;
-use Src\Controllers\ShopConditionsController;
+use Src\Controllers\ShopConditionController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -199,9 +199,9 @@ switch($request){
         echo ShopCmdLigneController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
-    case $config->urls->base . ShopConditionsController::path() . $data:
+    case $config->urls->base . ShopConditionController::path() . $data:
         header('Access-Control-Allow-Origin: *');
-        echo ShopConditionsController::index($_SERVER['REQUEST_METHOD'], $data);
+        echo ShopConditionController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
 	default:

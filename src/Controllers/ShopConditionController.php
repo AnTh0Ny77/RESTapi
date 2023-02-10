@@ -16,7 +16,7 @@ use Src\Repository\ShopCmdRepository;
 use Src\Repository\ShopConditionRepository;
 use Src\Entities\ShopCondition;
 
-Class ShopConditionsController extends BaseController {
+Class ShopConditionController extends BaseController {
 
     public static function path(){
         return '/ShopConditions';
