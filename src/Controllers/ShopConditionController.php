@@ -86,7 +86,7 @@ Class ShopConditionsController extends BaseController {
             ], 401, 'bad request');
         }
 
-        $condition = $shopConditionsRepository->findOneBy(['sco__cli_id' =>  $_GET['sco__cli_id']] ,false);
+        $condition = $shopConditionsRepository->findBy(['sco__cli_id' =>  $_GET['sco__cli_id']] ,45 , []);
 
         if (empty($condition)) {
             return $responseHandler->handleJsonResponse([
