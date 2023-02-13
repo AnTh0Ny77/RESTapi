@@ -14,21 +14,16 @@ use Src\Controllers\NotFoundController;
 use Src\Repository\ClientRepository;
 use Src\Repository\LienUserClientRepository;
 
-
-
 Class UserSitesSossukeController extends BaseController {
-
     public static function path(){
         return '/usersitessossuke';
     }
-
     public static function renderDoc(){
         $doc = [
             
         ];
         return $doc;
     }
-
 	public static function index($method , $data){
         $notFound = new NotFoundController();
         switch ($method) {

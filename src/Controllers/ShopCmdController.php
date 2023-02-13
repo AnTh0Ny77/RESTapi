@@ -102,8 +102,6 @@ Class ShopCmdController extends BaseController {
         return $responseHandler->handleJsonResponse([
             'data' => $id
         ], 200, 'ok');
-
-
     }
 
 
