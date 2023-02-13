@@ -113,8 +113,6 @@ Class ShopCmdController extends BaseController {
         
         if (empty($body['scm__client_id_fact'])) return 'client facturé non spécifié ';
 
-        if (!isset($body['scm__prix_port'])) return 'prix du port non spécifié ';
-
         return false ;
     }
 
