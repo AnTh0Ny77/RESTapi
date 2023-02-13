@@ -122,7 +122,6 @@ Class MaterielController extends BaseController {
                 $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
                 $user->setClients($clients);
             }
-           
         } else {
             $auth = self::Auth($responseHandler,$security);
             if ($auth != null ) return $auth;
