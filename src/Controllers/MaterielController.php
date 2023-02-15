@@ -255,6 +255,8 @@ Class MaterielController extends BaseController {
             ] , 401 , 'bad request');
         } 
 
+      
+
         if (!empty($user)) {
             $materiel = $materielRepository->postMateriel($body , $user);
         }else{

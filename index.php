@@ -11,6 +11,7 @@ use Src\Controllers\ClientController;
 use Src\Controllers\TicketController;
 use Src\Controllers\KeywordController;
 use Src\Controllers\RefreshController;
+use Src\Controllers\ShopCmdController;
 use Src\Controllers\BasePathController;
 use Src\Controllers\MaterielController;
 use Src\Controllers\NotFoundController;
@@ -20,22 +21,23 @@ use Src\Controllers\TransfertController;
 use Src\Controllers\UserSitesController;
 use Src\Controllers\VerifUserController;
 use Src\Controllers\CommercialController;
+use Src\Controllers\VerifyMailController;
 use Src\Controllers\ConfirmUserController;
 use Src\Controllers\ImageClientController;
+use Src\Controllers\ListSocieteController;
+use Src\Controllers\RoleSossukeController;
+use Src\Controllers\ShopAVendreController;
 use Src\Controllers\TicketLigneController;
+use Src\Controllers\UserSossukeController;
 use Src\Controllers\FilesTicketsController;
+use Src\Controllers\ShopCmdLigneController;
 use Src\Controllers\TicketChampsController;
 use Src\Controllers\NotificationsController;
-use Src\Controllers\ForgotPasswordController;
-use Src\Controllers\ListSocieteController;
-use Src\Controllers\VerifyMailController;
-use Src\Controllers\UserSossukeController;
-use Src\Controllers\RoleSossukeController;
-use Src\Controllers\UserSitesSossukeController;
-use Src\Controllers\ShopAVendreController;
-use Src\Controllers\ShopCmdController;
-use Src\Controllers\ShopCmdLigneController;
 use Src\Controllers\ShopConditionController;
+use Src\Controllers\ForgotPasswordController;
+use Src\Controllers\BoutiqueSossukeController;
+use Src\Controllers\MaterielSossukeController;
+use Src\Controllers\UserSitesSossukeController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -202,6 +204,16 @@ switch($request){
     case $config->urls->base . ShopConditionController::path() . $data:
         header('Access-Control-Allow-Origin: *');
         echo ShopConditionController::index($_SERVER['REQUEST_METHOD'], $data);
+        break;
+
+    case $config->urls->base . MaterielSossukeController::path() . $data:
+        header('Access-Control-Allow-Origin: *');
+        echo MaterielSossukeController::index($_SERVER['REQUEST_METHOD'], $data);
+        break;
+
+    case $config->urls->base . BoutiqueSossukeController::path() . $data:
+        header('Access-Control-Allow-Origin: *');
+        echo BoutiqueSossukeController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
 	default:

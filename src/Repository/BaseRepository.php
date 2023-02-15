@@ -214,10 +214,9 @@ Class BaseRepository {
             $request->execute();
         } catch (PDOException $e){
             $error = $e->getMessage();
-        }
-        if ($error != null) {
             return $error;
         }
+        
         return true;
     }
 

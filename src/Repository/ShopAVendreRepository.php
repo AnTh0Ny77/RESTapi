@@ -141,4 +141,10 @@ class ShopAVendreRepository  extends BaseRepository{
         $request = $this->Db->Pdo->query($clause);
         return  $request->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function findAll(){
+        $clause = 'SELECT * from shop_avendre where 1 =1 limit 8000';
+        $request = $this->Db->Pdo->query($clause);
+        return  $request->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
