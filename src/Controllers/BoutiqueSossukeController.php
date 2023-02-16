@@ -59,8 +59,7 @@ class BoutiqueSossukeController extends BaseController{
         }
     }
 
-    public static function post()
-    {
+    public static function post(){
 
         $database = new Database();
         $database->DbConnect();
@@ -92,6 +91,20 @@ class BoutiqueSossukeController extends BaseController{
             $list = $ShopAVendreRepository->findAll();
             return $responseHandler->handleJsonResponse([
                 'data' => $list
+            ], 200, 'ok');
+        }
+
+        if (!empty($body['sav__cli_id'])) {
+            $ShopAVRepository = new ShopAVendreRepository('shop_avendre' , $database, ShopAVendre::class);
+            $list = $ShopAVRepository->findby(['sav__cli_id' =>  $body['sav__cli_id'] ] , 1000 , []);
+            $resulst = [];
+            foreach ($list as $key => $value) {
+               $article =  $ShopAVendreRepository->findOneBy(['sar__ref_id' => $value['sav__ref_id']], false);
+               $value['article'] = $article; 
+               array_push($resulst , (object) $value);
+            }
+            return $responseHandler->handleJsonResponse([
+                'data' => $resulst
             ], 200, 'ok');
         }
     }
