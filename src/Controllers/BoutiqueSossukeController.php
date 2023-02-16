@@ -99,8 +99,8 @@ class BoutiqueSossukeController extends BaseController{
             $list = $ShopAVRepository->findby(['sav__cli_id' =>  $body['sav__cli_id'] ] , 1000 , []);
             $resulst = [];
             foreach ($list as $key => $value) {
-               $article =  $ShopAVendreRepository->findOneBy(['sar__ref_id' => $value['sav__ref_id']], false);
-               $value['article'] = $article; 
+               $article =   $ShopAVendreRepository->findOneBy(['sar__ref_id' => $value['sav__ref_id']], false);
+               $value['article'] = ( array ) $article; 
                array_push($resulst , (object) $value);
             }
             return $responseHandler->handleJsonResponse([
