@@ -38,6 +38,7 @@ use Src\Controllers\ForgotPasswordController;
 use Src\Controllers\BoutiqueSossukeController;
 use Src\Controllers\MaterielSossukeController;
 use Src\Controllers\UserSitesSossukeController;
+use Src\Controllers\ShopArticleController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -214,6 +215,11 @@ switch($request){
     case $config->urls->base . BoutiqueSossukeController::path() . $data:
         header('Access-Control-Allow-Origin: *');
         echo BoutiqueSossukeController::index($_SERVER['REQUEST_METHOD'], $data);
+        break;
+
+    case $config->urls->base . ShopArticleController::path() . $data:
+        header('Access-Control-Allow-Origin: *');
+        echo ShopArticleController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
 	default:
