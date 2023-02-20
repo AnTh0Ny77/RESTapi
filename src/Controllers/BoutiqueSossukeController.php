@@ -19,6 +19,8 @@ use Src\Repository\MaterielRepository;
 use Src\Repository\ShopArticleRepository;
 use Src\Repository\ShopAVendreRepository;
 use Src\Repository\LienUserClientRepository;
+use Src\Repository\ShopConditionRepository;
+use Src\Entities\ShopCondition;
 
 class BoutiqueSossukeController extends BaseController{
 
@@ -105,6 +107,14 @@ class BoutiqueSossukeController extends BaseController{
             }
             return $responseHandler->handleJsonResponse([
                 'data' => $resulst
+            ], 200, 'ok');
+        }
+
+        if (!empty($body['sco__cli_id'])) {
+            $ShopConditions = new ShopConditionRepository('shop_condition' , $database, ShopCondition::class);
+            $list = $ShopAVRepository->findOneby(['sco__cli_id' =>  $body['sco__cli_id'] ] , false);
+            return $responseHandler->handleJsonResponse([
+                'data' => $list
             ], 200, 'ok');
         }
     }
