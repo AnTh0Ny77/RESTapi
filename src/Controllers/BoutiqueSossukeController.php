@@ -128,7 +128,7 @@ class BoutiqueSossukeController extends BaseController{
                 'sco__cli_id_fact' => $body['sco__cli_id_fact'] , 
                 'sco__vue_ref' => $body['sco__vue_ref']
             ];
-            $verify = $ShopConditions->findOneby(['sco__cli_id' =>  $body['sco__cli_id_r'] ] , false);
+            $verify = $ShopConditions->findOneby(['sco__cli_id' =>  $body['sco__cli_id'] ] , false);
             if (!empty($verify)) {
                 $ShopConditions->update($body);
             }else{
