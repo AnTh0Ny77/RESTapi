@@ -89,6 +89,7 @@ class BoutiqueSossukeController extends BaseController{
             ], 401, 'bad request');
         }
 
+        // liste de tous les articles a vendre 
         if (!empty($body['shop_avendre'])) {
             $list = $ShopAVendreRepository->findAll();
             return $responseHandler->handleJsonResponse([
@@ -96,7 +97,8 @@ class BoutiqueSossukeController extends BaseController{
             ], 200, 'ok');
         }
 
-        if (!empty($body['sav__cli_id'])) {
+        // liste des articles disponible pour ce client  :
+        if (!empty($body['sav__cli_id']) and empty($body['sav__post']) and empty($body['sav__put'])) {
             $ShopAVRepository = new ShopAVendreRepository('shop_avendre' , $database, ShopAVendre::class);
             $list = $ShopAVRepository->findby(['sav__cli_id' =>  $body['sav__cli_id'] ] , 1000 , []);
             $resulst = [];
@@ -110,6 +112,7 @@ class BoutiqueSossukeController extends BaseController{
             ], 200, 'ok');
         }
 
+        //liste des condition de commandes  
         if (!empty($body['sco__cli_id'])){
             $ShopConditions = new ShopConditionRepository('shop_condition' , $database, ShopCondition::class);
             $list = $ShopConditions->findOneby(['sco__cli_id' =>  $body['sco__cli_id'] ] , false);
@@ -118,6 +121,7 @@ class BoutiqueSossukeController extends BaseController{
             ], 200, 'ok');
         }
 
+        //ajout mis a jour des conditions de ventes  :
         if (!empty($body['sco__cli_id_r'])){
             $ShopConditions = new ShopConditionRepository('shop_condition' , $database, ShopCondition::class);
             $body = [
@@ -136,6 +140,29 @@ class BoutiqueSossukeController extends BaseController{
             }
             return $responseHandler->handleJsonResponse([
                 'data' => true 
+            ], 200, 'ok');
+        }
+
+        //ajout d un article a vendre pour unj client 
+        if (!empty($body['sav__cli_id']) and !empty($body['sav__post'])) {
+            $ShopAVRepository = new ShopAVendreRepository('shop_avendre' , $database, ShopAVendre::class);
+            $body = [
+                'sav__cli_id' => $body['sav__cli_id'], 
+                'sav__ref_id' => $body['sav__ref_id'], 
+                'sav__etat' => $body['sav__etat'] , 
+                'sav__prix' => $body['sav__prix'] ,
+                'sav__memo_recode' => $body['sav__memo_recode'] , 
+                'sav__gar_std' => $body['sav__gar_std'] ,
+                'sav__cli_id' => $body['sav__cli_id'], 
+                'sav__dlv' => $body['sav__dlv'], 
+                'sav__gar1_mois' => $body['sav__gar1_mois'] , 
+                'sav__gar1_prix' => $body['sav__gar1_prix'] ,
+                'sav__gar2_mois' => $body['sav__gar2_mois'] , 
+                'sav__gar2_prix' => $body['sav__gar2_prix'] 
+            ];
+            $id  = $ShopAVRepository->insert($body);
+            return $responseHandler->handleJsonResponse([
+                'data' => $id
             ], 200, 'ok');
         }
     }
