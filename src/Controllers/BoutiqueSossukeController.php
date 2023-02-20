@@ -112,7 +112,7 @@ class BoutiqueSossukeController extends BaseController{
 
         if (!empty($body['sco__cli_id'])){
             $ShopConditions = new ShopConditionRepository('shop_condition' , $database, ShopCondition::class);
-            $list = $ShopAVRepository->findOneby(['sco__cli_id' =>  $body['sco__cli_id'] ] , false);
+            $list = $ShopConditions->findOneby(['sco__cli_id' =>  $body['sco__cli_id'] ] , false);
             return $responseHandler->handleJsonResponse([
                 'data' => $list
             ], 200, 'ok');
