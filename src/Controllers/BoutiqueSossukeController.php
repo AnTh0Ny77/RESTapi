@@ -117,5 +117,26 @@ class BoutiqueSossukeController extends BaseController{
                 'data' => $list
             ], 200, 'ok');
         }
+
+        if (!empty($body['sco__cli_id_r'])){
+            $ShopConditions = new ShopConditionRepository('shop_condition' , $database, ShopCondition::class);
+            $body = [
+                'sco__cli_id' => $body['sco__cli_id_r'], 
+                'sco__type_port' => $body['sco__type_port'], 
+                'sco__francoa' => $body['sco__francoa'] , 
+                'sco__prix_port' => $body['sco__prix_port'] ,
+                'sco__cli_id_fact' => $body['sco__cli_id_fact'] , 
+                'sco__vue_ref' => $body['sco__vue_ref']
+            ];
+            $verify = $ShopConditions->findOneby(['sco__cli_id' =>  $body['sco__cli_id_r'] ] , false);
+            if (!empty($verify)) {
+                $ShopConditions->update($body);
+            }else{
+                $ShopConditions->insert($body);
+            }
+            return $responseHandler->handleJsonResponse([
+                'data' => true 
+            ], 200, 'ok');
+        }
     }
 }
