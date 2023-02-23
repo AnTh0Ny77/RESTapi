@@ -28,7 +28,8 @@ Class MailerServices {
             $mail->Port       =  465;                                    
             $mail->setFrom('myrecode@recode.fr', 'MyRecode');
             $mail->addAddress($adresse);    
-            $mail->isHTML(true);                                  
+            $mail->isHTML(true);        
+            $mail->CharSet = 'UTF-8';                          
             $mail->Subject =  $subject;
             $mail->Body    = $template;
             $mail->send();
