@@ -144,7 +144,7 @@ class BoutiqueSossukeController extends BaseController{
         }
 
         //ajout d un article a vendre pour unj client 
-        if (!empty($body['sav__cli_id']) and !empty($body['sav__post'])) {
+        if (!empty($body['sav__cli_id']) and !empty($body['sav__post']) and empty($body['sav__put'])) {
             $ShopAVRepository = new ShopAVendreRepository('shop_avendre' , $database, ShopAVendre::class);
             $body = [
                 'sav__cli_id' => $body['sav__cli_id'], 
@@ -161,6 +161,29 @@ class BoutiqueSossukeController extends BaseController{
                 'sav__gar2_prix' => $body['sav__gar2_prix'] 
             ];
             $id  = $ShopAVRepository->insert($body);
+            return $responseHandler->handleJsonResponse([
+                'data' => $id
+            ], 200, 'ok');
+        }
+        //mise à jour d un article a vendre pour un client 
+        if (!empty($body['sav__cli_id']) and empty($body['sav__post']) and !empty($body['sav__put'])) {
+            $ShopAVRepository = new ShopAVendreRepository('shop_avendre' , $database, ShopAVendre::class);
+            $body = [
+                'sav__id' => $body['sav__id'] , 
+                'sav__cli_id' => $body['sav__cli_id'], 
+                'sav__ref_id' => $body['sav__ref_id'], 
+                'sav__etat' => $body['sav__etat'] , 
+                'sav__prix' => $body['sav__prix'] ,
+                'sav__memo_recode' => $body['sav__memo_recode'] , 
+                'sav__gar_std' => $body['sav__gar_std'] ,
+                'sav__cli_id' => $body['sav__cli_id'], 
+                'sav__dlv' => $body['sav__dlv'], 
+                'sav__gar1_mois' => $body['sav__gar1_mois'] , 
+                'sav__gar1_prix' => $body['sav__gar1_prix'] ,
+                'sav__gar2_mois' => $body['sav__gar2_mois'] , 
+                'sav__gar2_prix' => $body['sav__gar2_prix'] 
+            ];
+            $id = $ShopAVRepository->update($body);
             return $responseHandler->handleJsonResponse([
                 'data' => $id
             ], 200, 'ok');
