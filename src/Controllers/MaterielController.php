@@ -135,6 +135,7 @@ Class MaterielController extends BaseController {
             'mat__marque' => [], 
             'mat__kw_tg' => [] , 
             'mat__type' => [], 
+            'mat__actif' => [],
             'mat__id' => []
         ];
         
@@ -179,6 +180,13 @@ Class MaterielController extends BaseController {
                         array_push($inclause['mat__id'] , $value);   
                     }
                     $_GET['mat__id'] = "";
+                }
+
+                if (!empty($_GET['mat__actif'])) {
+                    foreach ($_GET['mat__actif'] as $value) {
+                        array_push($inclause['mat__actif'], $value);
+                    }
+                    $_GET['mat__actif'] = "";
                 }
                 
                 if(!empty($_GET['mat__marque'])){

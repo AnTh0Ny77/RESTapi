@@ -184,6 +184,7 @@ Class MaterielRepository  extends BaseRepository {
                     'mat__id' => 'in' ,
                     'mat__cli__id' => 'in',
                     'mat__type' => 'in',
+                    'mat__actif' => 'in',
                     'mat__marque' => 'like' , 
                     'mat__model' => 'like', 
                     'mat__memo' => 'like', 
@@ -315,6 +316,7 @@ Class MaterielRepository  extends BaseRepository {
                 'field' => [
                     'mat__id' => 'in' ,
                     'mat__cli__id' => 'in',
+                    'mat__actif' => 'in' ,
                     'mat__type' => 'in',
                     "mat__kw_tg" => 'in' ,
                     'mat__marque' => 'double' , 
