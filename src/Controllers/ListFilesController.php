@@ -89,7 +89,7 @@ class ListFilesController  extends  BaseController
         $config = json_decode(file_get_contents('config.json'));
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
         try {
-            $response = $guzzle->get('/SoftRecode/apiListDocuments', ['stream' => true, 'query' => ['tkl__id' =>  $_GET['tkl__id']]]);
+            $response = $guzzle->get('/SoftRecode/apiListDocuments', [ 'query' => ['tkl__id' =>  $_GET['tkl__id']]]);
         } catch (ClientException $exeption) {
             $response = $exeption->getResponse();
         }
