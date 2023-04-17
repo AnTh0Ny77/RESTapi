@@ -94,8 +94,9 @@ class ListFilesController  extends  BaseController
             $response = $exeption->getResponse();
         }
 
-        var_dump($response); 
-        die();
+        $data = $response->getBody()->getContents();
+                header('Content-Type: application/pdf');
+                echo $data;
 
         if ($response->getStatusCode() > 299 ) {
             return $responseHandler->handleJsonResponse([
