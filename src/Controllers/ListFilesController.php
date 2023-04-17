@@ -94,7 +94,7 @@ class ListFilesController  extends  BaseController
             $response = $exeption->getResponse();
         }
 
-        var_dump($response->getBody()->read(125922));
+        var_dump($response);
         die();
         if ($response->getStatusCode() > 299 ) {
             return $responseHandler->handleJsonResponse([
