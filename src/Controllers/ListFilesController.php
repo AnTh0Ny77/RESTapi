@@ -101,9 +101,18 @@ class ListFilesController  extends  BaseController
             ], 401, 'Bad request');
         }
         $data = $response->getBody()->getContents();
-        var_dump(json_decode($data, true ));
-        die();
-        echo $data;
+        $data = json_decode($data, true );
+        if (!empty($data['data'])) {
+            return $responseHandler->handleJsonResponse([
+                'data' => $data['data'],
+            ], 200, 'Pas de documents');
+        }else{
+            return $responseHandler->handleJsonResponse([
+                'data' =>  [],
+            ], 200, 'Pas de documents');
+        }
+     
+        
     }
 
 }
