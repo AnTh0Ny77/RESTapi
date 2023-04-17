@@ -94,8 +94,9 @@ class ListFilesController  extends  BaseController
             $response = $exeption->getResponse();
         }
 
-        var_dump($response);
+        var_dump($response); 
         die();
+
         if ($response->getStatusCode() > 299 ) {
             return $responseHandler->handleJsonResponse([
                 'msg' =>  'Une erreur est survenue dans l api listFilesController condition n 103  ',
@@ -103,7 +104,7 @@ class ListFilesController  extends  BaseController
         }
         return $responseHandler->handleJsonResponse([
             'data' =>  'Une erreur est survenue dans l api listFilesController condition n 103  ',
-        ], 200, ));
+        ], 200, json_decode($response->getBody()->read(125922)));
     }
 
 }
