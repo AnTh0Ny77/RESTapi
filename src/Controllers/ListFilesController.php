@@ -94,18 +94,16 @@ class ListFilesController  extends  BaseController
             $response = $exeption->getResponse();
         }
 
-        $data = $response->getBody()->getContents();
-                header('Content-Type: application/pdf');
-                echo $data;
-
+       
         if ($response->getStatusCode() > 299 ) {
             return $responseHandler->handleJsonResponse([
                 'msg' =>  'Une erreur est survenue dans l api listFilesController condition n 103  ',
             ], 401, 'Bad request');
         }
-        return $responseHandler->handleJsonResponse([
-            'data' =>  'Une erreur est survenue dans l api listFilesController condition n 103  ',
-        ], 200, json_decode($response->getBody()->read(125922)));
+        $data = $response->getBody()->getContents();
+        var_dump($data);
+        die();
+        echo $data;
     }
 
 }
