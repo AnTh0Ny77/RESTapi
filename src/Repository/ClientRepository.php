@@ -89,6 +89,8 @@ Class ClientRepository  extends BaseRepository {
             if (!$tel instanceof Client)
                 return $tel;
 
+            $client_data['cli__logo'] =  $client_data['cli_id'] .'.png';
+
             $client_data['cli__nom'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__nom']));
             $client_data['cli__ville'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__ville']));
             $id_client = $this->update($client_data);
@@ -120,6 +122,8 @@ Class ClientRepository  extends BaseRepository {
             $tel = $client->setCli__tel($client_data['cli__tel']);
             if (!$tel instanceof Client)
                 return $tel;
+
+            $client_data['cli__logo'] =  $client_data['cli_id'] .'.png';
 
             $client_data['cli__nom'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__nom']));
             $client_data['cli__ville'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__ville']));
