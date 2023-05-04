@@ -61,7 +61,7 @@ Class ClientRepository  extends BaseRepository {
     }
 
     public function transfertClient($client_data){
-        $verifyIfExist =  $this->findOneBy(['cli__id' =>$client_data['cli_id']], true);
+        $verifyIfExist =  $this->findOneBy(['cli__id' =>$client_data['cli__id']], true);
         if ($verifyIfExist instanceof Client) {
             $client = new Client();
 
@@ -89,7 +89,7 @@ Class ClientRepository  extends BaseRepository {
             if (!$tel instanceof Client)
                 return $tel;
 
-            $client_data['cli__logo'] =  $client_data['cli_id'] .'.png';
+            $client_data['cli__logo'] =  $client_data['cli__id'] .'.png';
 
             $client_data['cli__nom'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__nom']));
             $client_data['cli__ville'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__ville']));
@@ -123,7 +123,7 @@ Class ClientRepository  extends BaseRepository {
             if (!$tel instanceof Client)
                 return $tel;
 
-            $client_data['cli__logo'] =  $client_data['cli_id'] .'.png';
+            $client_data['cli__logo'] =  $client_data['cli__id'] .'.png';
 
             $client_data['cli__nom'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__nom']));
             $client_data['cli__ville'] = mb_strtoupper($this->cleanKeepSpace($client_data['cli__ville']));
