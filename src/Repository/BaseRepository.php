@@ -280,7 +280,7 @@ Class BaseRepository {
 
     public function update(array $field){
 
-        $array_exclusion  = [ 'token' , 'refresh_token' , 'roles'  , 'clients' , 'password'] ; 
+        $array_exclusion  = [ 'token' , 'refresh_token' , 'roles'  , 'clients' , 'password' , 'user__password'] ; 
         
         $identifier =  $this->returnPrimaryKey()['COLUMN_NAME'];
       
