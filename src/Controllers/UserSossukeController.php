@@ -114,7 +114,7 @@ Class UserSossukeController extends BaseController{
         $confirmRepository->insert((array)$confirm);
 
         $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyResetPassword('http://myrecode.fr/pw_modif.php?getpw&confirm__key=' . $confirm->getConfirm__key() . '&confirm__user=' . $confirm->getConfirm__user() . ''), $mailer->signature());
-        $mailer->sendMail($_GET['user__mail'], 'Définition de votre nouveau mot de passe ',  $body_mail);
+        $mailer->sendMail($body['user__mail'], 'Définition de votre nouveau mot de passe ',  $body_mail);
 
         return $responseHandler->handleJsonResponse([
             "data" => $user->getUser__id()
