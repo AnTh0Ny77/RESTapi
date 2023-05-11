@@ -6,10 +6,14 @@ use Src\Entities\User;
 use Src\Services\Security;
 use Src\Services\ResponseHandler;
 use Src\Repository\UserRepository;
+use Src\Services\MailerServices;
 use Src\Controllers\BaseController;
 use Src\Repository\RefreshRepository;
 use Src\Controllers\NotFoundController;
 use Src\Repository\LienUserClientRepository;
+use Src\Entities\Confirm;
+use Src\Repository\ClientRepository;
+use Src\Repository\ConfirmRepository;
 
 Class UserSossukeController extends BaseController{
 
@@ -52,6 +56,7 @@ Class UserSossukeController extends BaseController{
 	public static function post(){
         $database = new Database();
         $database->DbConnect();
+        $mailer = new MailerServices();
         $responseHandler = new ResponseHandler();
         $userRepository = new UserRepository('user' , $database , User::class );
         $refreshRepository = new RefreshRepository($database);
@@ -96,6 +101,21 @@ Class UserSossukeController extends BaseController{
 
         $refresh_token = $refreshRepository->insertOne($user->getUser__id());
         $user->setRefresh_token($refresh_token);
+        $confirm = new Confirm();
+        $confirmRepository = new ConfirmRepository('confirm', $database, Confirm::class);
+        $confirm->setConfirm__user($body['user__mail']);
+        $uniqueKey = strtoupper(substr(sha1(microtime()), rand(0, 5), 20));
+        $uniqueKey  = implode("-", str_split($uniqueKey, 5));
+        $confirm->setConfirm__key($uniqueKey);
+        $confirm->setConfirm__used(0);
+        $date = date('Y-m-d H:i:s');
+        $date = date('Y-m-d H:i:s', strtotime($date . ' +25 hours'));
+        $confirm->setConfirm__exp($date);
+        $confirmRepository->insert((array)$confirm);
+
+        $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyResetPassword('http://myrecode.fr/pw_modif.php?getpw&confirm__key=' . $confirm->getConfirm__key() . '&confirm__user=' . $confirm->getConfirm__user() . ''), $mailer->signature());
+        $mailer->sendMail($_GET['user__mail'], 'Définition de votre nouveau mot de passe ',  $body_mail);
+
         return $responseHandler->handleJsonResponse([
             "data" => $user->getUser__id()
         ] , 201 , 'ok');
