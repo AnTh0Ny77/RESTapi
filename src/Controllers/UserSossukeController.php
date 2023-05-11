@@ -60,8 +60,6 @@ Class UserSossukeController extends BaseController{
         $responseHandler = new ResponseHandler();
         $userRepository = new UserRepository('user' , $database , User::class );
         $refreshRepository = new RefreshRepository($database);
-
-        
         $body = json_decode(file_get_contents('php://input'), true);
 
         if(!empty($body['_METHOD']) and $body['_METHOD'] == 'PUT' ) {
@@ -113,7 +111,7 @@ Class UserSossukeController extends BaseController{
         $confirm->setConfirm__exp($date);
         $confirmRepository->insert((array)$confirm);
 
-        $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyResetPassword('http://myrecode.fr/pw_modif.php?getpw&confirm__key=' . $confirm->getConfirm__key() . '&confirm__user=' . $confirm->getConfirm__user() . ''), $mailer->signature());
+        $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyNewPassword('http://myrecode.fr/pw_modif.php?getpw&confirm__key=' . $confirm->getConfirm__key() . '&confirm__user=' . $confirm->getConfirm__user() . ''), $mailer->signature());
         $mailer->sendMail($body['user__mail'], 'Définition de votre nouveau mot de passe ',  $body_mail);
 
         return $responseHandler->handleJsonResponse([

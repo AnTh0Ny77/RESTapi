@@ -141,6 +141,52 @@ Class MailerServices {
             </div>';
     }
 
+
+    public function bodyNewPassword($link)
+    {
+        return '<style>
+                .success-link{
+                    padding-left: 24px;
+                    padding-right: 24px;
+                    padding-top: 12px;
+                    padding-bottom: 12px;
+                    background: #1FB447;
+                    color: white;
+                    border-radius: 16px;
+                }
+                .wrapper{
+                    margin-top: 50px;
+                    margin-bottom: 50px;
+                }
+                a:link { text-decoration: none; }
+            
+                a:visited { text-decoration: none; }
+            
+                a:hover { text-decoration: none; }
+            
+                a:active { text-decoration: none; }
+            </style>
+            <div class="wrapper">
+                <p style="text-align: center;"><!--StartFragment--><span style="font-size:14px"><span style="font-weight:bold">Bienvenue chez<br />
+                    MY RECODE</span></span>
+                    <br/>
+                    &nbsp;
+                </p>
+                    <p style="text-align: center;">Pour définir un nouveau mot de passe, utilisez simplement le bouton ci-dessous<br />
+                    <br />
+                    <br />
+                    <a  class="success-link" target="_blank" href="' . $link . '"><span>Je réinitialise mon mot de passe </span></a><br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <span style="font-size:16px" style="font-weight:bold">A tout de suite sur votre espace client.</span><br />
+                    <span style="font-size:16px" style="font-weight:bold">L équipe RECODE !</span>
+                </p>
+            </div>';
+    }
+
     public function renderBody($header , $body , $signature){
             return $header . $body . $signature ; 
     }
