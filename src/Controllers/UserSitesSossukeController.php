@@ -119,6 +119,15 @@ Class UserSitesSossukeController extends BaseController {
             ], 404, 'bad request');
         }
 
+
+        //supression des reletions tierces 
+        if (!empty($body['delete'])) {
+            $lienUserClientRepository->delete(['luc__user__id' =>  $body['delete'] ]);
+            return $responseHandler->handleJsonResponse([
+                "data" => 'les liens ont été supprimés !',
+            ], 200, 'bad request');
+        }
+
         if (empty($body['luc__user__id'])) {
             return $responseHandler->handleJsonResponse([
                 "msg" => 'user__id n est pas renseigné', 
