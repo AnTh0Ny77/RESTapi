@@ -128,6 +128,26 @@ Class UserSitesSossukeController extends BaseController {
             ], 200, 'bad request');
         }
 
+        if (!empty($body['multiple'])) {
+            $i = 0 ;
+            foreach ($body['multiple'] as $key => $value) {
+                $i ++ ;
+                $data = [
+                    'luc__user__id' => $body['luc__user__id'],
+                    'luc__cli__id' => $value,
+                    'luc__order' => $i
+                ];
+
+                $lienUserClientRepository->insertNoPrimary($data);
+            }
+            return $responseHandler->handleJsonResponse([
+                "data" => 'les liens ont été insérés !',
+            ],
+                200,
+                'bad request'
+            );
+        }
+
         if (empty($body['luc__user__id'])) {
             return $responseHandler->handleJsonResponse([
                 "msg" => 'user__id n est pas renseigné', 
