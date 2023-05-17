@@ -122,13 +122,14 @@ Class UserSitesSossukeController extends BaseController {
 
         //supression des reletions tierces 
         if (!empty($body['delete'])) {
-            $lienUserClientRepository->delete(['luc__user__id' =>  $body['delete'] ]);
+           
             return $responseHandler->handleJsonResponse([
                 "data" => 'les liens ont été supprimés !',
             ], 200, 'bad request');
         }
 
         if (!empty($body['multiple'])) {
+            $lienUserClientRepository->delete(['luc__user__id' =>  $body['luc__user__id']]);
             $i = 0 ;
             foreach ($body['multiple'] as $key => $value) {
                 $i ++ ;
