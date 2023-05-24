@@ -44,7 +44,7 @@ Class MailerServices {
         $imageData = base64_encode(file_get_contents('public/img/LOGO.png'));
         $src = 'data: '.mime_content_type('public/img/LOGO.png').';base64,'.$imageData;
 
-        return '<img width="150" height="auto" src="http://drive.google.com/uc?export=view&id=1-7IjI_qkbEb-ufKfmfPypxeg5Kssn6l8" style="display:block;" width="200" height="87"   alt="Logo" title="Logo" ><br><br>';
+        return '<img width="150"  src="https://myrecode.fr/img/logo_myrecode.png" style="display:block;"  alt="MyRecode" title="MyRecode" ><br><br>';
     }
     
     public function signature(){
