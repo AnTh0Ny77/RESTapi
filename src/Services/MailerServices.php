@@ -175,7 +175,7 @@ Class MailerServices {
                     <p style="text-align: center;">Pour définir un nouveau mot de passe, utilisez simplement le bouton ci-dessous<br />
                     <br />
                     <br />
-                    <a  class="success-link" target="_blank" href="' . $link . '"><span>Je réinitialise mon mot de passe </span></a><br />
+                    <a  class="success-link" target="_blank" href="' . $link . '"><span>je crée mon mot de passe</span></a><br />
                     <br />
                     <br />
                     <br />
