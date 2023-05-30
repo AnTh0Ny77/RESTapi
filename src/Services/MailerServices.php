@@ -251,7 +251,7 @@ Class MailerServices {
             $total += $total_ligne;
             $table_ligne .= '<tr>
 
-                    <td>
+                    <td width="47%">
                     '. $value['temp']['sar__marque'] . ' ' . $value['temp']['sar__model'] . '<br>
                     REF '. $value['temp']['sar__ref_constructeur'] . $gar . ' 
                     </td>
@@ -321,7 +321,7 @@ Class MailerServices {
                             </td>
         
                             <td>
-                                '.$cmd['scm__prix_port']. ' € HT 
+                                '.number_format($cmd['scm__prix_port'] , 2 , ',' , ' '). ' € HT 
                             </td>
                         </tr>
                         <tr>
