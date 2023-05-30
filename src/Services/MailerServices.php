@@ -297,7 +297,7 @@ Class MailerServices {
                     <br />
                     <br />
                     <br />
-                    <table >
+                    <table style="border-spacing: 5px 10px 10px;" >
                         '.$table_ligne .'
                         <tr>
                             <td>
