@@ -76,8 +76,7 @@ class MailCmdController extends BaseController
 
 
     public static function post(){
-        var_dump('hye');
-        die();
+        
         $database = new Database();
         $database->DbConnect();
         $security = new Security();
@@ -94,7 +93,8 @@ class MailCmdController extends BaseController
         //     return $auth;
         $body = json_decode(file_get_contents('php://input'), true);
 
-
+        var_dump('hye');
+        die();
         if (empty($body['scm__id'])) {
             return $responseHandler->handleJsonResponse([
                 "msg" => 'scm__id semble vide ',
