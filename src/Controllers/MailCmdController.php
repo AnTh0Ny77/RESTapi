@@ -77,6 +77,8 @@ class MailController extends BaseController
 
     public static function post()
     {
+        var_dump('hey');
+        die();
         $database = new Database();
         $database->DbConnect();
         $security = new Security();
@@ -117,6 +119,7 @@ class MailController extends BaseController
 
         $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$ligne), $mailer->signature());
         $mailer->sendMail('anthonybs.pro@gmail.com', 'Vous avez recu un message de Myrecode',  $body_mail);
+
         return $responseHandler->handleJsonResponse([
             "data" => 'l email à été transmis ',
         ], 200, 'Ok !');
