@@ -118,20 +118,14 @@ class MailCmdController extends BaseController
       
         foreach ($ligne as $key => $value) {
             $avendre = $shopAvendreRepository->findOneBy(['sav__id' =>  $value['scl__ref_id'] ], false);
-            var_dump( $avendre );
+            var_dump($avendre);
             die();
             $article = $ShopArticleRepository->findOneBy(['saf__ref_id' => $avendre['sav__ref_id']] , false);
-
-           
-
             $value['temp'] = $article;
         }
          
-     
-
         $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$ligne), $mailer->signature());
         $mailer->sendMail('anthonybs.pro@gmail.com', 'Vous avez recu un message de Myrecode',  $body_mail);
-
         return $responseHandler->handleJsonResponse([
             "data" => 'l email à été transmis ',
         ], 200, 'Ok !');
