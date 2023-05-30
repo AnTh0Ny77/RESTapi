@@ -114,7 +114,7 @@ class MailCmdController extends BaseController
         }
 
       
-        $ligne = $shopCmdLigneRepository->findOneBy(['scl__scm_id' =>  $body['scm__id'] ] , 100 , ['scl__id' => 'ASC']);
+        $ligne = $shopCmdLigneRepository->findBy(['scl__scm_id' =>  $body['scm__id'] ] , 100 , ['scl__id' => 'ASC']);
        
         
         foreach ($ligne as $key => $value) {
