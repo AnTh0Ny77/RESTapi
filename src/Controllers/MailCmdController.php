@@ -20,6 +20,7 @@ use Src\Repository\ShopAVendreRepository;
 use Src\Repository\ShopCmdRepository;
 use Src\Repository\ShopCmdLigneRepository;
 use Src\Entities\ShopCmd;
+use Src\Entities\ShopCmdLigne;
 use Src\Controllers\NotFoundController;
 use Src\Repository\ShopArticleRepository;
 use Src\Entities\ShopArticle;
@@ -28,8 +29,7 @@ use Src\Entities\ShopArticle;
 class MailCmdController extends BaseController
 {
 
-    public static function path()
-    {
+    public static function path(){
         return '/mailCommande';
     }
 
@@ -86,7 +86,7 @@ class MailCmdController extends BaseController
         $shopCmdRepository = new ShopCmdRepository('shop_cmd', $database, ShopCmd::class);
         $shopAvendreRepository = new ShopAVendreRepository('shop_avendre' , $database , ShopAVendre::class);
       
-        $shopCmdLigneRepository = new ShopCmdLigneRepository('shop_cmd_ligne', $database, ShopCmd::class);
+        $shopCmdLigneRepository = new ShopCmdLigneRepository('shop_cmd_ligne', $database, ShopCmdLigne::class);
         
         // $lienUserClientRepository = new LienUserClientRepository('lien_user_client', $database, User::class);
         
