@@ -124,9 +124,6 @@ class MailCmdController extends BaseController
             array_push($def_array , $array_item);
         }
 
-        var_dump($def_array);
-        die();
-
         $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$def_array), $mailer->signature());
         $mailer->sendMail('anthonybs.pro@gmail.com', 'Vous avez recu un message de Myrecode',  $body_mail);
         return $responseHandler->handleJsonResponse([
