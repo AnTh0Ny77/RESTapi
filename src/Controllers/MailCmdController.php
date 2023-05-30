@@ -87,9 +87,9 @@ class MailCmdController extends BaseController
         $shopAvendreRepository = new ShopAVendreRepository('shop_avendre' , $database , ShopAVendre::class);
       
         $shopCmdLigneRepository = new ShopCmdLigneRepository('shop_cmd_ligne', $database, ShopCmd::class);
-        var_dump('hye');
-        die();
-        $lienUserClientRepository = new LienUserClientRepository('lien_user_client', $database, User::class);
+        // var_dump('hye');
+        // die();
+        // $lienUserClientRepository = new LienUserClientRepository('lien_user_client', $database, User::class);
         
         $ShopArticleRepository = new ShopArticleRepository('shop_article' , $database , ShopArticle::class);
         $security = new Security();
