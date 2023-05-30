@@ -204,6 +204,7 @@ Class MailerServices {
                 }
                 .wrapper{
                     margin-top: 50px;
+                    width: 350px;
                     margin-bottom: 50px;
                 }
                 a:link { text-decoration: none; }
@@ -296,7 +297,7 @@ Class MailerServices {
                     <br />
                     <br />
                     <br />
-                    <table>
+                    <table >
                         '.$table_ligne .'
                         <tr>
                             <td>
