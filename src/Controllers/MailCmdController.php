@@ -113,11 +113,11 @@ class MailCmdController extends BaseController
             ], 401, 'bad request');
         }
 
+        
+        $ligne = $shopCmdLigneRepository->findBy(['scl__scm_id' =>  $body['scm__id'] ] , false );
         var_dump('hye');
         die();
         
-        $ligne = $shopCmdLigneRepository->findBy(['scl__scm_id' =>  $body['scm__id'] ] , false );
-
         foreach ($ligne as $key => $value) {
             $avendre = $shopAvendreRepository->findOneBy(['sav__id' =>  $value['scl__ref_id'] ], false);
             $article = $ShopArticleRepository->findOneBy(['saf__ref_id' => $avendre['sav__ref_id']] , false);
