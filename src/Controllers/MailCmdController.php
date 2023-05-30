@@ -15,6 +15,7 @@ use Src\Controllers\BaseController;
 use Src\Repository\ConfirmRepository;
 use Src\Entities\ShopAVendre;
 use Src\Repository\RefreshRepository;
+use Src\Controllers\UserController;
 use Src\Repository\ClientRepository;
 use Src\Repository\ShopAVendreRepository;
 use Src\Repository\ShopCmdRepository;
@@ -92,9 +93,15 @@ class MailCmdController extends BaseController
         
         $ShopArticleRepository = new ShopArticleRepository('shop_article' , $database , ShopArticle::class);
         $security = new Security();
-        // $auth = self::Auth($responseHandler, $security);
-        // if ($auth != null)
-        //     return $auth;
+
+        $auth = self::Auth($responseHandler, $security);
+        if ($auth != null)
+            return $auth;
+        
+        
+        $id_user = UserController::returnId__user($security)['uid'];
+        $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
+
         $body = json_decode(file_get_contents('php://input'), true);
         
      
@@ -125,7 +132,7 @@ class MailCmdController extends BaseController
         }
 
         $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$def_array), $mailer->signature());
-        $mailer->sendMail('anthonybs.pro@gmail.com', 'Vous avez recu un message de Myrecode',  $body_mail);
+        $mailer->sendMail($user->getUser__mail(), 'Confirmation de votre commande MyRecode',  $body_mail);
         return $responseHandler->handleJsonResponse([
             "data" => 'l email à été transmis ',
         ], 200, 'Ok !');
