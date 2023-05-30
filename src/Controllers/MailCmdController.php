@@ -92,7 +92,8 @@ class MailCmdController extends BaseController
         // if ($auth != null)
         //     return $auth;
         $body = json_decode(file_get_contents('php://input'), true);
-
+        var_dump('hye');
+        die();
      
         if (empty($body['scm__id'])) {
             return $responseHandler->handleJsonResponse([
@@ -100,8 +101,7 @@ class MailCmdController extends BaseController
             ], 401, 'bad request');
         }
 
-        var_dump('hye');
-        die();
+      
 
         $cmd = $shopCmdRepository->findOneBy(['scm__id' => $body['scm__id'] ] , false);
         if (empty($cmd)) {
