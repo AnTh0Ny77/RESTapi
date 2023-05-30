@@ -113,7 +113,7 @@ class MailCmdController extends BaseController
             ], 401, 'bad request');
         }
 
-        var_dump($shopCmdLigneRepository->findBy(['scl__scm_id' =>  $body['scm__id'] ] , false ));
+        var_dump( $body['scm__id'] );
         die();
         $ligne = $shopCmdLigneRepository->findBy(['scl__scm_id' =>  $body['scm__id'] ] , false );
        
