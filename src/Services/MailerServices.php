@@ -261,7 +261,7 @@ Class MailerServices {
                     </td>
 
                     <td>
-                        '.$total_ligne. ' € HT 
+                        '.number_format($total_ligne, 2, ',', ' '). ' € HT 
                     </td>
             </tr>';
         }
@@ -308,7 +308,7 @@ Class MailerServices {
                             </td>
         
                             <td>
-                                '.$total. ' € HT 
+                                '. number_format($total, 2, ',', ' '). ' € HT 
                             </td>
                         </tr>
                         <tr>
@@ -334,7 +334,7 @@ Class MailerServices {
                             </td>
         
                             <td>
-                                '.$total + floatval($cmd['scm__prix_port']) . ' € HT 
+                                '.number_format($total + floatval($cmd['scm__prix_port']), 2 ,',' , ' ') . ' € HT 
                             </td>
                         </tr>
                     </table>
