@@ -118,7 +118,7 @@ class MailCmdController extends BaseController
       
         foreach ($ligne as $key => $value) {
             $avendre = $shopAvendreRepository->findOneBy(['sav__id' =>  $value['scl__ref_id'] ], false);
-            var_dump($article);
+            var_dump( $avendre );
             die();
             $article = $ShopArticleRepository->findOneBy(['saf__ref_id' => $avendre['sav__ref_id']] , false);
 
