@@ -117,10 +117,11 @@ class MailCmdController extends BaseController
         $ligne = $shopCmdLigneRepository->findBy(['scl__scm_id' =>  $body['scm__id'] ] , 100 , ['scl__id' => 'ASC']);
       
         foreach ($ligne as $key => $value) {
+
             $avendre = $shopAvendreRepository->findOneBy(['sav__id' =>  $value['scl__ref_id'] ], false);
-            
             $article = $ShopArticleRepository->findOneBy(['sar__ref_id' => $avendre['sav__ref_id']] , false);
             $value['temp'] = $article;
+            
         }
          
         $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$ligne), $mailer->signature());

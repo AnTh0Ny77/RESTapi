@@ -241,12 +241,18 @@ Class MailerServices {
         $table_ligne = '';
         foreach ($ligne as $key => $value) {
             $table_ligne .= '<tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
+
+                    <td>
+                    '. $value['temp']['sar__marque'] . ' ' . $value['temp']['sar__model'] . '<br>
+                    REF '. $value['temp']['sar__ref_constructeur'] . ' <br> 
+                    </td>
+
+                    <td>
+                        
+                    </td>
+
+                    <td>
+                    </td>
             </tr>';
         }
         return '<style>
@@ -281,14 +287,14 @@ Class MailerServices {
                     <br />
                     <br />
                     <table>
-                        '. $ligne .'
+                        '.$table_ligne .'
                     </table>
                     <br />
                     <br />
                     <br />
                     <br />
-                    <span style="font-size:16px" style="font-weight:bold">A tout de suite sur votre espace client.</span><br />
-                    <span style="font-size:16px" style="font-weight:bold">L équipe RECODE !</span>
+                    <span style="font-size:16px" style="font-weight:bold">Pour suivre l etat de votre commande livrée ou facturée</span><br />
+                    <span style="font-size:16px" style="font-weight:bold">rendez-vous dans l onglet "Mes documents"</span>
                 </p>
             </div>';
     } 
