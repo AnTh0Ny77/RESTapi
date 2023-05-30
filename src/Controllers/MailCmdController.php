@@ -82,6 +82,8 @@ class MailCmdController extends BaseController
         $security = new Security();
         $responseHandler = new ResponseHandler();
         $mailer = new MailerServices();
+        var_dump('hye');
+        die();
         $shopCmdRepository = new ShopCmdRepository('shop_cmd', $database, ShopCmd::class);
         $shopAvendreRepository = new ShopAVendreRepository('shop_avendre' , $database , ShopAVendre::class);
         $shopCmdLigneRepository = new ShopCmdLigneRepository('shop_cmd_ligne', $database, ShopCmd::class);
@@ -92,8 +94,7 @@ class MailCmdController extends BaseController
         // if ($auth != null)
         //     return $auth;
         $body = json_decode(file_get_contents('php://input'), true);
-        var_dump('hye');
-        die();
+        
      
         if (empty($body['scm__id'])) {
             return $responseHandler->handleJsonResponse([
