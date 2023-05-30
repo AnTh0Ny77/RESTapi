@@ -120,7 +120,7 @@ class MailCmdController extends BaseController
             $array_item = $value;
             $avendre = $shopAvendreRepository->findOneBy(['sav__id' =>  $value['scl__ref_id'] ], false);
             $article = $ShopArticleRepository->findOneBy(['sar__ref_id' => $avendre['sav__ref_id']] , false);
-            array_push($array_item , $value); 
+            $array_item['temp'] = $article;
             array_push($def_array , $array_item);
         }
 
