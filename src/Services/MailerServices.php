@@ -299,18 +299,43 @@ Class MailerServices {
                     <table>
                         '.$table_ligne .'
                         <tr>
-                        <td>
-                       
-                        </td>
-    
-                        <td>
-                           Sous-total <br>
-                           Frais de livraison
-                        </td>
-    
-                        <td>
-                            '.$total. ' € HT 
-                        </td>
+                            <td>
+                        
+                            </td>
+        
+                            <td>
+                            Sous-total 
+                            </td>
+        
+                            <td>
+                                '.$total. ' € HT 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                        
+                            </td>
+        
+                            <td>
+                                Frais de livraison
+                            </td>
+        
+                            <td>
+                                '.$cmd['scm__prix_port']. ' € HT 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                        
+                            </td>
+        
+                            <td>
+                                Total
+                            </td>
+        
+                            <td>
+                                '.$total + floatval($cmd['scm__prix_port']) . ' € HT 
+                            </td>
                         </tr>
                     </table>
                     <br />
