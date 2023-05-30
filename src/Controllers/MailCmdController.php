@@ -87,8 +87,7 @@ class MailCmdController extends BaseController
         $shopAvendreRepository = new ShopAVendreRepository('shop_avendre' , $database , ShopAVendre::class);
       
         $shopCmdLigneRepository = new ShopCmdLigneRepository('shop_cmd_ligne', $database, ShopCmd::class);
-        // var_dump('hye');
-        // die();
+        
         // $lienUserClientRepository = new LienUserClientRepository('lien_user_client', $database, User::class);
         
         $ShopArticleRepository = new ShopArticleRepository('shop_article' , $database , ShopArticle::class);
@@ -113,6 +112,9 @@ class MailCmdController extends BaseController
                 "msg" => 'cmd inconnue ',
             ], 401, 'bad request');
         }
+
+        var_dump('hye');
+        die();
         
         $ligne = $shopCmdLigneRepository->findBy(['scl__scm_id' =>  $body['scm__id'] ] , false );
 
