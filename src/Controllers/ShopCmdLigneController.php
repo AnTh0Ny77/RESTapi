@@ -95,7 +95,7 @@ class ShopCmdLigneController extends BaseController
             ], 401, 'bad request');
         }
 
-        if (empty($body['scl__scm_id'])) {
+        if(empty($body['scl__scm_id'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'l ID de commande n est pas indiqué'
             ], 401, 'bad request');

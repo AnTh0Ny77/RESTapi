@@ -25,7 +25,7 @@ use Src\Repository\ShopArticleRepository;
 use Src\Entities\ShopArticle;
 
 
-class MailController extends BaseController
+class MailCmdController extends BaseController
 {
 
     public static function path()
@@ -75,10 +75,8 @@ class MailController extends BaseController
     }
 
 
-    public static function post()
-    {
-        var_dump('hey');
-        die();
+    public static function post(){
+        
         $database = new Database();
         $database->DbConnect();
         $security = new Security();
