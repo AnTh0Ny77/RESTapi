@@ -76,7 +76,8 @@ class MailCmdController extends BaseController
 
 
     public static function post(){
-        
+        var_dump('hye');
+        die();
         $database = new Database();
         $database->DbConnect();
         $security = new Security();
