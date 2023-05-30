@@ -239,19 +239,29 @@ Class MailerServices {
     public function renderBodyCommande($cmd, $ligne){
 
         $table_ligne = '';
+        $total = 0 ;
         foreach ($ligne as $key => $value) {
+            $total_ligne = intval($value['scl__qte']) * floatval($value['scl__prix_unit']);
+            $gar= '';
+            if (!empty($value['scl__gar_mois'])) {
+                $gar= ' <br> garantie ' .$value['scl__gar_mois'] . ' mois ';
+                $gar_prix = intval($value['scl__qte']) * floatval($value['scl__gar_prix']);
+                $total_ligne +=  $gar_prix;
+            }
+            $total += $total_ligne;
             $table_ligne .= '<tr>
 
                     <td>
                     '. $value['temp']['sar__marque'] . ' ' . $value['temp']['sar__model'] . '<br>
-                    REF '. $value['temp']['sar__ref_constructeur'] . ' <br> 
+                    REF '. $value['temp']['sar__ref_constructeur'] . $gar . ' 
                     </td>
 
                     <td>
-                        
+                       quantité  '.$value['scl__qte'].'
                     </td>
 
                     <td>
+                        '.$total_ligne. ' € HT 
                     </td>
             </tr>';
         }
@@ -288,6 +298,20 @@ Class MailerServices {
                     <br />
                     <table>
                         '.$table_ligne .'
+                        <tr>
+                        <td>
+                       
+                        </td>
+    
+                        <td>
+                           Sous-total <br>
+                           Frais de livraison
+                        </td>
+    
+                        <td>
+                            '.$total. ' € HT 
+                        </td>
+                        </tr>
                     </table>
                     <br />
                     <br />
