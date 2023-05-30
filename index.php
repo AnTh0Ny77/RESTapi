@@ -39,6 +39,7 @@ use Src\Controllers\BoutiqueSossukeController;
 use Src\Controllers\MaterielSossukeController;
 use Src\Controllers\UserSitesSossukeController;
 use Src\Controllers\ShopArticleController;
+use Src\Controllers\MailCmdController;
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -220,6 +221,11 @@ switch($request){
     case $config->urls->base . ShopArticleController::path() . $data:
         header('Access-Control-Allow-Origin: *');
         echo ShopArticleController::index($_SERVER['REQUEST_METHOD'], $data);
+        break;
+
+    case $config->urls->base . MailCmdController::path() . $data:
+        header('Access-Control-Allow-Origin: *');
+        echo MailCmdController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
 	default:
