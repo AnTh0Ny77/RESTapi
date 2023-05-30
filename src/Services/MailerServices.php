@@ -253,16 +253,16 @@ Class MailerServices {
             $table_ligne .= '<tr>
 
                     <td width="47%">
-                    '. $value['temp']['sar__marque'] . ' ' . $value['temp']['sar__model'] . '<br>
+                    <b>'. $value['temp']['sar__marque'] . ' ' . $value['temp']['sar__model'] . '</b><br>
                     REF '. $value['temp']['sar__ref_constructeur'] . $gar . ' 
                     </td>
 
                     <td>
-                       quantité  '.$value['scl__qte'].'
+                      <b> Qté  '.$value['scl__qte'].' </b>
                     </td>
 
                     <td>
-                        '.number_format($total_ligne, 2, ',', ' '). ' € HT 
+                       <b> '.number_format($total_ligne, 2, ',', ' '). ' € HT </b>
                     </td>
             </tr>';
         }
@@ -305,11 +305,11 @@ Class MailerServices {
                             </td>
         
                             <td>
-                            Sous-total 
+                                <b>Sous-total </b>
                             </td>
         
                             <td>
-                                '. number_format($total, 2, ',', ' '). ' € HT 
+                                <b>'. number_format($total, 2, ',', ' '). ' € HT </b>
                             </td>
                         </tr>
                         <tr>
@@ -331,11 +331,11 @@ Class MailerServices {
                             </td>
         
                             <td>
-                                Total
+                               <b> Total </b>
                             </td>
         
                             <td>
-                                '.number_format($total + floatval($cmd['scm__prix_port']), 2 ,',' , ' ') . ' € HT 
+                              <b>  '.number_format($total + floatval($cmd['scm__prix_port']), 2 ,',' , ' ') . ' € HT  </b>
                             </td>
                         </tr>
                     </table>
