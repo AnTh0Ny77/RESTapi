@@ -98,7 +98,8 @@ class MailCmdController extends BaseController
         if ($auth != null)
             return $auth;
         
-        
+        var_dump('hey');
+        die();
         $id_user = UserController::returnId__user($security)['uid'];
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
 
