@@ -131,7 +131,7 @@ class MailCmdController extends BaseController
             array_push($def_array , $array_item);
         }
 
-        var_dump( $mailer->renderBodyCommande($cmd ,$def_array));
+        var_dump( $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$def_array), $mailer->signature()));
         die();
         $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$def_array), $mailer->signature());
         $mailer->sendMail('anthonybs.pro@gmail.com', 'Confirmation de votre commande MyRecode',  $body_mail);
