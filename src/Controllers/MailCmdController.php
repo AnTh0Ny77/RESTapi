@@ -111,7 +111,8 @@ class MailCmdController extends BaseController
             ], 401, 'bad request');
         }
 
-        
+        var_dump('hey');
+        die();
 
         $cmd = $shopCmdRepository->findOneBy(['scm__id' => $body['scm__id'] ] , false);
         if (empty($cmd)) {
@@ -121,8 +122,7 @@ class MailCmdController extends BaseController
         }
 
 
-        var_dump('hey');
-        die();
+      
       
         $ligne = $shopCmdLigneRepository->findBy(['scl__scm_id' =>  $body['scm__id'] ] , 100 , ['scl__id' => 'ASC']);
         $def_array = [];
