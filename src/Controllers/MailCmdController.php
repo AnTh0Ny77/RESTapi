@@ -98,8 +98,7 @@ class MailCmdController extends BaseController
         if ($auth != null)
             return $auth;
         
-        var_dump('hey');
-        die();
+        
         $id_user = UserController::returnId__user($security)['uid'];
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
 
@@ -112,7 +111,8 @@ class MailCmdController extends BaseController
             ], 401, 'bad request');
         }
 
-      
+        var_dump('hey');
+        die();
 
         $cmd = $shopCmdRepository->findOneBy(['scm__id' => $body['scm__id'] ] , false);
         if (empty($cmd)) {
