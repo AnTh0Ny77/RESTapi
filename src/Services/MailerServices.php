@@ -289,12 +289,12 @@ Class MailerServices {
             
                 a:active { text-decoration: none; }
             </style>
-            <span  style="text-align: center; width: 350px; margin: 50px auto 50px; ">
+            <span  style=" width: 350px; margin: 50px auto 50px; ">
                 <p style="text-align: center;"><!--StartFragment--><span style="font-size:14px"><span style="font-weight:bold">Récapitulatif de votre commande  MY RECODE  <br /> '.$cmd['scm__id'].'
                    </span></span>
                     <br/>
                     &nbsp;
-               
+               </p>
                     <br />
                     <br />
                     <br />
@@ -346,7 +346,6 @@ Class MailerServices {
                     <br />
                     <span style="font-size:16px" style="font-weight:bold;  margin: auto;">Pour suivre l etat de votre commande livrée ou facturée</span><br />
                     <span style="font-size:16px" style="font-weight:bold;  margin: auto;">rendez-vous dans l onglet "Mes documents"</span>
-                </p>
             </span>';
     } 
 
