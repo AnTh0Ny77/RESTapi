@@ -344,8 +344,8 @@ Class MailerServices {
                     <br />
                     <br />
                     <br />
-                    <span style="font-size:16px" style="font-weight:bold">Pour suivre l etat de votre commande livrée ou facturée</span><br />
-                    <span style="font-size:16px" style="font-weight:bold">rendez-vous dans l onglet "Mes documents"</span>
+                    <span style="font-size:16px" style="font-weight:bold;  margin: auto;">Pour suivre l etat de votre commande livrée ou facturée</span><br />
+                    <span style="font-size:16px" style="font-weight:bold;  margin: auto;">rendez-vous dans l onglet "Mes documents"</span>
                 </p>
             </span>';
     } 
