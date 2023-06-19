@@ -277,10 +277,9 @@ Class MailerServices {
                     border-radius: 16px;
                 }
                 .wrapper{
-                    
-                        margin: 50px auto 50px;
-                        width: 350px;
-                        text-align : center;
+                    margin: 50px auto 50px;
+                    width: 350px;
+                    text-align : center;
                 }
                 a:link { text-decoration: none; }
             
@@ -295,7 +294,7 @@ Class MailerServices {
                    </span></span>
                     <br/>
                     &nbsp;
-                </p>
+               
                     <br />
                     <br />
                     <br />

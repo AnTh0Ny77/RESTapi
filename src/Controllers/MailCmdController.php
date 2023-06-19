@@ -83,36 +83,27 @@ class MailCmdController extends BaseController
         $security = new Security();
         $responseHandler = new ResponseHandler();
         $mailer = new MailerServices();
-        
         $shopCmdRepository = new ShopCmdRepository('shop_cmd', $database, ShopCmd::class);
         $shopAvendreRepository = new ShopAVendreRepository('shop_avendre' , $database , ShopAVendre::class);
         $userRepository = new UserRepository('user', $database, User::class);
         $shopCmdLigneRepository = new ShopCmdLigneRepository('shop_cmd_ligne', $database, ShopCmdLigne::class);
-        
         // $lienUserClientRepository = new LienUserClientRepository('lien_user_client', $database, User::class);
-        
         $ShopArticleRepository = new ShopArticleRepository('shop_article' , $database , ShopArticle::class);
         $security = new Security();
 
         $auth = self::Auth($responseHandler, $security);
         if ($auth != null)
             return $auth;
-        
-          
+    
         $id_user = UserController::returnId__user($security)['uid'];
-      
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
-
-       
         $body = json_decode(file_get_contents('php://input'), true);
         
-     
         if (empty($body['scm__id'])) {
             return $responseHandler->handleJsonResponse([
                 "msg" => 'scm__id semble vide ',
             ], 401, 'bad request');
         }
-
 
         $cmd = $shopCmdRepository->findOneBy(['scm__id' => $body['scm__id'] ] , false);
         if (empty($cmd)) {
@@ -123,7 +114,7 @@ class MailCmdController extends BaseController
       
         $ligne = $shopCmdLigneRepository->findBy(['scl__scm_id' =>  $body['scm__id'] ] , 100 , ['scl__id' => 'ASC']);
         $def_array = [];
-        foreach ($ligne as $key => $value) {
+        foreach ($ligne as $key => $value){
             $array_item = $value;
             $avendre = $shopAvendreRepository->findOneBy(['sav__id' =>  $value['scl__ref_id'] ], false);
             $article = $ShopArticleRepository->findOneBy(['sar__ref_id' => $avendre['sav__ref_id']] , false);
@@ -131,9 +122,7 @@ class MailCmdController extends BaseController
             array_push($def_array , $array_item);
         }
 
-       
-        $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$def_array), $mailer->signature());
-        
+        $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$def_array), $mailer->signature()); 
         $mailer->sendMail('anthonybs.pro@gmail.com', 'Confirmation de votre commande MyRecode',  $body_mail);
         return $responseHandler->handleJsonResponse([
             "data" => 'l email à été transmis ',
