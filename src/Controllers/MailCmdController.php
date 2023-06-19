@@ -123,7 +123,7 @@ class MailCmdController extends BaseController
         }
 
         $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$def_array), $mailer->signature()); 
-        $mailer->sendMail('anthonybs.pro@gmail.com', 'Confirmation de votre commande MyRecode',  $body_mail);
+        $mailer->sendMail( $user->getUser__mail(), 'Confirmation de votre commande MyRecode',  $body_mail);
         return $responseHandler->handleJsonResponse([
             "data" => 'l email à été transmis ',
         ], 200, 'Ok !');
