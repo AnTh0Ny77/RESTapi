@@ -86,7 +86,7 @@ class MailCmdController extends BaseController
         
         $shopCmdRepository = new ShopCmdRepository('shop_cmd', $database, ShopCmd::class);
         $shopAvendreRepository = new ShopAVendreRepository('shop_avendre' , $database , ShopAVendre::class);
-      
+        $userRepository = new UserRepository('user', $database, User::class);
         $shopCmdLigneRepository = new ShopCmdLigneRepository('shop_cmd_ligne', $database, ShopCmdLigne::class);
         
         // $lienUserClientRepository = new LienUserClientRepository('lien_user_client', $database, User::class);
@@ -100,8 +100,7 @@ class MailCmdController extends BaseController
         
           
         $id_user = UserController::returnId__user($security)['uid'];
-        var_dump('hey');
-        die();
+      
         $user = $userRepository->findOneBy(['user__id' => $id_user] , true);
 
        
