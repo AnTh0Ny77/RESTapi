@@ -289,7 +289,7 @@ Class MailerServices {
             
                 a:active { text-decoration: none; }
             </style>
-            <div class="wrapper">
+            <span  style="text-align: center; width: 350px; margin: 50px auto 50px; ">
                 <p style="text-align: center;"><!--StartFragment--><span style="font-size:14px"><span style="font-weight:bold">Récapitulatif de votre commande  MY RECODE  <br /> '.$cmd['scm__id'].'
                    </span></span>
                     <br/>
@@ -347,7 +347,7 @@ Class MailerServices {
                     <span style="font-size:16px" style="font-weight:bold">Pour suivre l etat de votre commande livrée ou facturée</span><br />
                     <span style="font-size:16px" style="font-weight:bold">rendez-vous dans l onglet "Mes documents"</span>
                 </p>
-            </div>';
+            </span>';
     } 
 
     public function renderBodyTicketDest($id , $user){
