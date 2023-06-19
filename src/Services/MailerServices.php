@@ -203,9 +203,9 @@ Class MailerServices {
                     border-radius: 16px;
                 }
                 .wrapper{
-                    margin-top: 50px;
+                    margin: 50px auto 50px;
                     width: 350px;
-                    margin-bottom: 50px;
+                    text-align : center;
                 }
                 a:link { text-decoration: none; }
             
