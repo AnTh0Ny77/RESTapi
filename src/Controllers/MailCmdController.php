@@ -120,9 +120,6 @@ class MailCmdController extends BaseController
                 "msg" => 'cmd inconnue ',
             ], 401, 'bad request');
         }
-
-
-      
       
         $ligne = $shopCmdLigneRepository->findBy(['scl__scm_id' =>  $body['scm__id'] ] , 100 , ['scl__id' => 'ASC']);
         $def_array = [];
@@ -134,8 +131,10 @@ class MailCmdController extends BaseController
             array_push($def_array , $array_item);
         }
 
+        var_dump($def_array);
+        die();
         $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$def_array), $mailer->signature());
-        $mailer->sendMail($user->getUser__mail(), 'Confirmation de votre commande MyRecode',  $body_mail);
+        $mailer->sendMail('anthonybs.pro@gmail.com', 'Confirmation de votre commande MyRecode',  $body_mail);
         return $responseHandler->handleJsonResponse([
             "data" => 'l email à été transmis ',
         ], 200, 'Ok !');
