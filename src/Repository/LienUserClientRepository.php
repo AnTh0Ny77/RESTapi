@@ -20,10 +20,9 @@ Class LienUserClientRepository  extends BaseRepository {
         $responses = [];
         foreach ($clients as $key => $value) {
             $value = $clientRepository->findOneBy(['cli__id' => $value['luc__cli__id']] ,true);
+            $value->luc__cata = $value['luc__parc'];
             array_push($responses , $value);
         }
         return $responses;
     }
-
-   
 }
