@@ -101,15 +101,13 @@ Class UserSitesSossukeController extends BaseController {
     }
 
 
-    public static function post()
-    {
+    public static function post(){
         $database = new Database();
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client', $database, User::class);
         $userRepository = new UserRepository('user', $database, User::class);
         $clientRepository = new ClientRepository('client' , $database , Client::class);
-
         $security = new Security();
         $body = json_decode(file_get_contents('php://input'), true);
 
@@ -118,8 +116,6 @@ Class UserSitesSossukeController extends BaseController {
                 'msg' =>  ' Opération impossible'
             ], 404, 'bad request');
         }
-
-
         //supression des reletions tierces 
         if (!empty($body['delete'])) {
            
@@ -147,6 +143,23 @@ Class UserSitesSossukeController extends BaseController {
                 200,
                 'bad request'
             );
+        }
+
+        if(!empty($body['update_parc'])) {
+            $user = $userRepository->findOneBy(['user__id' => $body['update_parc_user'] ], true);
+            $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
+            foreach ($body['update_parc'] as $key => $value){
+                    foreach ($clients as $client) {
+                            if ($client['cli__id'] == $value){
+                                $lienUserClientRepository->updateLink([1,$user->getUser__id(),$client['cli__id']]);
+                            }else{
+                                $lienUserClientRepository->updateLink([0,$user->getUser__id(),$client['cli__id']]);
+                            }
+                    }
+            }
+            return $responseHandler->handleJsonResponse([
+                "data" => 'mis à jour', 
+            ], 200, 'ok');
         }
 
         if (empty($body['luc__user__id'])) {
