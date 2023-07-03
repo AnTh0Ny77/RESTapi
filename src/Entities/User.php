@@ -38,6 +38,8 @@ Class User {
 
     public  $clients;
 
+    public $clientsParc;
+
     public $user__confirm;
 
 	
@@ -215,6 +217,18 @@ Class User {
 
     public function setUser__confirm($user__confirm){
         $this->user__confirm = $user__confirm;
+        return $this;
+    }
+
+    public function getClientsParc()
+    {
+        return $this->clientsParc;
+    }
+
+    public function setClientsParc($clientsParc)
+    {
+        $this->clientsParc = $clientsParc;
+
         return $this;
     }
 }

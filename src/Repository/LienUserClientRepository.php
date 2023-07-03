@@ -23,4 +23,17 @@ Class LienUserClientRepository  extends BaseRepository {
         }
         return $responses;
     }
+
+    public function getUserClientsParc($user__id){
+        $clientRepository = new ClientRepository('client' , $this->Db , Client::class );
+        $clients = $this->findBy(['luc__user__id' => $user__id ], 50 , [ 'luc__order' => 'ASC'] );
+        $responses = [];
+        foreach ($clients as $key => $value) {
+            if ($value['luc__parc'] == 1 ) {
+                $val = $clientRepository->findOneBy(['cli__id' => $value['luc__cli__id']] ,true);
+                array_push($responses , $val);
+            }
+        }
+        return $responses;
+    }
 }
