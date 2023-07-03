@@ -112,6 +112,8 @@ class ListSocieteController  extends  BaseController{
                         $use = $userRepository->findOneBy(['user__id' => $value['luc__user__id']], false);
                         $role = $userRepository->getRoleArray($use);
                         $clients = $lienUserClientRepository->getUserClients($use['user__id']);
+                        $clientsParc = $lienUserClientRepository->getUserClientsParc($use['user__id']);
+                        $use['clientsParc'] = $clientsParc;
                         $use['clients'] = $clients;
                         $use['roles'] = $role;
                         array_push($user_final, $use);

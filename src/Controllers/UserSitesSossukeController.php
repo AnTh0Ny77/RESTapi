@@ -87,7 +87,9 @@ Class UserSitesSossukeController extends BaseController {
 
             $subject = $userRepository->findOneBy(['user__id' => $users] , true);
             $clients = $lienUserClientRepository->getUserClients($users);
+            // $clientsParc = $lienUserClientRepository->getUserClientsParc($users);
             $subject->setClients($clients);
+            // $subject->setClientsParc($clientsParc);
             $subject = $userRepository->getRole($subject);
             array_push($definitve_array , (array ) $subject );
         }
