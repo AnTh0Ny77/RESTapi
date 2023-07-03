@@ -148,7 +148,7 @@ Class UserSitesSossukeController extends BaseController {
         }
 
         if(!empty($body['update_parc'])) {
-            $user = $userRepository->findOneBy(['user__id' => $body['update_parc_user'] ], true);
+            $user = $userRepository->findOneBy(['user__id' => $body['user__id'] ], true);
             $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
             foreach ($body['update_parc'] as $key => $value){
                     foreach ($clients as $client) {
