@@ -55,12 +55,12 @@ Class UserSitesSossukeController extends BaseController {
     }
 
     public static function get(){
+
         $database = new Database();
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
         $userRepository = new UserRepository('user' , $database , User::class );
-        
         $security = new Security();
         $auth = self::Auth($responseHandler,$security);
         if ($auth != null) 
@@ -73,9 +73,7 @@ Class UserSitesSossukeController extends BaseController {
         $array_user =  [] ;
         foreach($user->getClients() as $client){
             $array_links = $lienUserClientRepository->findBy(['luc__cli__id' => $client->getCli__id() ],1000, []);
-            
             foreach ($array_links as $match) {
-                
                 array_push($array_user ,  $match['luc__user__id']);
             }
         }
@@ -166,7 +164,7 @@ Class UserSitesSossukeController extends BaseController {
 
         if (empty($body['luc__user__id'])) {
             return $responseHandler->handleJsonResponse([
-                "msg" => 'user__id n est pas renseigné', 
+                "msg" => 'user__id caca n est pas renseigné', 
             ], 401, 'bad request');
         }
 
