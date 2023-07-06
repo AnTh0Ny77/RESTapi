@@ -31,8 +31,8 @@ Class LienUserClientRepository  extends BaseRepository {
             'client' => $luc__cli__id
         ];
         $request = $this->Db->Pdo->prepare("UPDATE lien_user_client SET luc__parc = :parc WHERE luc__user__id = :user AND luc__cli__id = :client ");
-        return $this->Db->Pdo->prepare("UPDATE lien_user_client SET luc__parc = :parc WHERE luc__user__id = :user AND luc__cli__id = :client ");
-        $request->execute($data);
+       
+        return $request->execute($data);
        
     }
 
