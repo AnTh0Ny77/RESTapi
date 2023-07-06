@@ -151,10 +151,11 @@ Class UserSitesSossukeController extends BaseController {
             $user = $userRepository->findOneBy(['user__id' => $body['user__id'] ], true);
             $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
            
-            var_dump($lienUserClientRepository->updateLink(0,2,3));
-            die();
+          
             foreach ($body['update'] as $key => $value){
+                    
                     foreach ($clients as $client) {
+
                             // if ($client['cli__id'] == $value){
                             //     var_dump($lienUserClientRepository->updateLink([1,$user->getUser__id(),$client['cli__id']]));
                             // }else{
