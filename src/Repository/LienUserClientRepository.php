@@ -25,8 +25,13 @@ Class LienUserClientRepository  extends BaseRepository {
     }
 
     public function updateLink($luc__parc , $luc__user__id , $luc__cli__id){
-        $request = $this->Db->Pdo->prepare("UPDATE lien_user_client SET luc__parc = '". $luc__parc ."' WHERE luc__user__id = '". $luc__user__id ."' AND luc__cli__id = '". $luc__cli__id ."' ");
-        $request->execute();
+        $data = [
+            'parc' => $luc__parc, 
+            'user' => $luc__user__id , 
+            'client' => $luc__cli__id
+        ];
+        $request = $this->Db->Pdo->prepare("UPDATE lien_user_client SET luc__parc = :parc WHERE luc__user__id = :user AND luc__cli__id = :client ");
+        $request->execute($data);
         return true ;
     }
 
