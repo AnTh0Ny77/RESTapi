@@ -158,9 +158,9 @@ Class UserSitesSossukeController extends BaseController {
                     foreach ($clients as $client) {
 
                             if ($client->getCli__id() == $value){
-                                var_dump('hey');
-                                die();
                                 var_dump($lienUserClientRepository->updateLink([1,$user->getUser__id(),$client->getCli__id()]));
+                                die();
+                               
                             }else{
                                 var_dump('hoo');
                                 die();
