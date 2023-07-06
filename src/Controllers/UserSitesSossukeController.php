@@ -154,7 +154,7 @@ Class UserSitesSossukeController extends BaseController {
            
             
             foreach ($body['update'] as $key => $value){
-                var_dump($client['cli__id']);
+                var_dump($value);
                 die();
                     foreach ($clients as $client) {
 
