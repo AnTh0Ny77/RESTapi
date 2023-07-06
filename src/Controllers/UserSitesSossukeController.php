@@ -154,9 +154,9 @@ Class UserSitesSossukeController extends BaseController {
             foreach ($body['update_parc'] as $key => $value){
                     foreach ($clients as $client) {
                             if ($client['cli__id'] == $value){
-                                $lienUserClientRepository->updateLink([1,$user->getUser__id(),$client['cli__id']]);
+                                var_dump($lienUserClientRepository->updateLink([1,$user->getUser__id(),$client['cli__id']]));
                             }else{
-                                $lienUserClientRepository->updateLink([0,$user->getUser__id(),$client['cli__id']]);
+                                var_dump($lienUserClientRepository->updateLink([0,$user->getUser__id(),$client['cli__id']]));
                             }
                     }
             }
