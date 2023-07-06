@@ -156,7 +156,9 @@ Class UserSitesSossukeController extends BaseController {
                             // if ($client['cli__id'] == $value){
                             //     var_dump($lienUserClientRepository->updateLink([1,$user->getUser__id(),$client['cli__id']]));
                             // }else{
+
                                 var_dump($lienUserClientRepository->updateLink(0,$user->getUser__id(),$client['cli__id']));
+                                die();
                             // }
                     }
             }
