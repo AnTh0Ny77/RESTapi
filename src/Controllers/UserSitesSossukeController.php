@@ -167,16 +167,18 @@ Class UserSitesSossukeController extends BaseController {
                                 $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
                                 SET luc__parc = :parc 
                                 WHERE luc__user__id = :user AND luc__cli__id = :client ");
-                                var_dump($request->execute($data));
-                                die();
-                                return $request->execute($data);
-                                // $lienUserClientRepository->updateLink([1,$user->getUser__id(),$client->getCli__id()]);
-                                
+                                $request->execute($data);   
                                
                             }else{
-                                var_dump('hoo');
-                                die();
-                                var_dump($lienUserClientRepository->updateLink(0,$user->getUser__id(),$client->getCli__id()));
+                                $data = [
+                                    'parc' => 1 , 
+                                    'user' => $user->getUser__id() , 
+                                    'client' => $client->getCli__id()
+                                ];
+                                $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
+                                SET luc__parc = :parc 
+                                WHERE luc__user__id = :user AND luc__cli__id = :client ");
+                                $request->execute($data);   
                 
                             }
                     }
