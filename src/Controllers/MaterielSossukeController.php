@@ -111,7 +111,8 @@ Class MaterielSossukeController extends BaseController {
         $userRepository = new UserRepository('user', $database, User::class);
         $security = new Security();
       
-
+        var_dump('debug '); 
+        die();
         if (empty($_GET['secret'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'opération non autorisée'
