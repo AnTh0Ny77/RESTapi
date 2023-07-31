@@ -33,7 +33,7 @@ Class MaterielSossukeController extends BaseController {
                 break;
 
             case 'GET':
-                return $notFound::index();
+                return self::get();
                 break;
 
             case 'PUT':
@@ -111,8 +111,7 @@ Class MaterielSossukeController extends BaseController {
         $userRepository = new UserRepository('user', $database, User::class);
         $security = new Security();
       
-        var_dump('debug '); 
-        die();
+     
         if (empty($_GET['secret'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'opération non autorisée'
