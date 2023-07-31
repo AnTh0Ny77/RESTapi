@@ -110,26 +110,20 @@ Class MaterielSossukeController extends BaseController {
         $lienUserClientRepository = new LienUserClientRepository('lien_user_client', $database, User::class);
         $userRepository = new UserRepository('user', $database, User::class);
         $security = new Security();
-        $body = json_decode(file_get_contents('php://input'), true);
+      
 
-        if (empty($body)) {
-            return $responseHandler->handleJsonResponse([
-                'msg' => 'le body ne peut pas etre vide'
-            ], 401, 'bad request');
-        } 
-
-        if (empty($body['secret'])) {
+        if (empty($_GET['secret'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'opération non autorisée'
             ], 401, 'bad request');
 
-        } elseif (!empty($body['secret']) and $body['secret'] != 'heAzqxwcrTTTuyzegva^5646478§§uifzi77..!yegezytaa9143ww98314528') {
+        } elseif (!empty($_GET['secret']) and $_GET['secret'] != 'heAzqxwcrTTTuyzegva^5646478§§uifzi77..!yegezytaa9143ww98314528') {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'opération non autorisée'
             ], 401, 'bad request');
         }
 
-        $mat = $materielRepository->findOneBy(["mat__sn" => $body['mat__sn']], false);
+        $mat = $materielRepository->findOneBy(["mat__sn" => $_GET['mat__sn']], false);
 
         return $responseHandler->handleJsonResponse([
             'data' => $mat
