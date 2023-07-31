@@ -77,6 +77,41 @@ Class MaterielSossukeController extends BaseController {
                 'msg' => 'opération non autorisée'
             ], 401, 'bad request');
         }
+
+        //si une mise a jour viens des abonnments : 
+        if (!empty($body['__PUT'])) {
+            if (!empty($body['mat__id']) and isset($body['mat__actif'])) {
+                $maj = [
+                    "mat__id" =>  $body['mat__id'] , 
+                    "mat__sn" =>       $body['mat__sn'],  
+                    "mat__cli__id" =>   $body['mat__cli__id'], 
+                    "mat__type" =>    $body['mat__type'], 
+                    "mat__marque" =>  $body['mat__marque'], 
+                    "mat__model" =>  $body['mat__model'], 
+                    "mat__pn" =>  "" , 
+                    "mat__memo" =>  '' , 
+                    "mat__date_in" =>  $body['mat__date_in'], 
+                    "mat__kw_tg" => $body['mat__kw_tg'], 
+                    "mat__date_offg" => $body['mat__date_offg'], 
+                    "mat__user_id" =>  $body['mat__user_id'], 
+                    "mat__contrat_id" =>  $body['mat__contrat_id'], 
+                    "mat__actif" => $body['mat__actif']
+                ];
+    
+                $materiel = $materielRepository->UpdateOne($maj, null);
+    
+                if (empty($materiel)) {
+                    return $responseHandler->handleJsonResponse([
+                        'msg' => 'un probleme est survenu durant la mise a jour '
+                    ], 401, 'bad request');
+                }
+    
+                return $responseHandler->handleJsonResponse([
+                    'data' => $materiel
+                ], 201, 'ok');
+    
+            } 
+        }
        
         if (!empty($body['mat__id']) and isset($body['mat__actif'])) {
             
@@ -100,6 +135,7 @@ Class MaterielSossukeController extends BaseController {
         }
 
     }
+
 
     public static function get (){
 
