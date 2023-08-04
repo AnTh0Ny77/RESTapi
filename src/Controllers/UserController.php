@@ -141,7 +141,7 @@ Class UserController  extends BaseController{
         $confirm->setConfirm__exp($date);
         $confirmRepository->insert((array)$confirm);
 
-        $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyNewPassword('http://myrecode.fr/pw_modif.php?getpw&confirm__key=' . $confirm->getConfirm__key() . '&confirm__user=' . $confirm->getConfirm__user() . ''), $mailer->signature());
+        $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyNewPassword('https://myrecode.fr/pw_modif.php?getpw&confirm__key=' . $confirm->getConfirm__key() . '&confirm__user=' . $confirm->getConfirm__user() . ''), $mailer->signature());
         $mailer->sendMail($body['user__mail'], 'Définition de votre mot de passe ',  $body_mail);
 
 
