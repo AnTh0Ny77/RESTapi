@@ -125,6 +125,7 @@ Class ForgotPasswordController  extends  BaseController {
 
     
     public static function post(){
+        
         $database = new Database();
         $database->DbConnect();
         $mailer = new MailerServices();
@@ -161,6 +162,7 @@ Class ForgotPasswordController  extends  BaseController {
         $userRepository->updatePassword($user->getUser__id(), $password );
         $user = $userRepository->findOneBy(['user__id' => $user->getUser__id()], true);
         $user->setUser__confirm(1);
+
         $user = $userRepository->UpdateUser((array) $user);
 
         return $responseHandler->handleJsonResponse('Le mot de passe à bien été mis à jour' , 200 , 'Bad Request');

@@ -58,7 +58,7 @@ Class UserRepository  extends BaseRepository{
     }
 
     public function updatePassword($user__id , $password){
-        $request = $this->Db->Pdo->prepare('UPDATE user set user__password = ? where user__id = '. $user__id .' ');
+        $request = $this->Db->Pdo->prepare('UPDATE user set user__password = ? , user__confirm = 1 where user__id = '. $user__id .' ');
         $request->execute([$password]);
         return true;
     }
