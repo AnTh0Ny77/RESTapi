@@ -267,7 +267,8 @@ Class MaterielController extends BaseController {
             $materiel = $materielRepository->postMateriel($body , $user);
         }else{
             if (!empty($body['__PUT']) and $body['__PUT'] == 'yes') {
-
+                var_dump('hey'); 
+                die();
                 $data = [
                     'mat__id' => $body['mat__id'], 
                     'mat__cli__id' => $body['mat__cli__id'],
