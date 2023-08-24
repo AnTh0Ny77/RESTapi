@@ -280,7 +280,7 @@ Class MaterielController extends BaseController {
                 $materiel = $materielRepository->update($data);
              
                 return $responseHandler->handleJsonResponse([
-                    'data' => $materiel
+                    'data' =>"ok"
                 ] , 201 , 'ressource updated');
             }
             $data = [
