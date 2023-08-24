@@ -270,7 +270,6 @@ Class MaterielController extends BaseController {
                
                 $data = [
                     'mat__id' => $body['mat__id'], 
-                    'mat__cli__id' => $body['mat__cli__id'],
                     'mat__pn' => $body['mat__pn'], 
                     'mat__sn' => $body['mat__sn'], 
                     'mat__idnec' => $body['mat__idnec'], 
@@ -279,8 +278,7 @@ Class MaterielController extends BaseController {
                
 
                 $materiel = $materielRepository->update($data);
-                var_dump($materiel); 
-                die();
+             
                 return $responseHandler->handleJsonResponse([
                     'data' => $materiel
                 ] , 201 , 'ressource updated');
