@@ -124,12 +124,14 @@ class BoutiqueSossukeController extends BaseController{
         //ajout mis a jour des conditions de ventes  :
         if (!empty($body['sco__cli_id_r'])){
             $ShopConditions = new ShopConditionRepository('shop_condition' , $database, ShopCondition::class);
+            $temp = $body['sco__cli_id_r'];
+            if (!empty($body['sco__cli_id_fact'])) {$temp = $body['sco__cli_id_fact'];}
             $bodyT = [
                 'sco__cli_id' => $body['sco__cli_id_r'], 
                 'sco__type_port' => $body['sco__type_port'], 
                 'sco__francoa' => $body['sco__francoa'] , 
                 'sco__prix_port' => $body['sco__prix_port'] ,
-                'sco__cli_id_fact' => $body['sco__cli_id_fact'] , 
+                'sco__cli_id_fact' => $temp , 
                 'sco__vue_ref' => $body['sco__vue_ref']
             ];
             $verify = $ShopConditions->findOneby(['sco__cli_id' =>  $bodyT['sco__cli_id'] ] , false);
@@ -137,8 +139,7 @@ class BoutiqueSossukeController extends BaseController{
                 $ShopConditions->update($bodyT);
             }else{
                 $ShopConditions->insert($bodyT);
-                var_dump($ShopConditions->insert($bodyT));
-                die();
+                
             }
             return $responseHandler->handleJsonResponse([
                 'data' => true 
