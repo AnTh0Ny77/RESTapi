@@ -276,12 +276,11 @@ Class MaterielController extends BaseController {
                     'mat__memo' => $body['mat__memo'] 
                 ];
                
-
                 $materiel = $materielRepository->update($data);
-             
                 return $responseHandler->handleJsonResponse([
                     'data' =>"ok"
                 ] , 201 , 'ressource updated');
+                
             }
             $data = [
                 'mat__cli__id' => $body['mat__cli__id'] ,
