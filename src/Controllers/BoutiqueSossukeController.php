@@ -139,7 +139,6 @@ class BoutiqueSossukeController extends BaseController{
                 $ShopConditions->update($bodyT);
             }else{
                 $ShopConditions->insert($bodyT);
-                
             }
             return $responseHandler->handleJsonResponse([
                 'data' => true 
