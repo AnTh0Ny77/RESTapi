@@ -263,11 +263,26 @@ Class MaterielController extends BaseController {
             ] , 401 , 'bad request');
         } 
 
-      
-
         if (!empty($user)) {
             $materiel = $materielRepository->postMateriel($body , $user);
         }else{
+            if (!empty($body['__PUT']) and $body['__PUT'] == 'yes') {
+
+                $data = [
+                    'mat__id' => $body['mat__id'], 
+                    'mat__cli__id' => $body['mat__cli__id'],
+                    'mat__pn' => $body['mat__pn'], 
+                    'mat__sn' => $body['mat__sn'], 
+                    'mat__idnec' => $body['mat__idnec'], 
+                    'mat__ident' => $body['mat__ident'], 
+                    'mat__memo' => $body['mat__memo'] 
+                ];
+
+                $materiel = $materielRepository->update($data);
+                return $responseHandler->handleJsonResponse([
+                    'data' => $materiel
+                ] , 201 , 'ressource updated');
+            }
             $data = [
                 'mat__cli__id' => $body['mat__cli__id'] ,
                 'mat__type' => $body['mat__type'] ,
