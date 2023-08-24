@@ -28,7 +28,6 @@ Class RefreshController {
                     ],
                 'reponse' =>  'envoi un token valide pour le user',
                 "Auth" => 'PUBLIC'
-                
             ] 
         ];
         return $doc;
