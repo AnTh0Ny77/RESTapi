@@ -145,10 +145,7 @@ Class UserSitesSossukeController extends BaseController {
             );
         }
 
-        return $responseHandler->handleJsonResponse([
-            "data" => $body, 
-        ], 200, '???');
-
+       
        
         if(!empty($body['update'])) {
          
