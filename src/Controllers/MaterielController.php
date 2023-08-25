@@ -273,14 +273,16 @@ Class MaterielController extends BaseController {
                     'mat__pn' => $body['mat__pn'], 
                     'mat__sn' => $body['mat__sn'], 
                     'mat__idnec' => $body['mat__idnec'], 
-                    'mat__memo' => $body['mat__memo'] 
+                    'mat__memo' => $body['mat__memo']  , 
+                    'mat__kw_tg' => $body['mat__kw_tg'] , 
+                    'mat__date_offg' => $body['mat__date_offg']
                 ];
                
                 $materiel = $materielRepository->update($data);
                 return $responseHandler->handleJsonResponse([
                     'data' =>"ok"
                 ] , 201 , 'ressource updated');
-                
+
             }
             $data = [
                 'mat__cli__id' => $body['mat__cli__id'] ,
