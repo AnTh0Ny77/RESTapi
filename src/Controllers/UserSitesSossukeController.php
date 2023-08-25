@@ -145,11 +145,13 @@ Class UserSitesSossukeController extends BaseController {
             );
         }
 
+        return $responseHandler->handleJsonResponse([
+            "data" => $body, 
+        ], 200, '???');
+
        
         if(!empty($body['update'])) {
-            return $responseHandler->handleJsonResponse([
-                "msg" => 'ICI', 
-            ], 401, 'bad request');
+         
             $user = $userRepository->findOneBy(['user__id' => $body['luc__user__id'] ], true);
        
             $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
