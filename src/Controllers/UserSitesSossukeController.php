@@ -159,7 +159,7 @@ Class UserSitesSossukeController extends BaseController {
                     foreach ($clients as $client) {
 
                         return $responseHandler->handleJsonResponse([
-                            "msg" => $client, 
+                            "msg" => $client->getCli__id(), 
                         ], 401, 'bad request');
 
                             if ($client->getCli__id() == $value){
