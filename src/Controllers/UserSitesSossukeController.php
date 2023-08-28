@@ -156,7 +156,7 @@ Class UserSitesSossukeController extends BaseController {
 
 
             $clause = '';
-            $totalElements = count($tableau);
+            $totalElements = count($body['update']);
             $index = 0;
             foreach ($body['update'] as $value) {
                 $index++;
