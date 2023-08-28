@@ -153,11 +153,11 @@ Class UserSitesSossukeController extends BaseController {
        
             $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
            
-            var_dump($clients);
-            die();
+           
             
             foreach ($body['update'] as $key => $value){
-                
+                var_dump($value);
+               
                     foreach ($clients as $client) {
 
                             if ($client->getCli__id() == $value){
@@ -189,6 +189,7 @@ Class UserSitesSossukeController extends BaseController {
                             }
                     }
             }
+            die();
             return $responseHandler->handleJsonResponse([
                 "data" => 'mis à jour', 
             ], 200, '???');
