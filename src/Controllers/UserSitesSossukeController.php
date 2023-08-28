@@ -153,8 +153,6 @@ Class UserSitesSossukeController extends BaseController {
        
             $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
 
-
-
             //remet tout a 1
             $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
             SET luc__parc = 0
