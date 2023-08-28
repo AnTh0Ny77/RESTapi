@@ -153,6 +153,8 @@ Class UserSitesSossukeController extends BaseController {
        
             $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
            
+            var_dump($clients);
+            die();
             
             foreach ($body['update'] as $key => $value){
                 
