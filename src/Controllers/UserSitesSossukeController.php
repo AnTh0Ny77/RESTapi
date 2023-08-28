@@ -155,6 +155,13 @@ Class UserSitesSossukeController extends BaseController {
 
 
 
+            //remet tout a 1
+            $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
+            SET luc__parc = 0
+            WHERE luc__user__id = ".$user->getUser__id()."");
+            $request->execute();   
+
+
             $clause = '';
             $totalElements = count($body['update']);
             $index = 0;
@@ -166,15 +173,10 @@ Class UserSitesSossukeController extends BaseController {
                     $clause .=  $value . " , ";
                 }
                
-            }
-
-            
-                  
+            }    
             $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
-            SET luc__parc = 0 
+            SET luc__parc = 1
             WHERE luc__user__id = ".$user->getUser__id()." AND luc__cli__id IN ( ".$clause."  ) ");
-
-
             $request->execute();   
             
 
