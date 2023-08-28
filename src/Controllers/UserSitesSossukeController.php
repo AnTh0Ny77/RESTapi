@@ -154,7 +154,7 @@ Class UserSitesSossukeController extends BaseController {
             $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
 
 
-            
+
             $clause = '';
             $totalElements = count($tableau);
             $index = 0;
@@ -171,8 +171,12 @@ Class UserSitesSossukeController extends BaseController {
             $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
             SET luc__parc = 0 
             WHERE luc__user__id = ".$user->getUser__id()." AND luc__cli__id IN ( ".$clause."  ) ");
+
+            var_dump($request);
+            die();
             $request->execute();   
-                               
+            
+
                 
             return $responseHandler->handleJsonResponse([
                 "data" => 'mis à jour', 
