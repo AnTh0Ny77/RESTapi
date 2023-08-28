@@ -160,7 +160,7 @@ Class UserSitesSossukeController extends BaseController {
                             if ($client->getCli__id() != $value){
                                
                                 $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
-                                SET luc__parc = 1  
+                                SET luc__parc = 0 
                                 WHERE luc__user__id = ".$user->getUser__id()." AND luc__cli__id = ".$client->getCli__id()." ");
                                 $request->execute();   
                                
