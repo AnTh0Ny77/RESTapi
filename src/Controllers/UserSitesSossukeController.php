@@ -158,18 +158,16 @@ Class UserSitesSossukeController extends BaseController {
                 
                     foreach ($clients as $client) {
 
-                      
-
                             if ($client->getCli__id() == $value){
-                                return $responseHandler->handleJsonResponse([
-                                    "msg" => $client->getCli__id(), 
-                                ], 401, 'bad request');
+                                
                                 $data = [
                                     'parc' => 0 , 
                                     'user' => $user->getUser__id() , 
                                     'client' => $client->getCli__id()
                                 ];
                                 
+                                var_dump($data);
+                                die();
                                 $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
                                 SET luc__parc = :parc 
                                 WHERE luc__user__id = :user AND luc__cli__id = :client ");
