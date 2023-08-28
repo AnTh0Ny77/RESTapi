@@ -157,8 +157,6 @@ Class UserSitesSossukeController extends BaseController {
             
            
                 
-               
-
                     foreach ($clients as $client) {
                         foreach ($body['update'] as $key => $value){
                             if ($client->getCli__id() == $value){
