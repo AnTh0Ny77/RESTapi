@@ -155,11 +155,12 @@ Class UserSitesSossukeController extends BaseController {
            
            
             
-            foreach ($body['update'] as $key => $value){
+           
                 
-                var_dump($value);
-                    foreach ($clients as $client) {
+               
 
+                    foreach ($clients as $client) {
+                        foreach ($body['update'] as $key => $value){
                             if ($client->getCli__id() == $value){
                                 
                                 $data = [
@@ -189,7 +190,7 @@ Class UserSitesSossukeController extends BaseController {
                             }
                     }
             }
-            die();
+            
             return $responseHandler->handleJsonResponse([
                 "data" => 'mis à jour', 
             ], 200, '???');
