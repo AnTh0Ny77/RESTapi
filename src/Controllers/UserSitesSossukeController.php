@@ -167,13 +167,15 @@ Class UserSitesSossukeController extends BaseController {
                 }
                
             }
+
+            var_dump($clause);
+            die();
                   
             $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
             SET luc__parc = 0 
             WHERE luc__user__id = ".$user->getUser__id()." AND luc__cli__id IN ( ".$clause."  ) ");
 
-            var_dump($request);
-            die();
+
             $request->execute();   
             
 
