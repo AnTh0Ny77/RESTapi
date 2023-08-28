@@ -154,19 +154,11 @@ Class UserSitesSossukeController extends BaseController {
             $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
            
            
-            
-           
-                
                     foreach ($clients as $client) {
+
                         foreach ($body['update'] as $key => $value){
-                            if ($client->getCli__id() == $value){
-                                
-                                $data = [
-                                    'parc' => 0 , 
-                                    'user' => $user->getUser__id() , 
-                                    'client' => $client->getCli__id()
-                                ];
-                                
+
+                            if ($client->getCli__id() != $value){
                                
                                 $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
                                 SET luc__parc = 0  
@@ -175,11 +167,6 @@ Class UserSitesSossukeController extends BaseController {
                                
                             }else{
                                
-                                $data = [
-                                    'parc' => 1 , 
-                                    'user' => $user->getUser__id() , 
-                                    'client' => $client->getCli__id()
-                                ];
                                 $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
                                 SET luc__parc = 1  
                                 WHERE luc__user__id = ".$user->getUser__id()." AND luc__cli__id = ".$client->getCli__id()." ");
