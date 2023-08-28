@@ -158,6 +158,10 @@ Class UserSitesSossukeController extends BaseController {
                 
                     foreach ($clients as $client) {
 
+                        return $responseHandler->handleJsonResponse([
+                            "msg" => $client, 
+                        ], 401, 'bad request');
+
                             if ($client->getCli__id() == $value){
                                 $data = [
                                     'parc' => 0 , 
@@ -191,7 +195,7 @@ Class UserSitesSossukeController extends BaseController {
 
         if (empty($body['luc__user__id'])) {
             return $responseHandler->handleJsonResponse([
-                "msg" => 'user__id caca n est pas renseigné', 
+                "msg" => 'user__id  n est pas renseigné', 
             ], 401, 'bad request');
         }
 
