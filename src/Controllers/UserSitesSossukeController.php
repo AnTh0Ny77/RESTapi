@@ -152,8 +152,7 @@ Class UserSitesSossukeController extends BaseController {
             $user = $userRepository->findOneBy(['user__id' => $body['luc__user__id'] ], true);
        
             $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
-           
-           
+        
                     foreach ($clients as $client) {
 
                         foreach ($body['update'] as $key => $value){
@@ -165,13 +164,6 @@ Class UserSitesSossukeController extends BaseController {
                                 WHERE luc__user__id = ".$user->getUser__id()." AND luc__cli__id = ".$client->getCli__id()." ");
                                 $request->execute();   
                                
-                            }else{
-                               
-                                $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
-                                SET luc__parc = 1  
-                                WHERE luc__user__id = ".$user->getUser__id()." AND luc__cli__id = ".$client->getCli__id()." ");
-                                $request->execute();   
-                
                             }
                     }
             }
