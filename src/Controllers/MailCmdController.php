@@ -14,8 +14,11 @@ use Src\Repository\UserRepository;
 use Src\Controllers\BaseController;
 use Src\Repository\ConfirmRepository;
 use Src\Entities\ShopAVendre;
+use Src\Entities\Commercial;
+use Src\Repository\CommercialRepository;
 use Src\Repository\RefreshRepository;
 use Src\Controllers\UserController;
+use Src\Entities\Client;
 use Src\Repository\ClientRepository;
 use Src\Repository\ShopAVendreRepository;
 use Src\Repository\ShopCmdRepository;
@@ -89,6 +92,8 @@ class MailCmdController extends BaseController
         $shopCmdLigneRepository = new ShopCmdLigneRepository('shop_cmd_ligne', $database, ShopCmdLigne::class);
         // $lienUserClientRepository = new LienUserClientRepository('lien_user_client', $database, User::class);
         $ShopArticleRepository = new ShopArticleRepository('shop_article' , $database , ShopArticle::class);
+        $clientRepository = new ClientRepository('client' , $database , Client::class );
+        $commercialRepository = new CommercialRepository('commercial' , $database , Commercial::class );
         $security = new Security();
 
         $auth = self::Auth($responseHandler, $security);
@@ -124,6 +129,20 @@ class MailCmdController extends BaseController
 
         $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$def_array), $mailer->signature()); 
         $mailer->sendMail( $user->getUser__mail(), 'Confirmation de votre commande MyRecode',  $body_mail);
+
+        $results =  $clientRepository->findOneBy(['cli__id' => $cmd['scm__client_id_fact']] , true);
+                   
+                    if ($results instanceof Client) {
+                        $com = $commercialRepository->findOneBy(['com__id' =>  $results->getCli__com1()] , true);
+                        if (!$com instanceof Commercial) {
+                            return $responseHandler->handleJsonResponse([
+                                'msg' => 'Le commercial du client n a pas été trouvé'
+                            ] , 400 , 'Bad Request');
+                        }else{
+                            $mailer->sendMail( $com->getCom__email(), 'Une commande vous à été passée par '.$results->getCli__nom().'',  $body_mail);
+                        }
+                    } else return $responseHandler->handleJsonResponse('Aucun clients facturé trouvés' , 404 , 'Not Found');
+
         return $responseHandler->handleJsonResponse([
             "data" => 'l email à été transmis ',
         ], 200, 'Ok !');
