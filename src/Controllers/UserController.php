@@ -174,10 +174,10 @@ Class UserController  extends BaseController{
             $user->setRefresh_token($refresh_token['refresh_token']);
 
             if (!empty($_GET['FLM']) and $_GET['FLM'] == 'ok' ) {
-               
-                $clients = $lienUserClientRepository->getUserClientsArray($user->getUser__id());
-                var_dump($clients); 
+                var_dump('hzy'); 
                 die();
+                $clients = $lienUserClientRepository->getUserClientsArray($user->getUser__id());
+               
                 $user->setClients($clients);
             }else{
                 $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
