@@ -145,8 +145,7 @@ Class MaterielRepository  extends BaseRepository {
 
        
         $id_materiel = $this->insert($materiel_data);
-        var_dump($id_materiel);
-        die();
+        
         $materiel = $this->findOneBy(['mat__id' =>  intval($id_materiel)] , false );
         return $materiel;
     }
