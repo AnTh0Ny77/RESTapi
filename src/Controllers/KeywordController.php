@@ -65,7 +65,7 @@ Class KeywordController extends BaseController {
         if ($auth != null) 
             return $auth;
 
-        $keywordlist = $Repository->findBy([], 100000, ['kw__type' => "ASC" , 'kw__ordre' => "ASC"]);
+        $keywordlist = $Repository->findBy([], 100000, ['kw__type' => "ASC" , 'kw__ordre' => "ASC" , "kw__lib" => "ASC"]);
         
         return $responseHandler->handleJsonResponse([
             'data' => $keywordlist

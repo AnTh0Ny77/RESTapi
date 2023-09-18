@@ -245,11 +245,13 @@ Class MailerServices {
             $total_ligne = intval($value['scl__qte']) * floatval($value['scl__prix_unit']);
             $gar= '';
             if (!empty($value['scl__gar_mois'])) {
+                //incorporer une nouvelle ligne sup :  
                 $gar= ' <br> garantie ' .$value['scl__gar_mois'] . ' mois ';
                 $gar_prix = intval($value['scl__qte']) * floatval($value['scl__gar_prix']);
-                $total_ligne +=  $gar_prix;
+                //$total_ligne +=  $gar_prix;
             }
             $total += $total_ligne;
+            $total += $gar_prix;
             $table_ligne .= '<tr>
 
                     <td width="47%">
@@ -262,7 +264,8 @@ Class MailerServices {
                     </td>
 
                     <td>
-                       <b> '.number_format($total_ligne, 2, ',', ' '). ' € HT </b>
+                       <b> '.number_format($total_ligne, 2, ',', ' '). ' € HT </b><br>
+                       '.number_format($gar_prix, 2, ',', ' '). ' € HT
                     </td>
             </tr>';
         }
