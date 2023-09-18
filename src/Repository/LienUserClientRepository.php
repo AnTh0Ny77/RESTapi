@@ -24,6 +24,19 @@ Class LienUserClientRepository  extends BaseRepository {
         return $responses;
     }
 
+    public function getUserClientsArray($user__id){
+        $clientRepository = new ClientRepository('client' , $this->Db , Client::class );
+        $clients = $this->findBy(['luc__user__id' => $user__id ], 50 , [ 'luc__order' => 'ASC'] );
+        $responses = [];
+        foreach ($clients as $key => $value) {
+            $rep = $clientRepository->findOneBy(['cli__id' => $value['luc__cli__id']] ,false);
+            $rep['luc__parc'] = $value['luc__parc'];
+            $rep['luc__cata'] = $value['luc__cata'];
+            array_push($responses , $value);
+        }
+        return $responses;
+    }
+
     public function updateLink($luc__parc , $luc__user__id , $luc__cli__id){
         $data = [
             'parc' => $luc__parc, 

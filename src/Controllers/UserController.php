@@ -172,9 +172,17 @@ Class UserController  extends BaseController{
            
             $refresh_token = $refreshRepository->findOneBy(['user__id' => $user->getUser__id()] ,false );
             $user->setRefresh_token($refresh_token['refresh_token']);
+
+            if (!empty($_GET['FLM']) and $_GET['FLM'] == 'ok' ) {
+               
+                $clients = $lienUserClientRepository->getUserClientsArray($user->getUser__id());
+                $user->setClients($clients);
+            }else{
+                $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
+                $user->setClients($clients);
+            }
            
-            $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
-            $user->setClients($clients);
+            
             return $responseHandler->handleJsonResponse( [ 
                 "data" => $user ]  , 200 , 'ok');
         }
