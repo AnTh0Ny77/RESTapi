@@ -20,7 +20,6 @@ use Src\Repository\RefreshRepository;
 use Src\Controllers\UserController;
 use Src\Entities\Client;
 use Src\Repository\ClientRepository;
-use Src\Entities\Client;
 use Src\Repository\ShopAVendreRepository;
 use Src\Repository\ShopCmdRepository;
 use Src\Repository\ShopCmdLigneRepository;
