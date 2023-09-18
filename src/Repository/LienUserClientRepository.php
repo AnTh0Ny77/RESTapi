@@ -32,7 +32,7 @@ Class LienUserClientRepository  extends BaseRepository {
             $rep = $clientRepository->findOneBy(['cli__id' => $value['luc__cli__id']] ,false);
             $rep['luc__parc'] = $value['luc__parc'];
             $rep['luc__cata'] = $value['luc__cata'];
-            array_push($responses , $value);
+            array_push($responses , $rep);
         }
         return $responses;
     }
