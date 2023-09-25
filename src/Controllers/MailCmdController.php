@@ -199,7 +199,7 @@ class MailCmdController extends BaseController
                                 $response = $exeption->getResponse();
                             }
                            $response = self::handleResponse($response);
-                           var_dump($response);
+                           var_dump($response["data"]);
                             die();
                             //mis a jour de l ID de la commande et de l ID des lignes 
 
