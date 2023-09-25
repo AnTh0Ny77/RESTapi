@@ -203,15 +203,11 @@ class MailCmdController extends BaseController
                             $shopCmdRepository->updateFromSossuke($body['scm__id'] , $cmd__id);
                             $shopCmdLigneRepository->updateFromSossuke($body['scm__id'] , $cmd__id);
                             //mis a jour de l ID de la commande et de l ID des lignes 
-                            var_dump('hey');
-                            die();
+                            $cmd = $shopCmdRepository->findOneBy(['scm__id' => $cmd__id] , false);
                             //ENVOI DES 2 MAILS A JOUR 
-                            //////////////////////////////////////////////
-                            //////////////////////////////////////////////
-                            //////////////////////////////////////////////
                             $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$def_array), $mailer->signature()); 
                             $mailer->sendMail( $user->getUser__mail(), 'Confirmation de votre commande MyRecode',  $body_mail);
-                            // $mailer->sendMail( $com->getCom__email(), 'Une commande vous à été passée par '.$results->getCli__nom().'',  $body_mail);
+                            $mailer->sendMail( $com->getCom__email(), 'Une commande vous à été passée par '.$results->getCli__nom().'',  $body_mail);
                         }
                     } else return $responseHandler->handleJsonResponse('Aucun clients facturé trouvés' , 404 , 'Not Found');
 
