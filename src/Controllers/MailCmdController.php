@@ -151,7 +151,8 @@ class MailCmdController extends BaseController
                                 'msg' => 'Le commercial du client n a pas été trouvé'
                             ] , 400 , 'Bad Request');
                         }else{
-
+                            var_dump($response);
+                            die();
                             //////////////////////////////////////
                             //creation de la commande sur sossuke :
                             $sossuke_commande = [];
@@ -170,8 +171,7 @@ class MailCmdController extends BaseController
                                 $response = $exeption->getResponse();
                             }
 
-                            var_dump($response);
-                            die();
+                            
                             //mis a jour de l ID de la commande et de l ID des lignes 
 
                             //ENVOI DES 2 MAILS A JOUR 
