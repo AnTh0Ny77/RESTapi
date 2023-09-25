@@ -181,7 +181,14 @@ class MailCmdController extends BaseController
                                 
                                 $response = $exeption->getResponse();
                             }
-                            var_dump($response);
+                            var_dump($guzzle->post('/SoftRecode/apiCmdTransfert', [ 'body' => [
+                                "scm__user_id" => $results->getCli__com1() , 
+                                "scm__prix_port" => $cmd['scm__prix_port'], 
+                                "scm__client_id_livr" => $cmd['scm__client_id_livr'], 
+                                "scm__client_id_fact" => $cmd['scm__client_id_fact'],
+                                "ligne" =>  $sossuke_array , 
+                                "secret" => "heAzqxwcrTTTuyzegva^5646478§§uifzi77..!yegezytaa9143ww98314528"
+                            ] ]));
                             die();
                           
                             //mis a jour de l ID de la commande et de l ID des lignes 
