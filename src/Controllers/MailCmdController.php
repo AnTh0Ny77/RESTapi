@@ -161,10 +161,11 @@ class MailCmdController extends BaseController
                             $sossuke_commande['scm__client_id_fact'] = $cmd['scm__client_id_fact'];
                             $sossuke_commande['ligne'] = $sossuke_array;
                             $sossuke_commande['secret'] = "heAzqxwcrTTTuyzegva^5646478§§uifzi77..!yegezytaa9143ww98314528";
-                            var_dump($response);
-                            die();
+                            
                             //envoi à l'api de sossuke/////////////////
                             $config = json_decode(file_get_contents('config.json'));
+                            var_dump($response);
+                            die();
                             $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
                             try {
                                 $response = $guzzle->post('/SoftRecode/apiCmdTransfert', [ 'body' => $sossuke_commande ]);
