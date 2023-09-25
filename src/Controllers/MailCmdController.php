@@ -164,16 +164,17 @@ class MailCmdController extends BaseController
                             
                             //envoi à l'api de sossuke/////////////////
                             $config = json_decode(file_get_contents('config.json'));
+                          
+                            $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
                             var_dump($response);
                             die();
-                            $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
                             try {
                                 $response = $guzzle->post('/SoftRecode/apiCmdTransfert', [ 'body' => $sossuke_commande ]);
                             } catch (ClientException $exeption) {
                                 $response = $exeption->getResponse();
                             }
 
-                            
+                          
                             //mis a jour de l ID de la commande et de l ID des lignes 
 
                             //ENVOI DES 2 MAILS A JOUR 
