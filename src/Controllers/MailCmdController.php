@@ -154,13 +154,13 @@ class MailCmdController extends BaseController
                           
                             //////////////////////////////////////
                             //creation de la commande sur sossuke :
-                            $sossuke_commande = [];
-                            $sossuke_commande['scm__user_id'] = $results->getCli__com1();
-                            $sossuke_commande['scm__user_id'] = $cmd['scm__prix_port'];
-                            $sossuke_commande['scm__client_id_livr'] = $cmd['scm__client_id_livr'];
-                            $sossuke_commande['scm__client_id_fact'] = $cmd['scm__client_id_fact'];
-                            $sossuke_commande['ligne'] = $sossuke_array;
-                            $sossuke_commande['secret'] = "heAzqxwcrTTTuyzegva^5646478§§uifzi77..!yegezytaa9143ww98314528";
+                            // $sossuke_commande = [];
+                            // $sossuke_commande['scm__user_id'] = $results->getCli__com1();
+                            // $sossuke_commande['scm__prix_port'] = $cmd['scm__prix_port'];
+                            // $sossuke_commande['scm__client_id_livr'] = $cmd['scm__client_id_livr'];
+                            // $sossuke_commande['scm__client_id_fact'] = $cmd['scm__client_id_fact'];
+                            // $sossuke_commande['ligne'] = $sossuke_array;
+                            // $sossuke_commande['secret'] = "heAzqxwcrTTTuyzegva^5646478§§uifzi77..!yegezytaa9143ww98314528";
                             
                             //envoi à l'api de sossuke/////////////////
                             $config = json_decode(file_get_contents('config.json'));
@@ -168,8 +168,17 @@ class MailCmdController extends BaseController
                             $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
                             
                             try {
-                                $response = $guzzle->post('/SoftRecode/apiCmdTransfert', [ 'body' => $sossuke_commande ]);
+
+                                $response = $guzzle->post('/SoftRecode/apiCmdTransfert', [ 'body' => [
+                                    "scm__user_id" => $results->getCli__com1() , 
+                                    "scm__prix_port" => $cmd['scm__prix_port'], 
+                                    "scm__client_id_livr" => $cmd['scm__client_id_livr'], 
+                                    "scm__client_id_fact" => $cmd['scm__client_id_fact'],
+                                    "ligne" =>  $sossuke_array , 
+                                    "secret" => "heAzqxwcrTTTuyzegva^5646478§§uifzi77..!yegezytaa9143ww98314528"
+                                ] ]);
                             } catch (ClientException $exeption) {
+                                
                                 $response = $exeption->getResponse();
                             }
                             var_dump($response);
