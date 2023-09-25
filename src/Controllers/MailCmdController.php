@@ -80,6 +80,23 @@ class MailCmdController extends BaseController
         }
     }
 
+    public static  function handleResponse($response){
+        
+        if($response->getStatusCode() <300){
+            return [
+            'code' => $response->getStatusCode(),
+            'data' => json_decode($response->getBody()->read(16384087),true)['data'] , 
+            'http_errors' => false
+            ];
+        }
+        
+        return [
+        'code' => $response->getStatusCode(),
+        'msg' => json_decode($response->getBody()->read(16384),true)['msg'] , 
+        'http_errors' => false
+        ];
+    }
+
 
     public static function post(){
         
