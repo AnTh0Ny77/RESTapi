@@ -165,7 +165,7 @@ class MailCmdController extends BaseController
                             //envoi à l'api de sossuke/////////////////
                             $config = json_decode(file_get_contents('config.json'));
                           
-                            $guzzle = new ClientHtpp(['base_uri' => $config->guzzle->host]);
+                            $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
                             
                             try {
 
@@ -174,7 +174,7 @@ class MailCmdController extends BaseController
                                     "scm__prix_port" => $cmd['scm__prix_port'], 
                                     "scm__client_id_livr" => $cmd['scm__client_id_livr'], 
                                     "scm__client_id_fact" => $cmd['scm__client_id_fact'],
-                                    "ligne" =>  $sossuke_array , 
+                                    "ligne" =>  [] , 
                                     "secret" => "heAzqxwcrTTTuyzegva^5646478§§uifzi77..!yegezytaa9143ww98314528"
                                 ] ]);
                             } catch (ClientException $exeption) {
