@@ -181,7 +181,7 @@ class MailCmdController extends BaseController
                                 
                                 $response = $exeption->getResponse();
                             }
-                            var_dump($response);
+                            var_dump($response->getResponse());
                             die();
                           
                             //mis a jour de l ID de la commande et de l ID des lignes 
@@ -192,7 +192,7 @@ class MailCmdController extends BaseController
                             //////////////////////////////////////////////
                             $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$def_array), $mailer->signature()); 
                             $mailer->sendMail( $user->getUser__mail(), 'Confirmation de votre commande MyRecode',  $body_mail);
-                            $mailer->sendMail( $com->getCom__email(), 'Une commande vous à été passée par '.$results->getCli__nom().'',  $body_mail);
+                            // $mailer->sendMail( $com->getCom__email(), 'Une commande vous à été passée par '.$results->getCli__nom().'',  $body_mail);
                         }
                     } else return $responseHandler->handleJsonResponse('Aucun clients facturé trouvés' , 404 , 'Not Found');
 
