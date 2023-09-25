@@ -198,11 +198,13 @@ class MailCmdController extends BaseController
                                 
                                 $response = $exeption->getResponse();
                             }
-                           $response = self::handleResponse($response);
-                           var_dump($response["data"]);
-                            die();
+                            $response = self::handleResponse($response);
+                            $cmd__id  = $response["data"];
+                            $shopCmdRepository->updateFromSossuke($body['scm__id'] , $cmd__id);
+                            $shopCmdLigneRepository->updateFromSossuke($body['scm__id'] , $cmd__id);
                             //mis a jour de l ID de la commande et de l ID des lignes 
-
+                            var_dump('hey');
+                            die();
                             //ENVOI DES 2 MAILS A JOUR 
                             //////////////////////////////////////////////
                             //////////////////////////////////////////////
