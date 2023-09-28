@@ -86,11 +86,15 @@ class AdController  extends  BaseController
 
         if (!empty($_GET['cli__id'])) {
             
-            
-
             $list = $lienClientpromo->getPromoClient($_GET['cli__id']);
+            $data = [];
+            foreach ($list as $key => $value) {
+                $temp = $addrepository->findOneBy(['add__id' => $value['lcp__ad__id']] , false );
+                array_push($data , $temp );
+            }
+
             return $responseHandler->handleJsonResponse([
-                'data' =>  $list,
+                'data' =>  $data,
             ], 200, "ok");
         }
 
