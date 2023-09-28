@@ -88,9 +88,9 @@ class AdController  extends  BaseController
             
             $list = $lienClientpromo->getPromoClient($_GET['cli__id']);
             $data = [];
-            foreach ($list as $key => $value) {
-                $temp = $addrepository->findOneBy(['add__id' => $value['lcp__ad__id']] , false );
-                array_push($data , $temp );
+            foreach ($list as $key => $value){
+                $temp = $addrepository->findOneBy(['ad__id' => $value['lcp__ad__id']] , false );
+                array_push($data,$temp);
             }
 
             return $responseHandler->handleJsonResponse([
