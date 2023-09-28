@@ -80,10 +80,8 @@ class AdController  extends  BaseController
         $lienClientpromo = new  LienClientPromoRepository('lien_client_promo' , $database , Client::class);
         $security = new Security();
         // $auth = self::Auth($responseHandler, $security);
-
         // if ($auth != null)
         //     return $auth;
-
         if (!empty($_GET['cli__id'])) {
             
             $list = $lienClientpromo->getPromoClient($_GET['cli__id']);
@@ -97,7 +95,6 @@ class AdController  extends  BaseController
                 'data' =>  $data,
             ], 200, "ok");
         }
-
 
         $list = $addrepository->findRandom();
         return $responseHandler->handleJsonResponse([
