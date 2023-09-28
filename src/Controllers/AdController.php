@@ -85,7 +85,7 @@ class AdController  extends  BaseController
         //     return $auth;
 
         if (!empty($_GET['cli__id'])) {
-            var_dump($lienClientpromo->getPromoClient($_GET['cli__id']));
+            var_dump($lienClientpromo);
             die();
             $list = $lienClientpromo->getPromoClient($_GET['cli__id']);
             return $responseHandler->handleJsonResponse([
