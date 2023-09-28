@@ -34,14 +34,14 @@ Class LienClientPromoRepository  extends BaseRepository {
         $request = "SELECT DISTINCT * FROM lien_client_promo WHERE 1 = 1 AND lcp__cli__id IN ".$in_clause." ";
         $request = $this->Db->Pdo->query($request);
         $request = $request->fetchAll(PDO::FETCH_ASSOC);
-        return $responses;
+        return $request;
     }
 
     public function getPromoClient($client__id){
         $request = "SELECT DISTINCT *  FROM lien_client_promo WHERE 1 = 1 AND lcp__cli__id  = ".$client__id." ";
         $request = $this->Db->Pdo->query($request);
         $request = $request->fetchAll(PDO::FETCH_ASSOC);
-        return $responses;
+        return $request;
     }
 
    
