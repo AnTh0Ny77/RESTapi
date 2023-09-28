@@ -11,6 +11,8 @@ use Src\Repository\ClientRepository;
 use Src\Controllers\BaseController;
 use Src\Repository\UserRepository;
 use Src\Repository\BaseRepository;
+use Src\Repository\LienClientPromoRepository;
+use Src\Entities\Promo;
 use Src\Entities\Client;
 use Src\Entities\TicketsLigne;
 use Src\Repository\TicketLigneRepository;
@@ -74,14 +76,22 @@ class AdController  extends  BaseController
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
         $security = new Security();
-       
         $addrepository = new BaseRepository('promo' , $database ,  Client::class);
+        $lienClientpromo = new  LienClientPromoRepository('lien__client_promo' , $database , Client::class);
         $security = new Security();
-        $auth = self::Auth($responseHandler, $security);
-        if ($auth != null)
-            return $auth;
+        // $auth = self::Auth($responseHandler, $security);
 
-            
+        // if ($auth != null)
+        //     return $auth;
+
+        if (!empty($_GET['cli__id'])) {
+            $list = $lienClientpromo->getPromoClient($_GET['cli__id']);
+            return $responseHandler->handleJsonResponse([
+                'data' =>  $list,
+            ], 200, "ok");
+        }
+
+
         $list = $addrepository->findRandom();
         return $responseHandler->handleJsonResponse([
             'data' =>  $list,
