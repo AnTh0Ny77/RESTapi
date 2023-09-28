@@ -77,7 +77,7 @@ class AdController  extends  BaseController
         $responseHandler = new ResponseHandler();
         $security = new Security();
         $addrepository = new BaseRepository('promo' , $database ,  Client::class);
-        $lienClientpromo = new  LienClientPromoRepository('lien__client_promo' , $database , Client::class);
+        $lienClientpromo = new  LienClientPromoRepository('lien_client_promo' , $database , Client::class);
         $security = new Security();
         // $auth = self::Auth($responseHandler, $security);
 
