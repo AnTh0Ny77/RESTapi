@@ -39,6 +39,9 @@ Class LienClientPromoRepository  extends BaseRepository {
 
     public function getPromoClient($client__id){
         $request = "SELECT DISTINCT FROM lien_client_promo WHERE 1 = 1 AND lcp__cli__id  = ".$client__id." ";
+
+        var_dump($request);
+        die();
         $request = $this->Db->Pdo->query($request);
         $request = $request->fetch(PDO::FETCH_ASSOC);
         return $responses;

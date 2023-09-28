@@ -86,6 +86,8 @@ class AdController  extends  BaseController
 
         if (!empty($_GET['cli__id'])) {
             
+            
+
             $list = $lienClientpromo->getPromoClient($_GET['cli__id']);
             return $responseHandler->handleJsonResponse([
                 'data' =>  $list,
