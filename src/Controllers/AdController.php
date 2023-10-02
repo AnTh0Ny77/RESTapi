@@ -79,9 +79,11 @@ class AdController  extends  BaseController
         $addrepository = new BaseRepository('promo' , $database ,  Client::class);
         $lienClientpromo = new  LienClientPromoRepository('lien_client_promo' , $database , Client::class);
         $security = new Security();
-        // $auth = self::Auth($responseHandler, $security);
-        // if ($auth != null)
-        //     return $auth;
+        $auth = self::Auth($responseHandler, $security);
+        if ($auth != null)
+            return $auth;
+
+            
         if (!empty($_GET['cli__id'])) {
             $list = $lienClientpromo->getPromoClient($_GET['cli__id']);
             $data = [];
