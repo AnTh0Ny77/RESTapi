@@ -78,6 +78,14 @@ Class BaseRepository {
         return  $request->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getAllAdd(){
+        $request = 'SELECT *
+            FROM promo';
+
+        $request = $this->Db->Pdo->query($request);
+        return  $request->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
     
 
@@ -320,5 +328,7 @@ Class BaseRepository {
         $request = $this->Db->Pdo->prepare('UPDATE '.$this->Table.' '.$setClause.' '. $clause. ' ');
         $request->execute($arraySetClause);
     }
+
+   
 
 }
