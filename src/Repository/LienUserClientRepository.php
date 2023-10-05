@@ -47,6 +47,9 @@ Class LienUserClientRepository  extends BaseRepository {
             }
            
         }
+
+        var_dump($response);
+        die();
         return $response;
     }
 
