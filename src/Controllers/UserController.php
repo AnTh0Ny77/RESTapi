@@ -167,27 +167,24 @@ Class UserController  extends BaseController{
                 return $auth;
             
             $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
-            
             $user = $userRepository->getRole($user);
            
             $refresh_token = $refreshRepository->findOneBy(['user__id' => $user->getUser__id()] ,false );
             $user->setRefresh_token($refresh_token['refresh_token']);
 
-           
-            if (!empty($_GET['FLM']) and $_GET['FLM'] == 'ok' ) {
+            if (!empty($_GET['FLM']) and $_GET['FLM'] == 'ok' ){
                
                 $clients = $lienUserClientRepository->getUserClientsArray($user->getUser__id());
-               
                 $user->setClients($clients);
+
             }else{
+
                 $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
                 $user->setClients($clients);
             }
            
-            
             return $responseHandler->handleJsonResponse( [ 
                 "data" => $user ]  , 200 , 'ok');
-        
     }
 
     public static function put(){

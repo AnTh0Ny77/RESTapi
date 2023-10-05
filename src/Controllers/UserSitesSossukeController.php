@@ -74,7 +74,7 @@ Class UserSitesSossukeController extends BaseController {
 
         if (!empty($_GET['flm']) and $_GET['flm'] == 'ok') {
 
-            $clients = $lienUserClientRepository->getUserClientsFLM($user->getUser__id());
+            $clients = $lienUserClientRepository->get2array($user->getUser__id());
             return $responseHandler->handleJsonResponse([ 
                 "data" =>  $clients ]  , 200 , 'ok');
         }
