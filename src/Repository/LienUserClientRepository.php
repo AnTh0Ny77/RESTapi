@@ -43,13 +43,15 @@ Class LienUserClientRepository  extends BaseRepository {
                 $temp['luc__cata'] = $value['luc__cata'];
                 $temp['luc__order'] = $value['luc__order'];
                 $temp['luc__parc'] = $value['luc__parc'];
-                array_push($responses , $temp);
+                //array_push($responses , $temp);
             }
+
+            var_dump($temp);
+            die();
            
         }
 
-        var_dump($response);
-        die();
+       
         return $response;
     }
 
