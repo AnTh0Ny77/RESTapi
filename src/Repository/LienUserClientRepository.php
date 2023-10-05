@@ -39,12 +39,13 @@ Class LienUserClientRepository  extends BaseRepository {
         foreach ($clients as  $value) {
             $temp = $clientRepository->findOneBy(['cli__id' => $value['luc__cli__id']] ,false);
            
-            $temp['luc__cata'] = $value['luc__cata'];
-            $temp['luc__order'] = $value['luc__order'];
-            $temp['luc__parc'] = $value['luc__parc'];
-            var_dump($temp);
-            die();
-            array_push($responses , $temp);
+            if (!empty($temp)) {
+                $temp['luc__cata'] = $value['luc__cata'];
+                $temp['luc__order'] = $value['luc__order'];
+                $temp['luc__parc'] = $value['luc__parc'];
+                array_push($responses , $temp);
+            }
+           
         }
         return $response;
     }
