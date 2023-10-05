@@ -31,13 +31,12 @@ Class LienUserClientRepository  extends BaseRepository {
     }
 
     public function get2array($user__id){
+
         $clientRepository = new ClientRepository('client' , $this->Db , Client::class );
-        $clientsParcs = $this->findBy(['luc__user__id' => $user__id  , 'luc__parc' => 1 ], 50 , [ 'luc__order' => 'ASC'] );
-        $clientBoutique = $this->findBy(['luc__user__id' => $user__id  , 'luc__cata' => 1 ], 50 , [ 'luc__order' => 'ASC'] );
-        
-        $mergedClients = array_merge($clientsParcs, $clientBoutique);
+        $clients = $this->findBy(['luc__user__id' => $user__id   ], 50 , [ 'luc__order' => 'ASC'] );
+      
         $response = [];
-        foreach ($mergedClients as $key => $value) {
+        foreach ($clients as $key => $value) {
             $temp = $clientRepository->findOneBy(['cli__id' => $value['luc__cli__id']] ,false);
             $temp['luc__cata'] = $value['luc__cata'];
             $temp['luc__order'] = $value['luc__order'];
