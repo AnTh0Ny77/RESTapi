@@ -84,10 +84,9 @@ Class UserSitesController extends BaseController {
         $user->setClients($clients);
         $array_user =  [] ;
         foreach($user->getClients() as $client){
+
             $array_links = $lienUserClientRepository->findBy(['luc__cli__id' => $client->getCli__id() ],1000, []);
-            
-            foreach ($array_links as $match) {
-                
+            foreach ($array_links as $match){
                 array_push($array_user ,  $match['luc__user__id']);
             }
         }
@@ -98,10 +97,11 @@ Class UserSitesController extends BaseController {
         foreach ($array_user as $users) {
 
             $subject = $userRepository->findOneBy(['user__id' => $users] , true);
-            $clients = $lienUserClientRepository->getUserClients($users);
+            $clients = $lienUserClientRepository->get2array($users);
             $subject->setClients($clients);
             $subject = $userRepository->getRole($subject);
             array_push($definitve_array , (array ) $subject );
+
         }
         
         $prenom  = array_column($definitve_array, strtolower('user__prenom'));
