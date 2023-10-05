@@ -77,6 +77,9 @@ Class UserSitesSossukeController extends BaseController {
             
             $clients = $lienUserClientRepository->get2array($user->getUser__id());
 
+            var_dump($clients);
+            die();
+
             return $responseHandler->handleJsonResponse([ 
                 "data" =>  $clients ]  , 200 , 'ok');
         }
