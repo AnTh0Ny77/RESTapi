@@ -202,10 +202,24 @@ Class UserSitesController extends BaseController {
             ], 401, 'bad request');
         }
 
+        if (!empty($body['luc__cata'])) {
+            $cata = $body['luc__cata'];
+        }else{
+            $cata = 1;
+        }
+        if (!empty($body['luc__parc'])) {
+            $parc = $body['luc__parc'];
+        }else{
+            $parc = 1;
+        }
+
         $data = [
             'luc__user__id' => $body['luc__user__id'] , 
             'luc__cli__id' => $body['luc__cli__id'] , 
-            'luc__order' => $body['luc__order']
+            'luc__order' => $body['luc__order'] , 
+            'luc__parc' => $parc , 
+            'luc__cata' => $cata
+
         ];
 
         $lienUserClientRepository->insertNoPrimary($data);
