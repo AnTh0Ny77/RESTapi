@@ -34,7 +34,8 @@ Class LienUserClientRepository  extends BaseRepository {
 
         $clientRepository = new ClientRepository('client' , $this->Db , Client::class );
         $clients = $this->findBy(['luc__user__id' => $user__id   ], 50 , [ 'luc__order' => 'ASC'] );
-      
+      var_dump($clients);
+      die();
         $response = [];
         foreach ($clients as $key => $value) {
             $temp = $clientRepository->findOneBy(['cli__id' => $value['luc__cli__id']] ,false);
