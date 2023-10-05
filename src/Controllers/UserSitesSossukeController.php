@@ -32,7 +32,7 @@ Class UserSitesSossukeController extends BaseController {
                 break;
 
             case 'GET':
-                return $notFound::index();
+                return self::get();
                 break;
 
             case 'PUT':
@@ -73,12 +73,12 @@ Class UserSitesSossukeController extends BaseController {
         $array_user =  [] ;
 
         if (!empty($_GET['flm']) and $_GET['flm'] == 'ok') {
+
             $clients = $lienUserClientRepository->getUserClientsFLM($user->getUser__id());
-            return $responseHandler->handleJsonResponse( [ 
+            return $responseHandler->handleJsonResponse([ 
                 "data" =>  $clients ]  , 200 , 'ok');
         }
 
-        
         foreach($user->getClients() as $client){
             $array_links = $lienUserClientRepository->findBy(['luc__cli__id' => $client->getCli__id() ],1000, []);
             foreach ($array_links as $match) {
@@ -88,9 +88,9 @@ Class UserSitesSossukeController extends BaseController {
         
         $array_user = array_unique($array_user);
         $definitve_array = [];
-        
-        foreach ($array_user as $users) {
+    
 
+        foreach ($array_user as $users) {
             $subject = $userRepository->findOneBy(['user__id' => $users] , true);
             $clients = $lienUserClientRepository->getUserClients($users);
             // $clientsParc = $lienUserClientRepository->getUserClientsParc($users);
