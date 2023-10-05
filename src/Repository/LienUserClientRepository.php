@@ -34,6 +34,8 @@ Class LienUserClientRepository  extends BaseRepository {
         $clientRepository = new ClientRepository('client' , $this->Db , Client::class );
         $clientsParcs = $this->findBy(['luc__user__id' => $user__id  , 'luc__parc' => 1 ], 50 , [ 'luc__order' => 'ASC'] );
         $clientBoutique = $this->findBy(['luc__user__id' => $user__id  , 'luc__cata' => 1 ], 50 , [ 'luc__order' => 'ASC'] );
+        var_dump($clientBoutique);
+        die();
         $mergedClients = array_merge($clientsParcs, $clientBoutique);
         $response = [];
         foreach ($mergedClients as $key => $value) {
