@@ -24,6 +24,12 @@ Class LienUserClientRepository  extends BaseRepository {
         return $responses;
     }
 
+    public function getUserClientsFLM($user__id){
+        $clientRepository = new ClientRepository('client' , $this->Db , Client::class );
+        $clients = $this->findBy(['luc__user__id' => $user__id ], 50 , [ 'luc__order' => 'ASC'] );
+        return $clients;
+    }
+
     public function getUserClientsArray($user__id){
         $clientRepository = new ClientRepository('client' , $this->Db , Client::class );
         $clients = $this->findBy(['luc__user__id' => $user__id ], 50 , [ 'luc__order' => 'ASC'] );

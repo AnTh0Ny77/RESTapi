@@ -83,7 +83,7 @@ class AdController  extends  BaseController
         if ($auth != null)
             return $auth;
 
-            
+
         if (!empty($_GET['cli__id'])) {
             $list = $lienClientpromo->getPromoClient($_GET['cli__id']);
             $data = [];
@@ -106,6 +106,49 @@ class AdController  extends  BaseController
         $list = $addrepository->findRandom();
         return $responseHandler->handleJsonResponse([
             'data' =>  $list,
+        ], 200, "ok");
+    }
+
+
+    public static function post(){
+        $database = new Database();
+        $database->DbConnect();
+        $responseHandler = new ResponseHandler();
+        $security = new Security();
+        $addrepository = new BaseRepository('promo' , $database ,  Client::class);
+        $lienClientpromo = new  LienClientPromoRepository('lien_client_promo' , $database , Client::class);
+        $security = new Security();
+        $auth = self::Auth($responseHandler, $security);
+        if ($auth != null)
+            return $auth;
+
+        $body = json_decode(file_get_contents('php://input'), true);
+
+        if (!empty($body['ad__titre'])) {
+            
+            $new_add = [
+                'ad__titre' => $body['ad__titre'] , 
+                'ad__lien' => $body['ad__lien'] , 
+                'ad__txt' => $body['ad__txt'] , 
+                'ad__img' => $body['ad__img']
+            ];
+
+            $id = $addrepository->insert($new_add);
+
+            if (!empty($body['relation'])) {
+                foreach ($body['relation'] as $value){
+                    $relation = [
+                        'lcp__cli__id' => $value , 
+                        'lcp__ad__id' => $id
+                    ];
+                    $lienClientpromo->insert($relation);
+                }
+            }
+        }   
+            
+        
+        return $responseHandler->handleJsonResponse([
+            'data' =>  'OKKKKK',
         ], 200, "ok");
     }
 }

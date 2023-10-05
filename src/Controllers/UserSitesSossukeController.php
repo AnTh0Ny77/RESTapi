@@ -71,6 +71,14 @@ Class UserSitesSossukeController extends BaseController {
         $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
         $user->setClients($clients);
         $array_user =  [] ;
+
+        if (!empty($_GET['flm']) and $_GET['flm'] == 'ok') {
+            $clients = $lienUserClientRepository->getUserClientsFLM($user->getUser__id());
+            return $responseHandler->handleJsonResponse( [ 
+                "data" =>  $clients ]  , 200 , 'ok');
+        }
+
+        
         foreach($user->getClients() as $client){
             $array_links = $lienUserClientRepository->findBy(['luc__cli__id' => $client->getCli__id() ],1000, []);
             foreach ($array_links as $match) {
