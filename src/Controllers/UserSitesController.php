@@ -210,8 +210,8 @@ Class UserSitesController extends BaseController {
             'luc__user__id' => $body['luc__user__id'] , 
             'luc__cli__id' => $body['luc__cli__id'] , 
             'luc__order' => $body['luc__order'] , 
-            'luc__parc' => $parc , 
-            'luc__cata' => $cata
+            'luc__parc' => 2 , 
+            'luc__cata' => 2
         ];
 
         $lienUserClientRepository->insertNoPrimary($data);
