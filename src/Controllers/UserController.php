@@ -174,7 +174,8 @@ Class UserController  extends BaseController{
 
             if (!empty($_GET['FLM']) and $_GET['FLM'] == 'ok' ){
                
-                $clients = $lienUserClientRepository->getUserClientsArray($user->getUser__id());
+               
+                $clients = $lienUserClientRepository->get2array($user->getUser__id());
                 $user->setClients($clients);
 
             }else{
