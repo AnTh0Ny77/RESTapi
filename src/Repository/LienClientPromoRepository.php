@@ -37,6 +37,12 @@ Class LienClientPromoRepository  extends BaseRepository {
         return $request;
     }
 
+    public function getClientAdds($ad__id){
+        $request = "SELECT *  FROM lien_client_promo WHERE 1 = 1 AND lcp__ad__id  = ".$ad__id." ";
+        $request = $this->Db->Pdo->query($request);
+        $request = $request->fetchAll(PDO::FETCH_ASSOC);
+        return $request;
+    }
    
 
     public function getPromoClient($client__id){

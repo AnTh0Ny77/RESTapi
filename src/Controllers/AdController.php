@@ -50,7 +50,7 @@ class AdController  extends  BaseController
         $notFound = new NotFoundController();
         switch ($method) {
             case 'POST':
-                return $notFound::index();
+                return self::post();
                 break;
 
             case 'GET':
@@ -76,6 +76,7 @@ class AdController  extends  BaseController
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
         $security = new Security();
+        $clientRepository = new ClientRepository('client' , $database , Client::class );
         $addrepository = new BaseRepository('promo' , $database ,  Client::class);
         $lienClientpromo = new  LienClientPromoRepository('lien_client_promo' , $database , Client::class);
         $security = new Security();
@@ -98,8 +99,28 @@ class AdController  extends  BaseController
 
         if (!empty($_GET['all']) and  $_GET['all'] == "vgvhnoza7875z85acc114cz5"){
             $list = $addrepository->getAllAdd();
+            $definitive_array = [];
+            foreach ($list as  $value) {
+                $relations = $lienClientpromo->getClientAdds($value['ad__id']);
+                $array_client = [];
+                foreach ($relations as $client) {
+                    $results = $clientRepository->findOneBy(['cli__id' => $client['lcp__cli__id']] , false);
+                    array_push($array_client , $results);
+                }
+
+                $temp = [
+                    'relation' => $array_client , 
+                    'ad__titre' => $value['ad__titre'],
+                    'ad__lien' => $value['ad__lien'],
+                    'ad__txt' => $value['ad__txt'] , 
+                    'ad__img' => $value['ad__img']
+
+                ];
+                array_push($definitive_array , $temp);
+                
+            }
             return $responseHandler->handleJsonResponse([
-                'data' =>   $list,
+                'data' =>   $definitive_array,
             ], 200, "ok");
         }
 
@@ -118,11 +139,14 @@ class AdController  extends  BaseController
         $addrepository = new BaseRepository('promo' , $database ,  Client::class);
         $lienClientpromo = new  LienClientPromoRepository('lien_client_promo' , $database , Client::class);
         $security = new Security();
-        $auth = self::Auth($responseHandler, $security);
-        if ($auth != null)
-            return $auth;
-
+        
         $body = json_decode(file_get_contents('php://input'), true);
+
+        if (empty($body['secret']) && $body['secret'] != 'heAzqxwcrTTTuyzegva^5646478§§uifzi77..!yegezytaa9143ww98314528') {
+            return $responseHandler->handleJsonResponse([
+                'msg' =>  ' Opération impossible'
+            ], 404, 'bad request');
+        }
 
         if (!empty($body['ad__titre'])) {
             
