@@ -113,7 +113,8 @@ class AdController  extends  BaseController
                     'ad__titre' => $value['ad__titre'],
                     'ad__lien' => $value['ad__lien'],
                     'ad__txt' => $value['ad__txt'] , 
-                    'ad__img' => $value['ad__img']
+                    'ad__img' => $value['ad__img'] , 
+                    'ad__id' => $value['ad__id']
 
                 ];
                 array_push($definitive_array , $temp);
@@ -146,6 +147,18 @@ class AdController  extends  BaseController
             return $responseHandler->handleJsonResponse([
                 'msg' =>  ' Opération impossible'
             ], 404, 'bad request');
+        }
+
+
+        if (!empty($body['__PUT']) and  $body['__PUT'] == 'yes') {
+
+
+            //update with id 
+
+            //delete relation : 
+
+            //new relation 
+
         }
 
         if (!empty($body['ad__titre'])) {
