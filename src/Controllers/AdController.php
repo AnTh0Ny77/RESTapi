@@ -152,12 +152,33 @@ class AdController  extends  BaseController
 
         if (!empty($body['__PUT']) and  $body['__PUT'] == 'yes') {
 
-
             //update with id 
+            $update__ad  = [
+                'ad__id' => $body['ad__id'], 
+                'ad__lien' => $body['ad__lien'] , 
+                'ad__txt' => $body['ad__txt'] ,
+                'ad__titre' => $body['ad__titre'] , 
+                'ad__img' => self::nom_fichier_propre($body['ad__titre']) .'.PNG'
+            ];
 
-            //delete relation : 
+            $addrepository->update($update__ad);
 
-            //new relation 
+            $lienClientpromo->delete(['lcp__ad__id' =>  $body['ad__id']]);
+
+            if (!empty($body['relation'])) {
+                foreach ($body['relation'] as $value){
+                    $relation = [
+                        'lcp__cli__id' => $value , 
+                        'lcp__ad__id' => $body['ad__id']
+                    ];
+                    $lienClientpromo->insert($relation);
+                }
+            }
+
+            return $responseHandler->handleJsonResponse([
+                'data' =>  'Maj Ok',
+            ], 200, "ok");
+           
 
         }
 
