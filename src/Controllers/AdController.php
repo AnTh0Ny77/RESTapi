@@ -160,7 +160,10 @@ class AdController  extends  BaseController
                 'ad__titre' => $body['ad__titre'] , 
                 'ad__img' => self::nom_fichier_propre($body['ad__titre']) .'.PNG'
             ];
+
+            $addrepository->update($update__ad);
             
+
             $lienClientpromo->delete(['lcp__ad__id' =>  $body['ad__id']]);
 
             if (!empty($body['relation'])) {
