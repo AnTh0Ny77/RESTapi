@@ -137,7 +137,7 @@ class AdController  extends  BaseController
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
         $security = new Security();
-        $addrepository = new BaseRepository('promo' , $database ,  Client::class);
+        $addrepository = new BaseRepository('promo' , $database ,  Promo::class);
         $lienClientpromo = new  LienClientPromoRepository('lien_client_promo' , $database , Client::class);
         $security = new Security();
         
