@@ -38,7 +38,7 @@ Class LienClientPromoRepository  extends BaseRepository {
     }
 
     public function getClientAdds($ad__id){
-        $request = "SELECT *  FROM lien_client_promo WHERE 1 = 1 AND lcp__ad__id  = ".$ad__id." ORDER BY RAND () LIMIT 3";
+        $request = "SELECT *  FROM lien_client_promo WHERE 1 = 1 AND lcp__ad__id  = ".$ad__id." ";
         $request = $this->Db->Pdo->query($request);
         $request = $request->fetchAll(PDO::FETCH_ASSOC);
         return $request;
@@ -46,7 +46,7 @@ Class LienClientPromoRepository  extends BaseRepository {
    
 
     public function getPromoClient($client__id){
-        $request = "SELECT DISTINCT *  FROM lien_client_promo WHERE 1 = 1 AND lcp__cli__id  = ".$client__id." ";
+        $request = "SELECT DISTINCT *  FROM lien_client_promo WHERE 1 = 1 AND lcp__cli__id  = ".$client__id." ORDER BY RAND () LIMIT 3";
         $request = $this->Db->Pdo->query($request);
         $request = $request->fetchAll(PDO::FETCH_ASSOC);
         return $request;
