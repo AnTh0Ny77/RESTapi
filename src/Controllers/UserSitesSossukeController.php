@@ -139,22 +139,41 @@ Class UserSitesSossukeController extends BaseController {
             $lienUserClientRepository->delete(['luc__user__id' =>  $body['luc__user__id']]);
             $i = 0 ;
             foreach ($body['multiple'] as $key => $value) {
+                $i ++ ;
 
-                if ($value == $premier['luc__cli__id']) {
-                    $data = [
-                        'luc__user__id' => $body['luc__user__id'],
-                        'luc__cli__id' => $value,
-                        'luc__order' => 1
-                    ];
+                if (empty($premier)) {
+                    if ($i == 1 ) {
+                        $data = [
+                            'luc__user__id' => $body['luc__user__id'],
+                            'luc__cli__id' => $value,
+                            'luc__order' => 1
+                        ];
+                    }else{
+                        $data = [
+                            'luc__user__id' => $body['luc__user__id'],
+                            'luc__cli__id' => $value,
+                            'luc__order' => 5
+                        ];
+                    }
+                    
+                }else{
+                    if ($value == $premier['luc__cli__id']) {
+                        $data = [
+                            'luc__user__id' => $body['luc__user__id'],
+                            'luc__cli__id' => $value,
+                            'luc__order' => 1
+                        ];
+                    }
+                    else{
+                        $data = [
+                            'luc__user__id' => $body['luc__user__id'],
+                            'luc__cli__id' => $value,
+                            'luc__order' => 5
+                        ];
+                    }
                 }
-                else{
-                    $data = [
-                        'luc__user__id' => $body['luc__user__id'],
-                        'luc__cli__id' => $value,
-                        'luc__order' => 5
-                    ];
-                }
-                
+               
+
                 $lienUserClientRepository->insertNoPrimary($data);
             }
             return $responseHandler->handleJsonResponse([
