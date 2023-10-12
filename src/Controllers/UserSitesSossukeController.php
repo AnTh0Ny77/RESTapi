@@ -132,16 +132,29 @@ Class UserSitesSossukeController extends BaseController {
         }
 
         if (!empty($body['multiple'])) {
+            
+
+            $premier= $lienUserClientRepository->getLucOrder1($body['luc__user__id']);
+
             $lienUserClientRepository->delete(['luc__user__id' =>  $body['luc__user__id']]);
             $i = 0 ;
             foreach ($body['multiple'] as $key => $value) {
-                $i ++ ;
-                $data = [
-                    'luc__user__id' => $body['luc__user__id'],
-                    'luc__cli__id' => $value,
-                    'luc__order' => $i
-                ];
 
+                if ($value == $premier['luc__cli__id']) {
+                    $data = [
+                        'luc__user__id' => $body['luc__user__id'],
+                        'luc__cli__id' => $value,
+                        'luc__order' => 1
+                    ];
+                }
+                else{
+                    $data = [
+                        'luc__user__id' => $body['luc__user__id'],
+                        'luc__cli__id' => $value,
+                        'luc__order' => 5
+                    ];
+                }
+                
                 $lienUserClientRepository->insertNoPrimary($data);
             }
             return $responseHandler->handleJsonResponse([
@@ -153,11 +166,8 @@ Class UserSitesSossukeController extends BaseController {
         }
 
        
-       
         if(!empty($body['update'])) {
-         
             $user = $userRepository->findOneBy(['user__id' => $body['luc__user__id'] ], true);
-       
             $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
 
             //remet tout a 1

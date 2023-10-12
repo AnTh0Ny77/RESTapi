@@ -30,6 +30,13 @@ Class LienUserClientRepository  extends BaseRepository {
         return $clients;
     }
 
+
+    public function getLucOrder1($user__id){
+        $clientRepository = new ClientRepository('client' , $this->Db , Client::class );
+        $client = $this->findOneBy(['luc__user__id' => $user__id  , 'luc__order' => 1 ], false );
+        return $client;
+    }
+
     public function get2array($user__id){
 
         $clientRepository = new ClientRepository('client' , $this->Db , Client::class );
