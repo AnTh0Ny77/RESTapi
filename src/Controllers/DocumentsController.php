@@ -97,14 +97,16 @@ class DocumentsController  extends BaseController {
                 'msg' =>  'le type de document n est pas précisé'
             ], 401, 'bad request');
         }
- 
+
         $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , false);
         $clients = $lienUserClientRepository->getUserClients($user['user__id']);
+        
         if (empty($clients)) {
             return $responseHandler->handleJsonResponse([
                 'msg' =>  'la société ne correspond pas !'
             ], 401, 'bad request');
         }
+
         $config = json_decode(file_get_contents('config.json'));
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
        

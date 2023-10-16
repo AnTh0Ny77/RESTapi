@@ -172,11 +172,11 @@ Class UserController  extends BaseController{
             $refresh_token = $refreshRepository->findOneBy(['user__id' => $user->getUser__id()] ,false );
             $user->setRefresh_token($refresh_token['refresh_token']);
 
-            if (!empty($_GET['FLM']) and $_GET['FLM'] == 'ok' ){
-               
+            if (!empty($_GET['MyRecode']) and $_GET['MyRecode'] == 'TRUE' ){
                
                 $clients = $lienUserClientRepository->get2array($user->getUser__id());
-                $user->setClients($clients);
+                $user = (array)$user ;
+                $user['clients'] = $clients ;
 
             }else{
 

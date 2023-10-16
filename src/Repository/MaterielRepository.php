@@ -119,8 +119,14 @@ Class MaterielRepository  extends BaseRepository {
             return $materiel;
 
         
-        $materiel_data['mat__actif'] = 1 ;
-        $materiel_data['mat__date_in'] = date('Y-m-d H:i:s');
+        if (!isset($materiel_data['mat__actif'])){
+            $materiel_data['mat__actif'] = 1 ;
+        }
+
+        if (!isset($materiel_data['mat__date_in'])){
+            $materiel_data['mat__date_in'] = date('Y-m-d');
+        }
+       
         $materiel_data['mat__date_maj'] = date('Y-m-d H:i:s');
         $materiel_data['mat__user_id'] = $user->getUser__id();
        
