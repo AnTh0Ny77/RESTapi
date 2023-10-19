@@ -264,7 +264,19 @@ Class MaterielController extends BaseController {
         } 
 
         if (!empty($user)) {
-            $materiel = $materielRepository->postMateriel($body , $user);
+
+            $verif = $materielRepository->findOneBy(['mat__sn' =>  $body['mat__sn'] , 'mat__cli__id' => $body['mat__cli__id'] , 'mat__actif' => 1 ] , false );
+
+            if (empty($verif)) {
+                $materiel = $materielRepository->postMateriel($body , $user);
+            }else{
+                return $responseHandler->handleJsonResponse([
+                    'msg' => $verif
+                ] , 401 , 'bad request');
+            }
+
+
+           
         }else{
             if (!empty($body['__PUT']) and $body['__PUT'] == 'yes') {
                
