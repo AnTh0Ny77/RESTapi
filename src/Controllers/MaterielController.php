@@ -312,10 +312,14 @@ Class MaterielController extends BaseController {
             ];
             if (!isset($body['mat__actif'])){
                 $data['mat__actif'] = 1 ;
+            }else {
+                $data['mat__actif'] = $body['mat__actif'];
             }
     
             if (!isset($body['mat__date_in'])){
                 $data['mat__date_in'] = date('Y-m-d');
+            }else {
+                $data['mat__date_in'] = $body['mat__date_in'];
             }
         
             $materiel = $materielRepository->postMaterielSossuke($data);
