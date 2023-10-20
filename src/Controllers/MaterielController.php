@@ -310,6 +310,13 @@ Class MaterielController extends BaseController {
                 'mat__date_offg' => $body['mat__date_offg'],
                 'mat__contrat_id' => $body['mat__contrat_id'] 
             ];
+            if (!isset($body['mat__actif'])){
+                $data['mat__actif'] = 1 ;
+            }
+    
+            if (!isset($body['mat__date_in'])){
+                $data['mat__date_in'] = date('Y-m-d');
+            }
         
             $materiel = $materielRepository->postMaterielSossuke($data);
         }
