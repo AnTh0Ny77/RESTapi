@@ -85,7 +85,14 @@ Class ShopArticleController extends BaseController {
             ], 401, 'bad request');
         }
 
-        $article = $ShopArticleRepository->insert($body);
+        $verif = $ShopArticleRepository->findOneBy(['sar__ref_constructeur' => $body['sar__ref_constructeur'] ] , false);
+
+        if (empty($verif)){
+            $body['sar__ref_id'] = $verif['sar__ref_id'];
+            $article  = $ShopArticleRepository->update($body);
+        }else {
+            $article = $ShopArticleRepository->insert($body);
+        }
 
         return $responseHandler->handleJsonResponse([
             'data' => $article

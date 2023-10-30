@@ -16,9 +16,7 @@ Class MailerServices {
 
     public function sendMail($adresse , $subject , $template){
         $mail = new PHPMailer(true);
-        try {
-           
-                        
+        try {          
             $mail->isSMTP();                                           
             $mail->Host       =  $this->config->mailer->host;                     
             $mail->SMTPAuth   =  true;                                   
@@ -39,11 +37,9 @@ Class MailerServices {
         }
     }
 
-
     public function header(){
         $imageData = base64_encode(file_get_contents('public/img/LOGO.png'));
         $src = 'data: '.mime_content_type('public/img/LOGO.png').';base64,'.$imageData;
-
         return '<img width="150"  src="https://myrecode.fr/img/logo_myrecode.png" style="display:block;"  alt="MyRecode" title="MyRecode" ><br><br>';
     }
     
@@ -142,8 +138,7 @@ Class MailerServices {
     }
 
 
-    public function bodyNewPassword($link)
-    {
+    public function bodyNewPassword($link){
         return '<style>
                 .success-link{
                     padding-left: 24px;
@@ -236,7 +231,6 @@ Class MailerServices {
             </div>';
     } 
 
-
     public function renderBodyCommande($cmd, $ligne){
 
         $table_ligne = '';
@@ -284,13 +278,14 @@ Class MailerServices {
                     width: 350px;
                     text-align : center;
                 }
-                a:link { text-decoration: none; }
+                a:link {text-decoration: none;}
             
-                a:visited { text-decoration: none; }
+                a:visited {text-decoration: none;}
             
-                a:hover { text-decoration: none; }
+                a:hover {text-decoration: none;}
             
-                a:active { text-decoration: none; }
+                a:active {text-decoration: none;}
+
             </style>
             <span  style=" width: 350px; margin: 50px auto 50px; ">
                 <p style="text-align: center;"><!--StartFragment--><span style="font-size:14px"><span style="font-weight:bold">Récapitulatif de votre commande  MY RECODE  <br /> '.$cmd['scm__id'].'
@@ -393,7 +388,5 @@ Class MailerServices {
                     <span style="font-size:16px" style="font-weight:bold">L équipe RECODE !</span>
                 </p>
             </div>';
-
     }
-	
 }
