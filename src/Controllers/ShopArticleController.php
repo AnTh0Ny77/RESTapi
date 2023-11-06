@@ -87,7 +87,7 @@ Class ShopArticleController extends BaseController {
 
         $verif = $ShopArticleRepository->findOneBy(['sar__ref_constructeur' => $body['sar__ref_constructeur'] ] , false);
 
-        if (empty($verif)){
+        if (!empty($verif)){
             $body['sar__ref_id'] = $verif['sar__ref_id'];
             $article  = $ShopArticleRepository->update($body);
         }else {
