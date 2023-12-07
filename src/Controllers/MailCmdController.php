@@ -182,10 +182,10 @@ class MailCmdController extends BaseController
                             
                             //envoi à l'api de sossuke/////////////////
                             $config = json_decode(file_get_contents('config.json'));
+                           
+                            $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
                             var_dump('debug'); 
                             die();
-                            $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
-                            
                             try {
 
                                 $response = $guzzle->post('/SoftRecode/apiCmdTransfert', [ 'json' => [
