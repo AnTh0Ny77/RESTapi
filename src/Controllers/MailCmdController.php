@@ -205,6 +205,9 @@ class MailCmdController extends BaseController
                             }
                             
                             $response = self::handleResponse($response);
+                            var_dump($response);
+                            die();  
+                            
                             $cmd__id  = $response["data"];
                             $shopCmdRepository->updateFromSossuke($body['scm__id'] , $cmd__id);
                             $shopCmdLigneRepository->updateFromSossuke($body['scm__id'] , $cmd__id);
