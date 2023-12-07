@@ -93,17 +93,13 @@ Class UserSitesController extends BaseController {
         
         $array_user = array_unique($array_user);
         $definitve_array = [];
-        
-        foreach ($array_user as $users) {
-
+        foreach ($array_user as $users){
             $subject = $userRepository->findOneBy(['user__id' => $users] , true);
             $clients = $lienUserClientRepository->get2array($users);
             $subject->setClients($clients);
             $subject = $userRepository->getRole($subject);
             array_push($definitve_array , (array ) $subject );
-
         }
-        
         $prenom  = array_column($definitve_array, strtolower('user__prenom'));
         $nom = array_column($definitve_array, strtolower('user__nom'));
         array_multisort( $nom, SORT_STRING, $prenom, SORT_STRING, $definitve_array);
@@ -203,15 +199,14 @@ Class UserSitesController extends BaseController {
         }
 
         if (isset($body['luc__cata'])) { $cata = $body['luc__cata'];}else{$cata = 1;}
-
         if (isset($body['luc__parc'])) { $parc = $body['luc__parc']; }else{$parc = 1;}
 
         $data = [
             'luc__user__id' => $body['luc__user__id'] , 
             'luc__cli__id' => $body['luc__cli__id'] , 
             'luc__order' => $body['luc__order'] , 
-            'luc__parc' => $cata , 
-            'luc__cata' => $parc
+            'luc__parc' => $parc , 
+            'luc__cata' => $cata
         ];
 
         $lienUserClientRepository->insertNoPrimary($data);

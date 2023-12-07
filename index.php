@@ -44,6 +44,7 @@ use Src\Controllers\MailCmdController;
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
+date_default_timezone_set('Europe/Paris');
 error_reporting(E_WARNING);
 error_reporting(E_ERROR);
 error_reporting(E_NOTICE);
