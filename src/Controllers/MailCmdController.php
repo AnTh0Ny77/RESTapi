@@ -163,8 +163,7 @@ class MailCmdController extends BaseController
 
         
         $results =  $clientRepository->findOneBy(['cli__id' => $cmd['scm__client_id_fact']] , true);
-        var_dump($results);
-        die();          
+                
                     if ($results instanceof Client) {
                         $com = $commercialRepository->findOneBy(['com__id' =>  $results->getCli__com1()] , true);
                         if (!$com instanceof Commercial) {
@@ -190,7 +189,8 @@ class MailCmdController extends BaseController
                            
                             try {
 
-                                
+                                var_dump($results);
+                                die();  
                                 
 
                                 $response = $guzzle->post('/SoftRecode/apiCmdTransfert', [ 'json' => [
