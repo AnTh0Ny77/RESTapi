@@ -131,6 +131,8 @@ class MailCmdController extends BaseController
         }
         
         $cmd = $shopCmdRepository->findOneBy(['scm__id' => $body['scm__id'] ] , false);
+        var_dump($cmd);
+        die();
         if (empty($cmd)) {
             return $responseHandler->handleJsonResponse([
                 "msg" => 'cmd inconnue ',
