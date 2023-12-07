@@ -131,8 +131,7 @@ class MailCmdController extends BaseController
         }
         
         $cmd = $shopCmdRepository->findOneBy(['scm__id' => $body['scm__id'] ] , false);
-        var_dump($cmd);
-        die();
+       
         if (empty($cmd)) {
             return $responseHandler->handleJsonResponse([
                 "msg" => 'cmd inconnue ',
@@ -140,6 +139,8 @@ class MailCmdController extends BaseController
         }
       
         $ligne = $shopCmdLigneRepository->findBy(['scl__scm_id' =>  $body['scm__id'] ] , 100 , ['scl__id' => 'ASC']);
+        var_dump($cmd);
+        die();
         $def_array = [];
         $sossuke_array = [];
         foreach ($ligne as $key => $value){
