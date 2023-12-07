@@ -115,8 +115,7 @@ class MailCmdController extends BaseController
         $commercialRepository = new CommercialRepository('commercial' , $database , Commercial::class );
         $security = new Security();
 
-        var_dump('debug'); 
-        die();
+       
         $auth = self::Auth($responseHandler, $security);
         if ($auth != null)
             return $auth;
@@ -130,7 +129,8 @@ class MailCmdController extends BaseController
                 "msg" => 'scm__id semble vide ',
             ], 401, 'bad request');
         }
-
+        var_dump('debug'); 
+        die();
         $cmd = $shopCmdRepository->findOneBy(['scm__id' => $body['scm__id'] ] , false);
         if (empty($cmd)) {
             return $responseHandler->handleJsonResponse([
