@@ -159,8 +159,7 @@ class MailCmdController extends BaseController
             array_push( $sossuke_array , $sossuke_line);
         }
 
-        var_dump('debug'); 
-        die();
+        
         $results =  $clientRepository->findOneBy(['cli__id' => $cmd['scm__client_id_fact']] , true);
                    
                     if ($results instanceof Client) {
@@ -183,7 +182,8 @@ class MailCmdController extends BaseController
                             
                             //envoi à l'api de sossuke/////////////////
                             $config = json_decode(file_get_contents('config.json'));
-                          
+                            var_dump('debug'); 
+                            die();
                             $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
                             
                             try {
