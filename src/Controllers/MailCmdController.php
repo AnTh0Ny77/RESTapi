@@ -185,7 +185,7 @@ class MailCmdController extends BaseController
                             //envoi à l'api de sossuke/////////////////
                             $config = json_decode(file_get_contents('config.json'));
                            
-                            $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
+                            $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host , 'http_errors' => true, ]);
                            
                             try {
 
@@ -203,8 +203,7 @@ class MailCmdController extends BaseController
                                 
                                 $response = $exeption->getResponse();
                             }
-                            var_dump($response->getBody()->read(4323155));
-                            die();  
+                            
                             
                             $response = self::handleResponse($response);
                             $cmd__id  = $response["data"];
