@@ -189,8 +189,6 @@ class MailCmdController extends BaseController
                            
                             try {
 
-                                var_dump($results);
-                                die();  
                                 
 
                                 $response = $guzzle->post('/SoftRecode/apiCmdTransfert', [ 'json' => [
@@ -205,7 +203,9 @@ class MailCmdController extends BaseController
                                 
                                 $response = $exeption->getResponse();
                             }
-                           
+                            var_dump($response->getBody()->read(4323155));
+                            die();  
+                            
                             $response = self::handleResponse($response);
                             $cmd__id  = $response["data"];
                             $shopCmdRepository->updateFromSossuke($body['scm__id'] , $cmd__id);
