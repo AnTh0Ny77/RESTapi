@@ -202,7 +202,7 @@ class MailCmdController extends BaseController
                                 
                                 $response = $exeption->getResponse();
                             }
-                            var_dump(json_decode($response->getBody()->read(16384087),true)); 
+                            var_dump($response->getBody()->read(16384087)); 
                             die();
                             $response = self::handleResponse($response);
                             $cmd__id  = $response["data"];
