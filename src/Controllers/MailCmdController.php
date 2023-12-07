@@ -129,8 +129,7 @@ class MailCmdController extends BaseController
                 "msg" => 'scm__id semble vide ',
             ], 401, 'bad request');
         }
-        var_dump('debug'); 
-        die();
+        
         $cmd = $shopCmdRepository->findOneBy(['scm__id' => $body['scm__id'] ] , false);
         if (empty($cmd)) {
             return $responseHandler->handleJsonResponse([
@@ -160,7 +159,8 @@ class MailCmdController extends BaseController
             array_push( $sossuke_array , $sossuke_line);
         }
 
-
+        var_dump('debug'); 
+        die();
         $results =  $clientRepository->findOneBy(['cli__id' => $cmd['scm__client_id_fact']] , true);
                    
                     if ($results instanceof Client) {
