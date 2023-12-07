@@ -139,8 +139,7 @@ class MailCmdController extends BaseController
         }
       
         $ligne = $shopCmdLigneRepository->findBy(['scl__scm_id' =>  $body['scm__id'] ] , 100 , ['scl__id' => 'ASC']);
-        var_dump($cmd);
-        die();
+        
         $def_array = [];
         $sossuke_array = [];
         foreach ($ligne as $key => $value){
@@ -164,7 +163,8 @@ class MailCmdController extends BaseController
 
         
         $results =  $clientRepository->findOneBy(['cli__id' => $cmd['scm__client_id_fact']] , true);
-                   
+        var_dump($results);
+        die();          
                     if ($results instanceof Client) {
                         $com = $commercialRepository->findOneBy(['com__id' =>  $results->getCli__com1()] , true);
                         if (!$com instanceof Commercial) {
