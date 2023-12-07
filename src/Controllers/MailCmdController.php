@@ -47,7 +47,7 @@ class MailCmdController extends BaseController
                 "tittle" => 'Mail de commande',
                 'method' => 'POST',
                 'path' => self::path(),
-                'description' => 'permet d envoyer un mail deconfirmation de commande',
+                'description' => 'permet d envoyer un mail de confirmation de commande',
                 'body' =>  [
                     'type' => 'application/json',
                     'fields' => [
@@ -115,6 +115,8 @@ class MailCmdController extends BaseController
         $commercialRepository = new CommercialRepository('commercial' , $database , Commercial::class );
         $security = new Security();
 
+        var_dump('debug'); 
+        die();
         $auth = self::Auth($responseHandler, $security);
         if ($auth != null)
             return $auth;
