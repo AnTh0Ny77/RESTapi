@@ -40,6 +40,8 @@ use Src\Controllers\MaterielSossukeController;
 use Src\Controllers\UserSitesSossukeController;
 use Src\Controllers\ShopArticleController;
 use Src\Controllers\MailCmdController;
+use Src\Controller\PlanningController;
+
 
 header("Access-Control-Allow-Origin: *");
 ini_set('display_errors', 1);
@@ -229,6 +231,11 @@ switch($request){
         echo MailCmdController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
 
+    case $config->urls->base . PlanningController::path() . $data:
+        header('Access-Control-Allow-Origin: *');
+        echo MailCmdController::index($_SERVER['REQUEST_METHOD'], $data);
+        break;
+        
 	default:
 		header('HTTP/1.0 404 not found');
         echo NotFoundController::index();
