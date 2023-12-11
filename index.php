@@ -40,7 +40,7 @@ use Src\Controllers\MaterielSossukeController;
 use Src\Controllers\UserSitesSossukeController;
 use Src\Controllers\ShopArticleController;
 use Src\Controllers\MailCmdController;
-use Src\Controller\PlanningController;
+use Src\Controllers\PlanningController;
 
 
 header("Access-Control-Allow-Origin: *");

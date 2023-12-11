@@ -70,17 +70,16 @@ class PlanningController  extends  BaseController
     }
 
     public static function get(){
-        // $database = new Database();
-        // $database->DbConnect();
-        // $responseHandler = new ResponseHandler();
-        // $security = new Security();
+        $database = new Database();
+        $database->DbConnect();
+        $responseHandler = new ResponseHandler();
+        $security = new Security();
 
         // $auth = self::Auth($responseHandler, $security);
         // if ($auth != null)
         //     return $auth;
 
-       var_dump('hey');
-       die();
+     
 
         $config = json_decode(file_get_contents('config.json'));
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
