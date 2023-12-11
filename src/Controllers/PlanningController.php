@@ -48,7 +48,7 @@ class PlanningController  extends  BaseController
         $notFound = new NotFoundController();
         switch ($method) {
             case 'POST':
-                return $notFound::index();
+                return self::post();
                 break;
 
             case 'GET':
@@ -70,6 +70,7 @@ class PlanningController  extends  BaseController
     }
 
     public static function get(){
+
         $database = new Database();
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
@@ -78,8 +79,6 @@ class PlanningController  extends  BaseController
         $auth = self::Auth($responseHandler, $security);
         if ($auth != null)
             return $auth;
-
-     
 
         $config = json_decode(file_get_contents('config.json'));
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
@@ -96,12 +95,43 @@ class PlanningController  extends  BaseController
         if (!empty($data['data'])) {
             return $responseHandler->handleJsonResponse([
                 'data' => $data['data'],
-            ], 200, 'Pas de documents');
+            ], 200, 'ok');
         }else{
             return $responseHandler->handleJsonResponse([
                 'data' =>  [],
-            ], 200, 'Pas de documents');
+            ], 200, 'Pas de planning');
         }
+    }
+
+
+    public static function post(){
+        
+        $database = new Database();
+        $database->DbConnect();
+        $responseHandler = new ResponseHandler();
+        $security = new Security();
+
+        $auth = self::Auth($responseHandler, $security);
+        if ($auth != null)
+            return $auth;
+
+        $body = json_decode(file_get_contents('php://input'), true);
+        $config = json_decode(file_get_contents('config.json'));
+        $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
+
+        try {
+            $response = $guzzle->post('/SoftRecode/apiPlanning' , [ 'json' =>  $body]);
+        } catch (ClientException $exeption) {
+            $response = $exeption->getResponse();
+        }
+
+        $data = $response->getBody()->read(12047878);
+        $data = json_decode($data, true);
+
+        return $responseHandler->handleJsonResponse([
+        'data' => $data['data'],
+        ], 200, 'ok');
+       
     }
 
 }
