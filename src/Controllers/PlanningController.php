@@ -70,10 +70,10 @@ class PlanningController  extends  BaseController
     }
 
     public static function get(){
-        $database = new Database();
-        $database->DbConnect();
-        $responseHandler = new ResponseHandler();
-        $security = new Security();
+        // $database = new Database();
+        // $database->DbConnect();
+        // $responseHandler = new ResponseHandler();
+        // $security = new Security();
 
         // $auth = self::Auth($responseHandler, $security);
         // if ($auth != null)
