@@ -75,9 +75,9 @@ class PlanningController  extends  BaseController
         $responseHandler = new ResponseHandler();
         $security = new Security();
 
-        // $auth = self::Auth($responseHandler, $security);
-        // if ($auth != null)
-        //     return $auth;
+        $auth = self::Auth($responseHandler, $security);
+        if ($auth != null)
+            return $auth;
 
      
 
