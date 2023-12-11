@@ -81,14 +81,14 @@ class PlanningController  extends  BaseController
 
         $config = json_decode(file_get_contents('config.json'));
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
-        
+
         try {
             $response = $guzzle->get('/SoftRecode/apiPlanning');
         } catch (ClientException $exeption) {
             $response = $exeption->getResponse();
         }
 
-        $data = $response->getBody()->getContents();
+        $data = $response->getBody()->read(12047878);
         $data = json_decode($data, true );
 
         if (!empty($data['data'])) {
