@@ -233,7 +233,7 @@ switch($request){
 
     case $config->urls->base . PlanningController::path() . $data:
         header('Access-Control-Allow-Origin: *');
-        echo MailCmdController::index($_SERVER['REQUEST_METHOD'], $data);
+        echo PlanningController::index($_SERVER['REQUEST_METHOD'], $data);
         break;
         
 	default:
