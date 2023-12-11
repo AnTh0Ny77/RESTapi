@@ -70,10 +70,10 @@ class PlanningController  extends  BaseController
     }
 
     public static function get(){
-        $database = new Database();
-        $database->DbConnect();
-        $responseHandler = new ResponseHandler();
-        $security = new Security();
+        // $database = new Database();
+        // $database->DbConnect();
+        // $responseHandler = new ResponseHandler();
+        // $security = new Security();
 
         // $auth = self::Auth($responseHandler, $security);
         // if ($auth != null)
@@ -81,6 +81,7 @@ class PlanningController  extends  BaseController
 
         var_dump('hey');
         die();
+
         $config = json_decode(file_get_contents('config.json'));
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
 
@@ -91,7 +92,7 @@ class PlanningController  extends  BaseController
         }
 
         $data = $response->getBody()->read(12047878);
-        $data = json_decode($data, true );
+        $data = json_decode($data, true);
 
         if (!empty($data['data'])) {
             return $responseHandler->handleJsonResponse([
