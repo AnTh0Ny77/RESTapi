@@ -103,7 +103,6 @@ class PlanningController  extends  BaseController
         }
     }
 
-
     public static function post(){
         
         $database = new Database();
