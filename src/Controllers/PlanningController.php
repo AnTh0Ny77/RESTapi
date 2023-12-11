@@ -75,9 +75,9 @@ class PlanningController  extends  BaseController
         $responseHandler = new ResponseHandler();
         $security = new Security();
 
-        $auth = self::Auth($responseHandler, $security);
-        if ($auth != null)
-            return $auth;
+        // $auth = self::Auth($responseHandler, $security);
+        // if ($auth != null)
+        //     return $auth;
 
         $config = json_decode(file_get_contents('config.json'));
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
