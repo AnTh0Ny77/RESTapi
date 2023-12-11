@@ -79,7 +79,8 @@ class PlanningController  extends  BaseController
         // if ($auth != null)
         //     return $auth;
 
-       
+       var_dump('hey');
+       die();
 
         $config = json_decode(file_get_contents('config.json'));
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host]);
