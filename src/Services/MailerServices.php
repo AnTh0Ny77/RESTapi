@@ -347,6 +347,86 @@ Class MailerServices {
             </span>';
     } 
 
+
+    public function renderBodyCommande2($cmd, $ligne){
+
+        $table_ligne = '';
+        $total = 0 ;
+        foreach ($ligne as $key => $value) {
+            $total_ligne = intval($value['scl__qte']) * floatval($value['scl__prix_unit']);
+            $gar= '';
+            if (!empty($value['scl__gar_mois'])) {
+                //incorporer une nouvelle ligne sup :  
+                $gar= ' <br> garantie ' .$value['scl__gar_mois'] . ' mois ';
+                $gar_prix = intval($value['scl__qte']) * floatval($value['scl__gar_prix']);
+                //$total_ligne +=  $gar_prix;
+            }
+            $total += $total_ligne;
+            $total += $gar_prix;
+            $table_ligne .= '<tr>
+                            <td><b>'. $value['temp']['sar__marque'] . ' ' . $value['temp']['sar__model'] . '</b> REF '. $value['temp']['sar__ref_constructeur'] . $gar . ' mois</td>
+                            <td align=center><b> Qte  '.$value['scl__qte'].'</b></td>
+                            <td><b>'.number_format($gar_prix, 2, ',', ' '). ' € HT</b><br>'.number_format($gar_prix, 2, ',', ' '). ' € HT</td>
+                            </tr>';
+        }
+        return '<style>
+                .success-link{
+                    padding-left: 24px;
+                    padding-right: 24px;
+                    padding-top: 12px;
+                    padding-bottom: 12px;
+                    background: #1FB447;
+                    color: white;
+                    border-radius: 16px;
+                }
+                .wrapper{
+                    margin: 50px auto 50px;
+                    width: 350px;
+                    text-align : center;
+                }
+                a:link {text-decoration: none;}
+            
+                a:visited {text-decoration: none;}
+            
+                a:hover {text-decoration: none;}
+            
+                a:active {text-decoration: none;}
+
+            </style>
+            <img width="150" src="https://myrecode.fr/img/logo_myrecode.png" style="display:block;" alt="MyRecode" title="MyRecode" ><br><br>
+            <p style="text-align: center;">
+            <span style="font-size:24px">
+            <b>Récapitulatif de votre commande MY RECODE <br/> 3241509 </b>
+            </span>
+            <br><br><br>
+
+            <table style="border-spacing: 5px 10px 10px; margin: auto; border: 1px solid black; border-collapse : collapse;" >
+                 '.$table_ligne.'
+                 <tr>
+                    <td></td>
+                    <td><b>Sous-total </b></td>
+                    <td><b>'. number_format($total, 2, ',', ' '). ' € HT</b></td>
+                    </tr>
+                    <tr>
+                    <td></td>
+                    <td>Frais de livraison</td>
+                    <td>'.number_format($cmd['scm__prix_port'] , 2 , ',' , ' '). ' € HT</td>
+                    </tr>
+                    <tr>
+                    <td></td>
+                    <td><b> Total </b></td>
+                    <td><b>'.number_format($total + floatval($cmd['scm__prix_port']), 2 ,',' , ' ') . ' € HT</b></td>
+                    </tr>
+                 <tr style="border: 1px solid black;" >
+                    <td COLSPAN=3>Livraison : nom société + CP + ville<br>Contact : xyxyxyxy (contact de livraison)</td>
+                </tr>
+            </table>
+
+            <br><br><br><br>
+
+            <span style="font-size:16px">Pour suivre l etat de votre commande livrée ou facturée<br>rendez-vous dans l onglet "Mes documents" sur MyRecode.fr</span>';
+    } 
+
     public function renderBodyTicketDest($id , $user){
         return '<style>
                 .success-link{
