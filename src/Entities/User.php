@@ -42,6 +42,8 @@ Class User {
 
     public $user__confirm;
 
+    public $user__abs_adress;
+
 	
 	public function getUser__id(){
 		return $this->user__id;
@@ -228,6 +230,19 @@ Class User {
     public function setClientsParc($clientsParc)
     {
         $this->clientsParc = $clientsParc;
+
+        return $this;
+    }
+
+    
+    public function getUser__abs_adress()
+    {
+        return $this->user__abs_adress;
+    }
+
+    public function setUser__abs_adress($user__abs_adress)
+    {
+        $this->user__abs_adress = $user__abs_adress;
 
         return $this;
     }
