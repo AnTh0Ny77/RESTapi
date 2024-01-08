@@ -14,6 +14,7 @@ use Src\Entities\Client;
 use Src\Entities\TicketsLigne;
 use Src\Repository\TicketLigneRepository;
 use Src\Services\Security;
+use Src\Services\MailerServices;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\ClientHtpp;
 use GuzzleHttp\Promise;
@@ -119,6 +120,7 @@ class PlanningController  extends  BaseController
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
         $security = new Security();
+        $mailer = new MailerServices();
 
         $auth = self::Auth($responseHandler, $security);
         if ($auth != null)
@@ -137,6 +139,10 @@ class PlanningController  extends  BaseController
         $data = $response->getBody()->read(12047878);
         $data = json_decode($data, true);
 
+        $body_mail = $mailer->RenderbodyAbsence($body['user__abs'] , $body['motif__string'] , $body['to__info'] ,$body['to__out'] , $body['to__in'] ); 
+        $mailer->sendMail( $body['abs__adress'], 'ABSENCE',  $body_mail);
+
+        
         return $responseHandler->handleJsonResponse([
         'data' => $data['data'],
         ], 200, 'ok');

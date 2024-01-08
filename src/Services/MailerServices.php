@@ -469,4 +469,69 @@ Class MailerServices {
                 </p>
             </div>';
     }
+
+    public function RenderbodyAbsence($user , $type , $motif , $date , $dateR){
+        return '<style>
+                .success-link{
+                    padding-left: 24px;
+                    padding-right: 24px;
+                    padding-top: 12px;
+                    padding-bottom: 12px;
+                    background: #1FB447;
+                    color: white;
+                    border-radius: 16px;
+                }
+                .wrapper{
+                    margin-top: 50px;
+                    margin-bottom: 50px;
+                }
+                a:link { text-decoration: none; }
+            
+                a:visited { text-decoration: none; }
+            
+                a:hover { text-decoration: none; }
+            
+                a:active { text-decoration: none; }
+            </style>
+            <div class="wrapper">
+                <p style="text-align: center;"><!--StartFragment--><span style="font-size:14px"><span style="font-weight:bold">Demande<br />
+                    D absence</span></span>
+                    <br/>
+                    &nbsp;
+                </p>
+                    <p style="text-align: center;"> '.$user.' à effectué une demande d abscence pour le motif suivant : 
+                    <br />
+                    <br />
+                        '.$type.' : '.$motif.'
+                    <br />
+                        Du  : '.$date.'
+                    <br />
+                        Au  : '.$dateR.'
+                    <br />
+                </p>
+            </div>';
+    }
+
+    public  function renderMotifString($select){
+        switch ($select) {
+            case 'CP':
+                return 'congés payés';
+                break;
+            case 'NP':
+                return 'non payés';
+                break;
+            case 'MLD':
+                return 'Maladie';
+                break;
+            case 'INT':
+                return 'intervention';
+                break;
+            case 'RCU':
+                return 'récupération';
+                break;
+            case 'TT':
+                return 'télétravail';
+                break;
+        }
+    }
 }
