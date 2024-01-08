@@ -187,15 +187,14 @@ class MailCmdController extends BaseController
                            
                             $guzzle = new \GuzzleHttp\Client(['base_uri' => $config->guzzle->host , 'http_errors' => true, ]);
                            
-                            try {
-
-                                
-
+                            try {    
                                 $response = $guzzle->post('/SoftRecode/apiCmdTransfert', [ 'json' => [
                                     "scm__user_id" => $results->getCli__com1() , 
                                     "scm__prix_port" => $cmd['scm__prix_port'], 
                                     "scm__client_id_livr" => $cmd['scm__client_id_livr'], 
                                     "scm__client_id_fact" => $cmd['scm__client_id_fact'],
+                                    "scm__ref_client" => $cmd['scm__ref_client'] ,
+                                    "scm__memo_client" => $cmd['scm__memo_client'] ,
                                     "ligne" =>  $sossuke_array , 
                                     "secret" => "heAzqxwcrTTTuyzegva^5646478§§uifzi77..!yegezytaa9143ww98314528"
                                 ] ]);
