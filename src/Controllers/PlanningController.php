@@ -161,7 +161,7 @@ class PlanningController  extends  BaseController
   
         if (!empty($body['user__abs']) and !empty($body['to__out'])) {
             $body_mail = $mailer->RenderbodyAbsence($body['user__abs'] , $body['motif__string'] , $body['to__info'] ,$body['to__out'] , $body['to__in'] ); 
-            $mailer->sendMail( $body['abs__adress'], 'ABSENCE' . $body['user__abs'] .  ' le ' .
+            $mailer->sendMail( $body['abs__adress'], 'ABSENCE ' .  $body['motif__string']  . ' '. $body['user__abs'] .  ' le ' .
             self::formatTo_intOut($body['data']['to__out']) . ' au ' .  self::formatTo_intOut($body['data']['to__in'])   ,  $body_mail);
         }
 
