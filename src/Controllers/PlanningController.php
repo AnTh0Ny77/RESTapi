@@ -144,7 +144,6 @@ class PlanningController  extends  BaseController
         $data = $response->getBody()->read(12047878);
         $data = json_decode($data, true);
 
-
         if (!empty($data['data']['to__abs_veto_motif'])) {
             $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
             $body_mail = $mailer->RenderbodyAnnulAbsence($data['data']['nom'] , $data['data']['to__abs_veto_motif'], $$data['data']['to__info'] ,$data['data']['to__out'] , $data['data']['to__in'] ); 
