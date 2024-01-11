@@ -112,16 +112,13 @@ class PlanningController  extends  BaseController
         }
     }
 
-    public static function returnId__user(Security $security){
-        $token = $security->getBearerToken();
-        return $security->readToken($token);
-    }
 
     public static function post(){
         
         $database = new Database();
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
+        $userRepository = new UserRepository('user', $database, User::class);
         $security = new Security();
         $mailer = new MailerServices();
 
@@ -144,7 +141,8 @@ class PlanningController  extends  BaseController
 
         
         if (!empty($data['data']['to__abs_veto_motif'])) {
-            $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
+            $id_user = UserController::returnId__user($security)['uid'];
+            $user = $userRepository->findOneBy(['user__id' => $id_user], true);
             var_dump($user);
             die();
             $body_mail = $mailer->RenderbodyAnnulAbsence($data['data']['nom'] , $data['data']['to__abs_veto_motif'], $$data['data']['to__info'] ,$data['data']['to__out'] , $data['data']['to__in'] ); 
