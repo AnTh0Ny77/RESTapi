@@ -15,6 +15,7 @@ use Src\Entities\User;
 use Src\Entities\TicketsLigne;
 use Src\Repository\TicketLigneRepository;
 use Src\Services\Security;
+use DateTime;
 use Src\Services\MailerServices;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\ClientHtpp;
@@ -113,6 +114,14 @@ class PlanningController  extends  BaseController
         }
     }
 
+    public static function formatTo_intOut($dateString){
+        $dateTime = new DateTime($dateString);
+
+        $formattedTime = $dateTime->format('d/m à H:i');
+
+        return $formattedTime;
+    }
+
 
     public static function post(){
         
@@ -139,22 +148,21 @@ class PlanningController  extends  BaseController
 
         $data = $response->getBody()->read(12047878);
         $data = json_decode($data, true);
-
         
-        if (!empty($data['data']['to__abs_veto_motif'])) {
-           
-            $id_user = UserController::returnId__user($security)['uid'];
-           
+        if(!empty($data['data']['to__abs_veto_motif'])){
+            $id_user = UserController::returnId__user($security)['uid']; 
             $user = $userRepository->findOneBy(['user__id' => $id_user], true);
-          
-            $body_mail = $mailer->RenderbodyAnnulAbsence($data['data']['nom'] , $data['data']['to__abs_veto_motif'], $$data['data']['to__info'] ,$data['data']['to__out'] , $data['data']['to__in'] ); 
-            $mailer->sendMail( $user->getUser__abs_adress(), 'ANNULATION ABSENCE',  $body_mail);
-            $mailer->sendMail( $user->getUser__mail(), 'ANNULATION ABSENCE',  $body_mail);
+            $body_mail = $mailer->RenderbodyAnnulAbsence($data['data']['nom'] . ' ' . $data['data']['prenom'] , $data['data']['to__abs_veto_motif'], $data['data']['to__info'] ,$data['data']['to__out'] , $data['data']['to__in'] ); 
+            $mailer->sendMail( $user->getUser__abs_adress(), 'ANNULATION ABSENCE' . $data['data']['nom'] . ' ' . $data['data']['prenom'] . ' le ' .
+             self::formatTo_intOut($data['data']['to__out']) . ' au ' .  self::formatTo_intOut($data['data']['to__in'])  ,  $body_mail);
+            $mailer->sendMail( $user->getUser__mail(), 'ANNULATION ABSENCE' . $data['data']['nom'] . ' ' . $data['data']['prenom'] . ' le ' .
+             self::formatTo_intOut($data['data']['to__out']) . ' au ' .  self::formatTo_intOut($data['data']['to__in']) ,  $body_mail);
         }
   
         if (!empty($body['user__abs']) and !empty($body['to__out'])) {
             $body_mail = $mailer->RenderbodyAbsence($body['user__abs'] , $body['motif__string'] , $body['to__info'] ,$body['to__out'] , $body['to__in'] ); 
-            $mailer->sendMail( $body['abs__adress'], 'ABSENCE',  $body_mail);
+            $mailer->sendMail( $body['abs__adress'], 'ABSENCE' . $body['user__abs'] .  ' le ' .
+            self::formatTo_intOut($body['data']['to__out']) . ' au ' .  self::formatTo_intOut($body['data']['to__in'])   ,  $body_mail);
         }
 
         return $responseHandler->handleJsonResponse([
