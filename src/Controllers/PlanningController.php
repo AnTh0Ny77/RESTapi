@@ -11,6 +11,7 @@ use Src\Repository\ClientRepository;
 use Src\Controllers\BaseController;
 use Src\Repository\UserRepository;
 use Src\Entities\Client;
+use Src\Entities\User;
 use Src\Entities\TicketsLigne;
 use Src\Repository\TicketLigneRepository;
 use Src\Services\Security;
@@ -143,10 +144,10 @@ class PlanningController  extends  BaseController
         if (!empty($data['data']['to__abs_veto_motif'])) {
            
             $id_user = UserController::returnId__user($security)['uid'];
+           
+            $user = $userRepository->findOneBy(['user__id' => $id_user], true);
             var_dump('hey');
             die();
-            $user = $userRepository->findOneBy(['user__id' => $id_user], true);
-          
             $body_mail = $mailer->RenderbodyAnnulAbsence($data['data']['nom'] , $data['data']['to__abs_veto_motif'], $$data['data']['to__info'] ,$data['data']['to__out'] , $data['data']['to__in'] ); 
             $mailer->sendMail( $user->getUser__abs_adress(), 'ANNULATION ABSENCE',  $body_mail);
             $mailer->sendMail( $user->getUser__mail(), 'ANNULATION ABSENCE',  $body_mail);
