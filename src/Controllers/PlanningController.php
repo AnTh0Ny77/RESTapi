@@ -114,6 +114,11 @@ class PlanningController  extends  BaseController
         }
     }
 
+    public static function returnId__user(Security $security){
+        $token = $security->getBearerToken();
+        return $security->readToken($token);
+    }
+
     public static function post(){
         
         $database = new Database();
@@ -139,10 +144,19 @@ class PlanningController  extends  BaseController
         $data = $response->getBody()->read(12047878);
         $data = json_decode($data, true);
 
-        $body_mail = $mailer->RenderbodyAbsence($body['user__abs'] , $body['motif__string'] , $body['to__info'] ,$body['to__out'] , $body['to__in'] ); 
-        $mailer->sendMail( $body['abs__adress'], 'ABSENCE',  $body_mail);
 
-        
+        if (!empty($data['data']['to__abs_veto_motif'])) {
+            $user = $userRepository->findOneBy(['user__id' => self::returnId__user($security)['uid']] , true);
+            $body_mail = $mailer->RenderbodyAnnulAbsence($data['data']['nom'] , $data['data']['to__abs_veto_motif'], $$data['data']['to__info'] ,$data['data']['to__out'] , $data['data']['to__in'] ); 
+            $mailer->sendMail( $user->getUser__abs_adress(), 'ANNULATION ABSENCE',  $body_mail);
+            $mailer->sendMail( $user->getUser__mail(), 'ANNULATION ABSENCE',  $body_mail);
+        }
+  
+        if (!empty($body['user__abs']) and !empty($body['to__out'])) {
+            $body_mail = $mailer->RenderbodyAbsence($body['user__abs'] , $body['motif__string'] , $body['to__info'] ,$body['to__out'] , $body['to__in'] ); 
+            $mailer->sendMail( $body['abs__adress'], 'ABSENCE',  $body_mail);
+        }
+
         return $responseHandler->handleJsonResponse([
         'data' => $data['data'],
         ], 200, 'ok');
