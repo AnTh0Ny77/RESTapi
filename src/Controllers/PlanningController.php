@@ -143,7 +143,7 @@ class PlanningController  extends  BaseController
         if (!empty($data['data']['to__abs_veto_motif'])) {
            
             $id_user = UserController::returnId__user($security)['uid'];
-            var_dump($userRepository->findOneBy(['user__id' => $id_user], true));
+            var_dump('hey');
             die();
             $user = $userRepository->findOneBy(['user__id' => $id_user], true);
           
