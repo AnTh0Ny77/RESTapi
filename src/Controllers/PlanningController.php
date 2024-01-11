@@ -146,7 +146,7 @@ class PlanningController  extends  BaseController
             $id_user = UserController::returnId__user($security)['uid'];
            
             $user = $userRepository->findOneBy(['user__id' => $id_user], true);
-            var_dump('hey');
+            var_dump($user);
             die();
             $body_mail = $mailer->RenderbodyAnnulAbsence($data['data']['nom'] , $data['data']['to__abs_veto_motif'], $$data['data']['to__info'] ,$data['data']['to__out'] , $data['data']['to__in'] ); 
             $mailer->sendMail( $user->getUser__abs_adress(), 'ANNULATION ABSENCE',  $body_mail);
