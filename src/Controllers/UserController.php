@@ -11,6 +11,7 @@ use Src\Controllers\BaseController;
 use Src\Repository\RefreshRepository;
 use Src\Controllers\NotFoundController;
 use Src\Repository\LienUserClientRepository;
+use Src\Repository\UserGroupsRepository;
 use Src\Entities\Confirm;
 use Src\Repository\ClientRepository;
 use Src\Repository\ConfirmRepository;
@@ -128,7 +129,6 @@ Class UserController  extends BaseController{
 
         $refresh_token = $refreshRepository->insertOne($user->getUser__id());
         $user->setRefresh_token($refresh_token);
-
         $confirm = new Confirm();
         $confirmRepository = new ConfirmRepository('confirm', $database, Confirm::class);
         $confirm->setConfirm__user($body['user__mail']);
@@ -140,11 +140,8 @@ Class UserController  extends BaseController{
         $date = date('Y-m-d H:i:s', strtotime($date . ' +25 hours'));
         $confirm->setConfirm__exp($date);
         $confirmRepository->insert((array)$confirm);
-
         $body_mail = $mailer->renderBody($mailer->header(), $mailer->bodyNewPassword('https://myrecode.fr/pw_modif.php?getpw&confirm__key=' . $confirm->getConfirm__key() . '&confirm__user=' . $confirm->getConfirm__user() . ''), $mailer->signature());
         $mailer->sendMail($body['user__mail'], 'Définition de votre mot de passe ',  $body_mail);
-
-
 
         return $responseHandler->handleJsonResponse([
             "data" => $user->getUser__id()
@@ -158,6 +155,7 @@ Class UserController  extends BaseController{
            
             $responseHandler = new ResponseHandler();
             $lienUserClientRepository = new LienUserClientRepository('lien_user_client' , $database , User::class );
+            $lienUserGroupsRepository = new UserGroupsRepository('lien_user_grp' ,$database ,User::class );
             $refreshRepository = new RefreshRepository($database);
             $userRepository = new UserRepository('user' , $database , User::class );
             
@@ -174,14 +172,18 @@ Class UserController  extends BaseController{
 
             if (!empty($_GET['MyRecode']) and $_GET['MyRecode'] == 'TRUE' ){
                
+                $groups = $lienUserGroupsRepository->getUserGroups($user->getUser__id());
                 $clients = $lienUserClientRepository->get2array($user->getUser__id());
                 $user = (array)$user ;
                 $user['clients'] = $clients ;
+                $user['user__groups'] = $groups;
 
             }else{
 
                 $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
+                $groups = $lienUserGroupsRepository->getUserGroups($user->getUser__id());
                 $user->setClients($clients);
+                $user->setUser__groups($groups);
             }
            
             return $responseHandler->handleJsonResponse( [ 

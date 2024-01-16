@@ -44,6 +44,8 @@ Class User {
 
     public $user__abs_adress;
 
+    public $user__groups;
+
 	
 	public function getUser__id(){
 		return $this->user__id;
@@ -243,6 +245,19 @@ Class User {
     public function setUser__abs_adress($user__abs_adress)
     {
         $this->user__abs_adress = $user__abs_adress;
+
+        return $this;
+    }
+
+    public function getUser__groups()
+    {
+        return $this->user__groups;
+    }
+
+    
+    public function setUser__groups($user__groups)
+    {
+        $this->user__groups = $user__groups;
 
         return $this;
     }
