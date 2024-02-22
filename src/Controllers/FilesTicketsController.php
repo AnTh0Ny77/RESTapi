@@ -178,6 +178,7 @@ Class FilesTicketsController  extends  BaseController{
         $security = new Security();
         $tiketLigne = new TicketLigneRepository('ticket_ligne' , $database , TicketsLigne::class);
         
+        
         //controle du client 
         if (empty($_POST['tklc__id'])){
             return $responseHandler->handleJsonResponse([
@@ -243,8 +244,8 @@ Class FilesTicketsController  extends  BaseController{
                         'name'  =>  'file',
                         'contents'      => fopen($tempPath  ,'r')
                     ],[
-                        'name'  =>  'tkl__id',
-                        'contents'      => $_POST['tkl__id']
+                        'name'  =>  'tklc__id',
+                        'contents'      => $_POST['tklc__id']
                     ],[
                         'name' => 'nom', 
                         'contents' => $fileName
