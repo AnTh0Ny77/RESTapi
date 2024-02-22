@@ -179,6 +179,8 @@ Class FilesTicketsController  extends  BaseController{
         $tiketLigne = new TicketLigneRepository('ticket_ligne' , $database , TicketsLigne::class);
         
         
+        var_dump($_POST);
+        die();
         //controle du client 
         if (empty($_POST['tklc__id'])){
             return $responseHandler->handleJsonResponse([
