@@ -179,7 +179,7 @@ Class FilesTicketsController  extends  BaseController{
         $tiketLigne = new TicketLigneRepository('ticket_ligne' , $database , TicketsLigne::class);
         
         //controle du client 
-        if (empty($_POST['tkl__id'])){
+        if (empty($_POST['tklc__id'])){
             return $responseHandler->handleJsonResponse([
                 'msg' =>  ' La ligne de ticket n est pas précisée'
             ] , 404 , 'bad request');
