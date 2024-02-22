@@ -182,7 +182,7 @@ Class FilesTicketsController  extends  BaseController{
         //controle du client 
         if (empty($_POST['tklc__id'])){
             return $responseHandler->handleJsonResponse([
-                'msg' =>  ' La ligne de ticket n est pas précisée'
+                'msg' =>  'La ligne de ticket n est pas précisée'
             ] , 404 , 'bad request');
         }
      
