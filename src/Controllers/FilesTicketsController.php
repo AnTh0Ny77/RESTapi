@@ -179,7 +179,7 @@ Class FilesTicketsController  extends  BaseController{
         $tiketLigne = new TicketLigneRepository('ticket_ligne' , $database , TicketsLigne::class);
         
         
-        var_dump($_POST);
+        var_dump($_FILES);
         die();
         //controle du client 
         if (empty($_POST['tklc__id'])){
