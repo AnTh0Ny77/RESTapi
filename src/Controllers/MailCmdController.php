@@ -214,6 +214,10 @@ class MailCmdController extends BaseController
                             $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$def_array), $mailer->signature()); 
                             $mailer->sendMail( $user->getUser__mail(), 'Confirmation de votre commande MyRecode',  $body_mail);
                             $mailer->sendMail( $com->getCom__email(), 'Une commande vous à été passée par '.$results->getCli__nom().'',  $body_mail);
+                            $com = $commercialRepository->findOneBy(['com__id' =>  $results->getCli__com2()] , true);
+                            if ($com instanceof Commercial) {
+                                $mailer->sendMail( $com->getCom__email(), 'Une commande vous à été passée par '.$results->getCli__nom().'',  $body_mail);
+                            }
                         }
                     } else return $responseHandler->handleJsonResponse('Aucun clients facturé trouvés' , 404 , 'Not Found');
 
