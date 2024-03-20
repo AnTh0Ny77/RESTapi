@@ -5,7 +5,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
-
 Class MailerServices {
 
     public $config;
@@ -21,7 +20,7 @@ Class MailerServices {
             $mail->Host       =  $this->config->mailer->host;                     
             $mail->SMTPAuth   =  true;                                   
             $mail->Username   =  $this->config->mailer->username;                     
-            $mail->Password   =  $this->config->mailer->password;                              
+            $mail->Password   =  $this->config->mailer->password;
             $mail->SMTPSecure =  PHPMailer::ENCRYPTION_SMTPS;            
             $mail->Port       =  465;                                    
             $mail->setFrom('myrecode@recode.fr', 'MyRecode');
@@ -231,7 +230,7 @@ Class MailerServices {
             </div>';
     } 
 
-    public function renderBodyCommande($cmd, $ligne){
+    public function renderBodyCommande($cmd, $ligne , $nom_client , $user){
 
         $table_ligne = '';
         $total = 0 ;
@@ -292,6 +291,11 @@ Class MailerServices {
                    </span></span>
                     <br/>
                     &nbsp;
+               </p>
+               <p>
+                Societe : '. $nom_client.'<br>
+                Passée par : '. $user->getUser__nom().'  '.$user->getUser__prenom() .'<br>
+                Ref : '. $cmd['scm__ref_client'].'<br>
                </p>
                     <br />
                     <br />

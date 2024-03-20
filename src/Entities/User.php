@@ -96,7 +96,7 @@ Class User {
     }
 
     public function setUser__password($user__password){
-        if (preg_match("/^(?=.*[0-9])(?=.*[A-Z]).{8,20}$/" ,  $user__password)) {
+        if (preg_match("/^(?=.*[0-9])(?=.*[A-Z]).{8,30}$/" ,  $user__password)) {
             $this->user__password = $user__password;
             return $this;
         }else return 'Le mot de pass doit contenir 8 charactères minimum ,un nombre, une majuscule et une minuscule ';

@@ -203,7 +203,6 @@ class MailCmdController extends BaseController
                                 $response = $exeption->getResponse();
                             }
                             
-                            
                             $response = self::handleResponse($response);
                             $cmd__id  = $response["data"];
                             $shopCmdRepository->updateFromSossuke($body['scm__id'] , $cmd__id);
@@ -211,7 +210,7 @@ class MailCmdController extends BaseController
                             //mis a jour de l ID de la commande et de l ID des lignes 
                             $cmd = $shopCmdRepository->findOneBy(['scm__id' => $cmd__id] , false);
                             //ENVOI DES 2 MAILS A JOUR 
-                            $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$def_array), $mailer->signature()); 
+                            $body_mail = $mailer->renderBody($mailer->header(), $mailer->renderBodyCommande($cmd ,$def_array , $results->getCli__nom() , $user  ), $mailer->signature()); 
                             $mailer->sendMail( $user->getUser__mail(), 'Confirmation de votre commande MyRecode',  $body_mail);
                             $mailer->sendMail( $com->getCom__email(), 'Une commande vous à été passée par '.$results->getCli__nom().'',  $body_mail);
                             $com = $commercialRepository->findOneBy(['com__id' =>  $results->getCli__com2()] , true);
