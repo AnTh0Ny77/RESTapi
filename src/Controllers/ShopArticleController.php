@@ -54,50 +54,49 @@ Class ShopArticleController extends BaseController {
 
 
     public static function post(){
-
         $database = new Database();
         $database->DbConnect();
         $responseHandler = new ResponseHandler();
-        $userRepository = new UserRepository('user' , $database , User::class );
-        $ShopArticleRepository = new ShopArticleRepository('shop_article' , $database , ShopArticle::class);
+        $userRepository = new UserRepository('user', $database, User::class);
+        $ShopArticleRepository = new ShopArticleRepository('shop_article', $database, ShopArticle::class);
         $security = new Security();
-        $auth = self::Auth($responseHandler,$security);
+        $auth = self::Auth($responseHandler, $security);
         if ($auth != null) 
             return $auth;
-
+    
         $body = json_decode(file_get_contents('php://input'), true);
-
+    
         if (empty($body)) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'le body ne peut pas etre vide'
             ], 401, 'bad request');
         }
-        
+    
         if (empty($body['sar__ref_constructeur'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'Ref constructeur absente'
             ], 401, 'bad request');
         }
-
+    
         if (empty($body['sar__famille'])) {
             return $responseHandler->handleJsonResponse([
                 'msg' => 'famille absente'
             ], 401, 'bad request');
         }
-
-        $verif = $ShopArticleRepository->findOneBy(['sar__ref_constructeur' => $body['sar__ref_constructeur'] ] , false);
-
-        if (!empty($verif)){
+    
+        $verif = $ShopArticleRepository->findOneBy(['sar__ref_constructeur' => $body['sar__ref_constructeur']], false);
+    
+        if (!empty($verif) and !empty($verif['sar__ref_id'])){
             $body['sar__ref_id'] = $verif['sar__ref_id'];
             $article  = $ShopArticleRepository->update($body);
-        }else {
+        } else {
             $article = $ShopArticleRepository->insert($body);
         }
-
+    
         return $responseHandler->handleJsonResponse([
             'data' => $article
         ], 200, 'ok');
-    
     }
+    
 
 }
