@@ -88,8 +88,10 @@ Class ShopArticleController extends BaseController {
     
         if (!empty($verif) and !empty($verif['sar__ref_id'])){
             $body['sar__ref_id'] = $verif['sar__ref_id'];
-            var_dump($body);
-            die();
+            return $responseHandler->handleJsonResponse([
+                'data' => $body
+            ], 200, 'ok');
+           
             $article  = $ShopArticleRepository->update($body);
         } else {
             $article = $ShopArticleRepository->insert($body);
