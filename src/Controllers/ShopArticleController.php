@@ -78,11 +78,11 @@ Class ShopArticleController extends BaseController {
             ], 401, 'bad request');
         }
     
-        if (empty($body['sar__famille'])) {
-            return $responseHandler->handleJsonResponse([
-                'msg' => 'famille absente'
-            ], 401, 'bad request');
-        }
+        // if (empty($body['sar__famille'])) {
+        //     return $responseHandler->handleJsonResponse([
+        //         'msg' => 'famille absente'
+        //     ], 401, 'bad request');
+        // }
     
         $verif = $ShopArticleRepository->findOneBy(['sar__ref_constructeur' => $body['sar__ref_constructeur']], false);
     
