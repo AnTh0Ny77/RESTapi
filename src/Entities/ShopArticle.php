@@ -6,6 +6,8 @@ Class ShopArticle {
 
     public $sar__ref_id;
 
+    public $sar__model;
+
     public $sar__ref_constructeur;
 
     public $sar__description;
@@ -133,6 +135,26 @@ Class ShopArticle {
     public function setSar__famille($sar__famille)
     {
         $this->sar__famille = $sar__famille;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of sar__model
+     */ 
+    public function getSar__model()
+    {
+        return $this->sar__model;
+    }
+
+    /**
+     * Set the value of sar__model
+     *
+     * @return  self
+     */ 
+    public function setSar__model($sar__model)
+    {
+        $this->sar__model = $sar__model;
 
         return $this;
     }
