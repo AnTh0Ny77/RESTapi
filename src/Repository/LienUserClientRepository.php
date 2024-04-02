@@ -80,13 +80,12 @@ Class LienUserClientRepository  extends BaseRepository {
 
     public function insertIfNotExist($user_id, $client_ids) {
         // Vérifier si des enregistrements correspondent déjà aux conditions données
-        $query = $this->Db->Pdo->prepare("SELECT COUNT(*) AS count FROM lien_user_client WHERE luc__user__id = :user_id AND luc__cli__id =  :luc__cli__id)");
+        $query = $this->Db->Pdo->prepare("SELECT COUNT(*) AS count FROM lien_user_client WHERE luc__user__id = :user_id AND luc__cli__id =  :luc__cli__id");
         $query->bindParam(':user_id', $user_id);
         $query->bindParam(':luc__cli__id', $client_ids);
         $query->execute();
         $result = $query->fetch(PDO::FETCH_ASSOC);
-        var_dump($result);
-        die();
+       
         // Si aucun enregistrement n'est trouvé, insérer les données
         if ($result['count'] == 1) {
             $data = [
