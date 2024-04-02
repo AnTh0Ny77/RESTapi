@@ -78,6 +78,31 @@ Class LienUserClientRepository  extends BaseRepository {
         return $request->execute($data);
     }
 
+    public function insertIfNotExist($user_id, $client_ids) {
+        // Vérifier si des enregistrements correspondent déjà aux conditions données
+        $query = $this->Db->Pdo->prepare("SELECT COUNT(*) AS count FROM lien_user_client WHERE luc__user__id = :user_id AND luc__cli__id =  :luc__cli__id)");
+        $query->bindParam(':user_id', $user_id);
+        $query->bindParam(':luc__cli__id', $client_ids);
+        $query->execute();
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+    
+        // Si aucun enregistrement n'est trouvé, insérer les données
+        if ($result['count'] == 1) {
+            $data = [
+                'luc__user__id' => $user_id , 
+                'luc__cli__id' => $client_ids , 
+                'luc__cata' => 0 , 
+                'luc__parc' => 1
+            ];
+            $this->insertNoPrimary($data);
+            
+            return true;
+        }
+        
+        return false;
+    }
+    
+
     public function getUserClientsParc($user__id){
         $clientRepository = new ClientRepository('client' , $this->Db , Client::class );
         $clients = $this->findBy(['luc__user__id' => $user__id ], 50 , [ 'luc__order' => 'ASC'] );
@@ -90,4 +115,13 @@ Class LienUserClientRepository  extends BaseRepository {
         }
         return $responses;
     }
+
+    
+    public function DeleteUselessLinks($user__id) {
+        $request = $this->Db->Pdo->prepare("DELETE FROM lien_user_client 
+        WHERE luc__parc = 0 AND luc__cata = 0 AND luc__user__id = :user_id");
+        $request->bindParam(':user_id', $user__id);
+        return $request->execute();
+    }
+    
 }

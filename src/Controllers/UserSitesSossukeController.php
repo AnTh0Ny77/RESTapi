@@ -133,10 +133,9 @@ Class UserSitesSossukeController extends BaseController {
 
         if (!empty($body['multiple'])) {
             
-
             $premier= $lienUserClientRepository->getLucOrder1($body['luc__user__id']);
-
             $lienUserClientRepository->delete(['luc__user__id' =>  $body['luc__user__id']]);
+
             $i = 0 ;
             foreach ($body['multiple'] as $key => $value) {
                 $i ++ ;
@@ -184,36 +183,44 @@ Class UserSitesSossukeController extends BaseController {
             );
         }
 
-       
         if(!empty($body['update'])) {
+
             $user = $userRepository->findOneBy(['user__id' => $body['luc__user__id'] ], true);
-            $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
+            // $clients = $lienUserClientRepository->getUserClients($user->getUser__id());
 
             //remet tout a 1
-            $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
-            SET luc__parc = 0
-            WHERE luc__user__id = ".$user->getUser__id()."");
-            $request->execute();   
+            // $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
+            // SET luc__parc = 0
+            // WHERE luc__user__id = ".$user->getUser__id()."");
+            // $request->execute();   
 
 
-            $clause = '';
-            $totalElements = count($body['update']);
-            $index = 0;
+            // $clause = '';
+            // $totalElements = count($body['update']);
+            // $index = 0;
+            // foreach ($body['update'] as $value) {
+            //     $index++;
+            //     if ($index ===  $totalElements) {
+            //         $clause .=  $value . "  ";
+            //     }else {
+            //         $clause .=  $value . " , ";
+            //     }
+               
+            // }   
+            
             foreach ($body['update'] as $value) {
-                $index++;
-                if ($index ===  $totalElements) {
-                    $clause .=  $value . "  ";
-                }else {
-                    $clause .=  $value . " , ";
+                $insertIf = $lienUserClientRepository->insertIfNotExist($user->getUser__id() ,$value);
+
+                if ($insertIf == false ) {
+                    $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
+                    SET luc__parc = 1
+                    WHERE luc__user__id = ".$user->getUser__id()." AND luc__cli__id IN ( ".$value."  ) ");
+                    $request->execute();
                 }
                
-            }    
-            $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
-            SET luc__parc = 1
-            WHERE luc__user__id = ".$user->getUser__id()." AND luc__cli__id IN ( ".$clause."  ) ");
-            $request->execute();   
-            
+            }   
 
+            $lienUserClientRepository->DeleteUselessLinks($user->getUser__id());
                 
             return $responseHandler->handleJsonResponse([
                 "data" => 'mis à jour', 
