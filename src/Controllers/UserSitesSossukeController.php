@@ -214,7 +214,7 @@ Class UserSitesSossukeController extends BaseController {
             
                 $insertIf = $lienUserClientRepository->insertIfNotExist($user->getUser__id() ,$value);
                var_dump($insertIf);
-               die();
+              
                 if ($insertIf == false ) {
                     $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
                     SET luc__parc = 1
@@ -223,7 +223,7 @@ Class UserSitesSossukeController extends BaseController {
                 }
                
             }   
-
+            die();
             $lienUserClientRepository->DeleteUselessLinks($user->getUser__id());
                 
             return $responseHandler->handleJsonResponse([
