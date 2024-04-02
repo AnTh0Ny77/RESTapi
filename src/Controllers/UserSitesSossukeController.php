@@ -213,8 +213,7 @@ Class UserSitesSossukeController extends BaseController {
             foreach ($body['update'] as $value) {
             
                 $insertIf = $lienUserClientRepository->insertIfNotExist($user->getUser__id() ,$value);
-                var_dump($insertIf);
-                die();
+               
                 if ($insertIf == false ) {
                     $request = $lienUserClientRepository->Db->Pdo->prepare("UPDATE lien_user_client 
                     SET luc__parc = 1
