@@ -208,10 +208,11 @@ Class UserSitesSossukeController extends BaseController {
                
             // }   
 
-            var_dump(   $body['update']);
-            die();
+            
             
             foreach ($body['update'] as $value) {
+                var_dump(   $value);
+            die();
                 $insertIf = $lienUserClientRepository->insertIfNotExist($user->getUser__id() ,$value);
 
                 if ($insertIf == false ) {
