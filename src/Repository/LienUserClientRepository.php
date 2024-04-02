@@ -87,7 +87,7 @@ Class LienUserClientRepository  extends BaseRepository {
         $result = $query->fetch(PDO::FETCH_ASSOC);
        
         // Si aucun enregistrement n'est trouvé, insérer les données
-        if ($result['count'] == 1) {
+        if ($result['count'] == 0) {
             $data = [
                 'luc__user__id' => $user_id , 
                 'luc__cli__id' => $client_ids , 
